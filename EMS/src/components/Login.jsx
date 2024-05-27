@@ -7,7 +7,7 @@ const Login = () => {
             <h2>Login Page</h2>
             <form>
                 <div>
-                    
+
                 </div>
             </form>
         </div>
