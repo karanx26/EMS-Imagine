@@ -1,11 +1,9 @@
-<<<<<<< HEAD
-import React, { useState } from 'react'
-import './style.css'
-import axios from 'axios'
-=======
+
+
+
 import React from 'react'
 import '../styles/style.css'
->>>>>>> d313b521c7bf95ea3e4cbede093c83743326a9c7
+
 
 const Login = () => {
     const [values, setValues] = useState({
@@ -15,7 +13,7 @@ const Login = () => {
     })
     const handleSubmit = (event) =>{
         event.preventDefault()
-        axios.post('http://localhost:3000/auth/adminlogin')
+        
         .then(result => console.log(result))
         .catch(result => console.log(err))
         
