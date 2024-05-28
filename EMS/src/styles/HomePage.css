@@ -1,5 +1,5 @@
 nav {
-  height: 50px;
+  height: 10%;
   background: #ffffff;
   width: 100%;
   position: fixed;
@@ -36,17 +36,6 @@ nav ul {
   height: 100%;
   padding: 8px 14px;
 }
-
-/* #bgimg {
-  width: 100%;
-  background-image: url(../Images/2.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  border: none;
-} */
 
 #bgimg {
     width: 100%;
