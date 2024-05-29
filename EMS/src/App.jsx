@@ -2,6 +2,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
+import Loginform from "./components/Loginform";
 import HomePage from "./components/HomePage";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/loginform" element={<Loginform />}></Route>
       </Routes>
     </BrowserRouter>
   );
