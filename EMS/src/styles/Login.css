@@ -52,15 +52,41 @@ nav {
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .loginForm {
     margin-top: 16%;
     background-color: rgba(59, 59, 59, 0.6);
     color: white;
+    width: 90%;
+  max-width: 400px;
 }
 
 .center-align {
     text-align: center;
   }
   
+  @media (max-width: 1030px) {
+    .loginForm {
+      width: 100%; 
+      padding: 15px; 
+    }
+  
+    .d-flex.justify-content-between {
+      flex-direction: column; 
+      align-items: center;
+    }
+  
+    .btn {
+      width: 100%; 
+      margin-bottom: 10px; 
+    }
+  
+    .btn:last-child {
+      margin-bottom: 0; 
+    }
+  }
