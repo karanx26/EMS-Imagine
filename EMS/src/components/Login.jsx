@@ -12,7 +12,7 @@ const Login = () => {
           </div>
           <ul>
             <li>
-              <a href="/">Back</a>
+              <a href="/">BACK</a>
             </li>
           </ul>
         </nav>
