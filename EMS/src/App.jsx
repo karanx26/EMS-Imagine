@@ -2,7 +2,9 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
-import Loginform from "./components/Loginform";
+import LoginformA from "./components/LoginformA";
+import LoginformE from "./components/LoginformE";
+import LoginformC from "./components/LoginformC";
 import HomePage from "./components/HomePage";
 
 function App() {
@@ -13,7 +15,9 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/loginform" element={<Loginform />}></Route>
+          <Route path="/loginforma" element={<LoginformA />}></Route>
+          <Route path="/loginforme" element={<LoginformE />}></Route>
+          <Route path="/loginformc" element={<LoginformC />}></Route>
       </Routes>
     </BrowserRouter>
   );

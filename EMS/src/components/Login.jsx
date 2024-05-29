@@ -21,9 +21,9 @@ const Login = () => {
         <div className="p-3 rounded w-25 border loginForm">
         <h2 className="center-align">LogIn As</h2>
             <div className="d-flex justify-content-between mt-5 mb-2">
-                <button type="button" className="btn btn-primary"><a className="buttonlink" href="loginform">Admin</a></button>
-                <button type="button" className="btn btn-danger"><a className="buttonlink" href="loginform">Employee</a></button>
-                <button type="button" className="btn btn-success"><a className="buttonlink" href="loginform">Client</a></button>
+                <button type="button" className="btn btn-primary"><a className="buttonlink" href="loginforma">Admin</a></button>
+                <button type="button" className="btn btn-danger"><a className="buttonlink" href="loginforme">Employee</a></button>
+                <button type="button" className="btn btn-success"><a className="buttonlink" href="loginformc">Client</a></button>
             </div>
         </div>      
     </div>
