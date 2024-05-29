@@ -11,10 +11,10 @@ function HomePage() {
           </div>
           <ul>
             <li>
-              <a>LOGIN</a>
+              <a href="/login">LOGIN</a>
             </li>
             <li>
-              <a>SIGN UP</a>
+              <a href="/signup">SIGN UP</a>
             </li>
           </ul>
         </nav>
