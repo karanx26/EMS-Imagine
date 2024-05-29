@@ -1,12 +1,66 @@
-.loginPage {
-    background: url('C:\Users\91932\Desktop\Imagine\EMS-Imagine\EMS\public\Images\1.jpg');
-    background: linear-gradient(rgba(11,11,11,0.5), rgba(10,10,10,0.5)), url('C:\Users\91932\Desktop\Imagine\EMS-Imagine\EMS\public\Images\1.jpg');
+nav {
+    height: 10%;
+    background: #ffffff;
+    width: 100%;
+    position: fixed;
+    font-family: sans-serif;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin: 0;
+  }
+  
+  nav li {
+    padding: 0 30px;
+  }
+  
+  nav li a{
+    text-decoration: none;
+    color: black;
+  }
+  
+  nav ul li a:hover {
+    color: orange;
+    text-decoration: underline;
+  }
+  
+  nav ul {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+  }
+  
+  #logo-img {
+    display: flex;
+    height: 100%;
+    background: #ffffff;
+    align-items: center;
+    color: white;
+  }
+  
+  #logo-img img {
+    height: 100%;
+    padding: 8px 14px;
+  }
+
+  .loginPage {
+    background: url(../Images/3.png);
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 100% 120%;
+    background-size: auto;
 }
 
 .loginForm {
-    background-color: rgba(1,32,93,0.6);
+    margin-top: 16%;
+    background-color: rgba(59, 59, 59, 0.6);
     color: white;
 }
+
+.center-align {
+    text-align: center;
+  }
+  

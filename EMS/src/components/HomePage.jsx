@@ -13,9 +13,6 @@ function HomePage() {
             <li>
               <a href="/login">LOGIN</a>
             </li>
-            <li>
-              <a href="/signup">SIGN UP</a>
-            </li>
           </ul>
         </nav>
       </div>
