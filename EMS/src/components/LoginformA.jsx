@@ -1,7 +1,46 @@
 import React from "react";
 import "../styles/Login.css";
+import axios from "axios"
+import React, {useEffect, useState} from "react"
+import { useNavigate, Link } from "react-router-dom";
 
-function LoginformA() {
+function LoginformA() {  
+
+  const history = useNavigate();
+
+  const [UID,setUid] = useState('')
+  const [Password,setPassword] =  useState('')
+
+  async function submit(e){
+    e.preventDefault();
+
+    try{
+      await axios.post("http://localhost:8000/",{
+        UID,Password
+      })
+
+      .then(res=>{
+        if(res.data="exist"){
+          history("/homea",{state:{id:uid}})
+          
+        }
+        else if (res.data=="notexist"){
+          alert("Invalid user id.")
+          
+          
+        }
+      })
+
+      .catch(e=>{
+        alert("wrond details")
+        console.log(e);
+      })
+    }
+    catch(e){
+      console.log(e);
+
+    }
+  }
   return (
     <>
       <div id="header">
@@ -26,7 +65,8 @@ function LoginformA() {
               </label>
               <br />
               <input
-                type="uid"
+                type="text"
+                onChange={(e)=>{setUid(e.target.value)}}
                 autoComplete="off"
                 placeholder="Enter UID"
                 name="uid"
@@ -41,13 +81,15 @@ function LoginformA() {
               <br />
               <input
                 type="password"
+                onChange={(e)=>{setPassword(e.target.value)}}
                 placeholder="Enter Password"
                 name="password"
                 className="form-control"
                 id="password"
               />
             </div>
-            <button className="btn btn-primary w-100 rounded-0 mb-2">
+            
+            <button onClick={submit} className="btn btn-primary w-100 rounded-0 mb-2">
               Log In
             </button>
           </form>

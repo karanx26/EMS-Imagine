@@ -26,7 +26,7 @@ function LoginformC() {
               </label>
               <br />
               <input
-                type="uid"
+                type="text"
                 autoComplete="off"
                 placeholder="Enter UID"
                 name="uid"
