@@ -1,28 +1,28 @@
 const express = require("express")
 
-const collection = require("./index")
+const collection = require("./index.mjs")
 const cors = require("cors")
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
 
-app.get("/",cors(),(req,res)=>{
+app.get("/loginforma",cors(),(req,res)=>{
 
 })
 
-app.post("/",async(req,res)=>{
-    const[UID,Password]=req.body
+app.post("/loginforma",async(req,res)=>{
+    const[uid,password]=req.body
 
     try{
-        const check=await collection.findOne({UID:UID})
+        const check=await collection.findOne({uid:uid})
 
         if(check){
             res.json("exist")
         }
         else{
             res.json("notexist")
-            await collection.insertMany([data])
+            // await collection.insertMany([data])
         }
 
     }

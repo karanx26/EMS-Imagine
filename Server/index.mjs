@@ -1,7 +1,11 @@
-import express, { text } from "express";
 import { UUID } from "mongodb";
 
+
 import mongoose, { mongo } from "mongoose";
+import express from "express";
+
+
+
 
 mongoose.connect("mongodb+srv://ipowertree:nP0d1pAEWVXpXYoK@imagine.onigxmo.mongodb.net/?retryWrites=true&w=majority&appName=imagine")
 .then(()=>{
@@ -17,18 +21,19 @@ app.listen(3000, () => {
 })
 
 const newSchema = new mongoose.Schema({
-    UID: {
+    uid: {
         type: String,
         required: true
     },
 
-        Password: {
+        password: {
         type: String ,
         required: true
     }
-
-
 })
 
-const collection = mongoose.model("collection",newSchema)
-module.exports=collection
+const collection = mongoose.model("collect",newSchema)
+
+// const collection = mongoose.model("admin")
+
+export default collection;

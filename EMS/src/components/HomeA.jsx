@@ -3,10 +3,10 @@ import { useLocation,useNavigate } from 'react-router-dom'
 
 function HomeA(){
 
-    const location = useLocation()
+    // const location = useLocation()
 
     return (
-        <div className="homepage">
+        <div>
             {/* <h1> Hello{location.state.id} and Welcome to Dashboard</h1> */}
             <h1>Admin Dashboard</h1>
 

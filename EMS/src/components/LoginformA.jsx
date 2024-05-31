@@ -1,46 +1,41 @@
-import React from "react";
 import "../styles/Login.css";
-import axios from "axios"
-import React, {useEffect, useState} from "react"
-import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
-function LoginformA() {  
-
+function LoginformA() {
   const history = useNavigate();
 
-  const [UID,setUid] = useState('')
-  const [Password,setPassword] =  useState('')
+  const [uid, setUid] = useState("");
+  const [password, setPassword] = useState("");
 
-  async function submit(e){
+  async function submit(e) {
     e.preventDefault();
 
-    try{
-      await axios.post("http://localhost:8000/",{
-        UID,Password
-      })
+    try {
+      await axios
+        .post("http://localhost:8000/loginforma", {
+          uid,
+          password,
+        })
 
-      .then(res=>{
-        if(res.data="exist"){
-          history("/homea",{state:{id:uid}})
-          
-        }
-        else if (res.data=="notexist"){
-          alert("Invalid user id.")
-          
-          
-        }
-      })
+        .then((res) => {
+          if (res.data == "exist") {
+            history("/homea", { state: { id: uid } });
+          } else if (res.data == "notexist") {
+            alert("Invalid user id.");
+          }
+        })
 
-      .catch(e=>{
-        alert("wrond details")
-        console.log(e);
-      })
-    }
-    catch(e){
+        .catch((e) => {
+          alert("wrong details");
+          console.log(e);
+        });
+    } catch (e) {
       console.log(e);
-
     }
   }
+
   return (
     <>
       <div id="header">
@@ -57,7 +52,7 @@ function LoginformA() {
       </div>
       <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
         <div className="p-3 rounded w-25 border loginForm">
-          <form>
+          <form action="POST">
             <h2 className="center-align">Admin</h2>
             <div className="mb-3">
               <label htmlFor="uid">
@@ -66,7 +61,9 @@ function LoginformA() {
               <br />
               <input
                 type="text"
-                onChange={(e)=>{setUid(e.target.value)}}
+                onChange={(e) => {
+                  setUid(e.target.value);
+                }}
                 autoComplete="off"
                 placeholder="Enter UID"
                 name="uid"
@@ -81,15 +78,20 @@ function LoginformA() {
               <br />
               <input
                 type="password"
-                onChange={(e)=>{setPassword(e.target.value)}}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 placeholder="Enter Password"
                 name="password"
                 className="form-control"
                 id="password"
               />
             </div>
-            
-            <button onClick={submit} className="btn btn-primary w-100 rounded-0 mb-2">
+
+            <button
+              onClick={submit}
+              className="btn btn-primary w-100 rounded-0 mb-2"
+            >
               Log In
             </button>
           </form>
