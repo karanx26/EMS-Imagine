@@ -1,5 +1,8 @@
 import express, { json, urlencoded } from "express";
-import collection from "./index.mjs";
+import {collectiona} from "./index.mjs";
+import {collectionc} from "./index.mjs";
+import {collectione} from "./index.mjs";
+
 import cors from "cors";
 
 const app = express();
@@ -14,18 +17,36 @@ app.use(cors({
 
 app.get("/admins", async (req, res) => {
     try {
-        const data = await collection.find({}, 'uid password').lean();
+        const data = await collectiona.find({}, 'uid password').lean();
         res.json(data);
     } catch (err) {
         res.status(500).json(err);
     }
 });
 
+app.get("/clients", async (req, res) => {
+  try {
+      const data = await collectionc.find({}, 'uid password').lean();
+      res.json(data);
+  } catch (err) {
+      res.status(500).json(err);
+  }
+});
+
+app.get("/employees", async (req, res) => {
+  try {
+      const data = await collectione.find({}, 'uid password').lean();
+      res.json(data);
+  } catch (err) {
+      res.status(500).json(err);
+  }
+});
+
 app.post("/loginforma", async (req, res) => {
     const { uid, password } = req.body;
 
     try {
-        const check = await collection.findOne({ uid: uid });
+        const check = await collectiona.findOne({ uid: uid });
 
         if (check) {
             res.json("exist");
@@ -36,6 +57,41 @@ app.post("/loginforma", async (req, res) => {
         res.json("notexist");
     }
 });
+
+app.post("/loginformc", async (req, res) => {
+  const { uid, password } = req.body;
+
+  try {
+      const check = await collectionc.findOne({ uid: uid });
+
+      if (check) {
+          res.json("exist");
+      } else {
+          res.json("notexist");
+      }
+  } catch (e) {
+      res.json("notexist");
+  }
+});
+
+app.post("/loginforme", async (req, res) => {
+  const { uid, password } = req.body;
+
+  try {
+      const check = await collectione.findOne({ uid: uid });
+
+      if (check) {
+          res.json("exist");
+      } else {
+          res.json("notexist");
+      }
+  } catch (e) {
+      res.json("notexist");
+  }
+});
+
+
+
 
 app.listen(8001, () => {
     console.log("Server is running on port 8001");

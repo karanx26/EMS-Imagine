@@ -1,7 +1,52 @@
-import React from "react";
 import "../styles/Login.css";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginformC() {
+  const [lformData, setFormData] = useState({
+    uid: "",
+    password: "",
+  });
+  const [loginData, setLoginData] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAllAdmin = async () => {
+      try {
+        const res = await axios.get("http://localhost:8001/clients");
+        setLoginData(res.data);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllAdmin();
+  }, []);
+
+  const validate = (lformData, loginData) => {
+    if (!lformData.uid) {
+      alert("User ID is required");
+      return;
+    }
+    const user = loginData.find(user => user.uid === lformData.uid);
+    if (!user) {
+      alert("Invalid User ID");
+      return;
+    }
+    if (!lformData.password) {
+      alert("Password is required");
+      return;
+    }
+    if (lformData.password !== user.password) {
+      alert("Wrong Password");
+      return;
+    }
+    window.localStorage.setItem("isLoggedIn", true);
+    window.localStorage.setItem("uid", lformData.uid);
+    navigate("/homec");
+  };
+
   return (
     <>
       <div id="header">
@@ -18,7 +63,10 @@ function LoginformC() {
       </div>
       <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
         <div className="p-3 rounded w-25 border loginForm">
-          <form>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            validate(lformData, loginData);
+          }}>
             <h2 className="center-align">Client</h2>
             <div className="mb-3">
               <label htmlFor="uid">
@@ -32,6 +80,8 @@ function LoginformC() {
                 name="uid"
                 className="form-control"
                 id="uid"
+                value={lformData.uid} 
+                onChange={(e) => setFormData({ ...lformData, uid: e.target.value })}
               />
             </div>
             <div className="mb-3">
@@ -45,9 +95,14 @@ function LoginformC() {
                 name="password"
                 className="form-control"
                 id="password"
+                value={lformData.password} 
+                onChange={(e) => setFormData({ ...lformData, password: e.target.value })}
               />
             </div>
-            <button className="btn btn-success w-100 rounded-0 mb-2">
+            <button 
+              type="submit"
+              className="btn btn-success w-100 rounded-0 mb-2"
+            >
               Log In
             </button>
           </form>
@@ -58,3 +113,4 @@ function LoginformC() {
 }
 
 export default LoginformC;
+

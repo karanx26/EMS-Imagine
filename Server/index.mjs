@@ -28,6 +28,12 @@ const newSchema = new mongoose.Schema({
     }
 });
 
-const collection = mongoose.model("admins", newSchema);
+const collectiona = mongoose.model("admins", newSchema);
 
-export default collection;
+const collectionc = mongoose.model("clients", newSchema);
+
+const collectione = mongoose.model("employees", newSchema);
+
+export {collectiona};
+export { collectionc};
+export { collectione};

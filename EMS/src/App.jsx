@@ -7,6 +7,8 @@ import LoginformE from "./components/LoginformE";
 import LoginformC from "./components/LoginformC";
 import HomePage from "./components/HomePage";
 import HomeA from "./components/HomeA";
+import HomeE from "./components/HomeE";
+import HomeC from "./components/HomeC";
 function App() {
   
   const loggedIn = window.localStorage.getItem("isLoggedIn")
@@ -20,6 +22,8 @@ function App() {
           <Route path="/loginforme" element={<LoginformE />}></Route>
           <Route path="/loginformc" element={<LoginformC />}></Route>
           <Route path="/homea" element={<HomeA />}></Route>
+          <Route path="/homee" element={<HomeE />}></Route>
+          <Route path="/homec" element={<HomeC />}></Route>
           {/* <Route path="/homea" element={loggedIn ? <HomeA /> : <LoginformA />}></Route> */}
       </Routes>
     </BrowserRouter>
