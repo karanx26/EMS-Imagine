@@ -15,10 +15,12 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          {/* <Route path="/loginforma" element={loggedIn? <HomeA/>:<LoginformA />}></Route> */}
           <Route path="/loginforma" element={<LoginformA />}></Route>
           <Route path="/loginforme" element={<LoginformE />}></Route>
           <Route path="/loginformc" element={<LoginformC />}></Route>
           <Route path="/homea" element={<HomeA />}></Route>
+          {/* <Route path="/homea" element={loggedIn ? <HomeA /> : <LoginformA />}></Route> */}
       </Routes>
     </BrowserRouter>
   );

@@ -1,39 +1,99 @@
-const express = require("express")
+// import express, { json, urlencoded } from "express"
 
-const collection = require("./index.mjs")
-const cors = require("cors")
-const app = express()
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
-app.use(cors())
+// import { find } from "./index.mjs"
+// import cors from "cors"
+// const app = express()
+// app.use(json())
+// app.use(urlencoded({extended: true}))
 
-app.get("/loginforma",cors(),(req,res)=>{
+// app.use(cors({
+//   origin: 'http://localhost:5173', // Allow only your frontend URL
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+// }));
 
-})
+// // app.get("/loginforma",cors(),(req,res)=>{
 
-app.post("/loginforma",async(req,res)=>{
-    const[uid,password]=req.body
+// // })
 
-    try{
-        const check=await collection.findOne({uid:uid})
+// // app.post("/loginforma",async(req,res)=>{
+// //     const[uid,password]=req.body
 
-        if(check){
-            res.json("exist")
-        }
-        else{
-            res.json("notexist")
-            // await collection.insertMany([data])
-        }
+// //     try{
+// //         const check=await collection.findOne({uid:uid})
 
+// //         if(check){
+// //             res.json("exist")
+// //         }
+// //         else{
+// //             res.json("notexist")
+// //             // await collection.insertMany([data])
+// //         }
+
+// //     }
+// //     catch(e){
+// //         res.json("notexist")
+
+// //     }
+
+
+// // })
+
+
+// app.get("/admins", async (req, res) => {
+//     try {
+//       const data = await find({}, 'uid password').lean();
+//       res.json(data);
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+//   });
+  
+
+// app.listen(8001,()=>{
+//     console.log("port connected");
+// })
+
+import express, { json, urlencoded } from "express";
+import collection from "./index.mjs";
+import cors from "cors";
+
+const app = express();
+app.use(json());
+app.use(urlencoded({ extended: true }));
+
+app.use(cors({
+    origin: 'http://localhost:5173', // Allow only your frontend URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+}));
+
+app.get("/admins", async (req, res) => {
+    try {
+        const data = await collection.find({}, 'uid password').lean();
+        res.json(data);
+    } catch (err) {
+        res.status(500).json(err);
     }
-    catch(e){
-        res.json("notexist")
+});
 
+app.post("/loginforma", async (req, res) => {
+    const { uid, password } = req.body;
+
+    try {
+        const check = await collection.findOne({ uid: uid });
+
+        if (check) {
+            res.json("exist");
+        } else {
+            res.json("notexist");
+        }
+    } catch (e) {
+        res.json("notexist");
     }
+});
 
+app.listen(8001, () => {
+    console.log("Server is running on port 8001");
+});
 
-})
-
-app.listen(8000,()=>{
-    console.log("port connected");
-})
