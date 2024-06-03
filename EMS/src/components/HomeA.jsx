@@ -1,11 +1,25 @@
 import React from 'react'
 // import { useLocation,useNavigate } from 'react-router-dom'
-import {Link} from 'react-router-dom'
+import {Link, Outlet, useNavigate } from 'react-router-dom'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
+import LoginformA from './LoginformA';
 
 
 function HomeA(){ 
+    const navigate = useNavigate()
+    axios.defaults.withCredentials = true
+    const handleLogout = () => {
+        // axios.get('http://localhost:5173/loginforma/logout')
+        axios.get('http://localhost:8001/logout')
+        .then (result => {
+            if(result.data.Status){
+                localStorage.removeItem("isLoggedIn")
+                window.localStorage.removeItem("isLoggedIn");
+                window.location.href = "/login"; // Redirect to login page
+            }
+        })
+    }
 
     // const location = useLocation()
 
@@ -20,36 +34,64 @@ function HomeA(){
                 Imagine Powertree
               </span>
               </Link>
-                        <ul>
-                            <li>
-                                <Link to="/HomeA">Admin Dashboard</Link>
+
+                        <ul  className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+              id="menu">
+                            <li className="w-100">
+                                <Link to="/HomeA"  className="nav-link text-white px-0 align-middle"> <i className="fs-4 bi-speedometer2 ms-2"></i>
+                                    <span className="ms-2 d-none d-sm-inline">Admin Dashboard</span>
+                                </Link>
                             </li>
 
-                            <li>
-                                <Link to="/HomeA">Manage Employees</Link>
+                            <li className="w-100">
+                                <Link to="/HomeA/employee"   className="nav-link px-0 align-middle text-white" >
+                                <i className="fs-4 bi-people ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">
+                                    Manage Employees
+                                    </span>
+                                    </Link>
                             </li>
                             
-                            <li>
-                                <Link to="/HomeA">Category</Link>
+                            <li className="w-100">
+                                <Link to="/HomeA/Category" className="nav-link px-0 align-middle text-white"> <i className="fs-4 bi-columns ms-2"></i>
+                                    <span className="ms-2 d-none d-sm-inline"></span>
+                                    Category
+                                    </Link>
                             </li> 
 
-                            <li>
-                                <Link to="/HomeA">Profile</Link>
+                            <li className="w-100">
+                                <Link to="/HomeA"   className="nav-link px-0 align-middle text-white">  <i className="fs-4 bi-person ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">
+                                        Profile
+                                        </span>
+                                        </Link>
                             </li>
-                            <li>
-                                <Link to="/HomeA">Logout</Link>
+                            <li className="w-100" onClick={handleLogout} >
+                                <Link to="/loginformA"className="nav-link px-0 align-middle text-white">
+                                    <i className="fs-4 bi-power ms-2"></i>
+                                <span className="ms-2 d-none d-sm-inline">  Logout </span></Link>
                             </li>
                         </ul>
                    </div>
 
                 </div>
+                <div className="col p-0 m-0">
+                <div  className="p-2 d-flex justify-content-center shadow">
+                    <h4> Employee Managament </h4>
+                </div>
+                <Outlet />
             </div>
+            </div>
+           
 
 
 
 
         </div>
-    )
-}
+
+        
+        
+    );
+};
 
 export default HomeA;

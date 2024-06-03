@@ -3,6 +3,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
+
+
 function LoginformA() {
   const [lformData, setFormData] = useState({
     uid: "",
@@ -10,11 +13,15 @@ function LoginformA() {
   });
   const [loginData, setLoginData] = useState([]);
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
+
+
+   
 
   useEffect(() => {
     const fetchAllAdmin = async () => {
       try {
-        const res = await axios.get("http://localhost:8001/admins");
+        const res = await axios.get("http://localhost:8001/admins" );
         setLoginData(res.data);
         console.log(res);
       } catch (err) {
