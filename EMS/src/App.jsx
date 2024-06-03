@@ -65,9 +65,14 @@ function App() {
         <Route path="/loginformc" element={<LoginformC />} />
 
         {/* Wrap protected routes with PrivateRoute */}
-        <Route path="/homea" element={<PrivateRoute>
-          <HomeA /></PrivateRoute>} />
-        <Route path="/homee" element={<PrivateRoute><HomeE /></PrivateRoute>} />
+        <Route path="/homea" element={
+        <PrivateRoute>
+          <HomeA />
+          </PrivateRoute>
+        } >
+        
+      </Route>
+      <Route path="/homee" element={<PrivateRoute><HomeE /></PrivateRoute>} />
         <Route path="/homec" element={<PrivateRoute><HomeC /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>

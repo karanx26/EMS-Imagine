@@ -13,6 +13,7 @@ function LoginformA() {
   });
   const [loginData, setLoginData] = useState([]);
   const navigate = useNavigate();
+  localStorage.removeItem("isLoggedIn")
   axios.defaults.withCredentials = true;
 
 
