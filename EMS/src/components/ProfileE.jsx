@@ -5,6 +5,8 @@ import axios from "axios";
 
 function ProfileE() 
 {
+  localStorage.removeItem("isLoggedIn");
+  window.localStorage.removeItem("isLoggedIn");
   return(
     <>
       <h1>Profile</h1>

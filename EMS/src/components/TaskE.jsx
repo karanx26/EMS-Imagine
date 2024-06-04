@@ -5,6 +5,8 @@ import axios from "axios";
 
 function TaskE() 
 {
+  localStorage.removeItem("isLoggedIn");
+  window.localStorage.removeItem("isLoggedIn");
   return(
     <>
       <h1>Task</h1>

@@ -5,6 +5,8 @@ import axios from "axios";
 
 function ManageInventoryA() 
 {
+  localStorage.removeItem("isLoggedIn");
+  window.localStorage.removeItem("isLoggedIn");
   return(
     <>
       <h1>Manage Inventory</h1>

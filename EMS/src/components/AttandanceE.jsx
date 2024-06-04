@@ -5,6 +5,8 @@ import axios from "axios";
 
 function AttandanceE() 
 {
+  localStorage.removeItem("isLoggedIn");
+  window.localStorage.removeItem("isLoggedIn");
   return(
     <>
       <h1>Attandance</h1>
