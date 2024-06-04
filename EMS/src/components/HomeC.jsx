@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
-import "../styles/HomeA.css"; // Import your custom CSS
+import "../styles/HomeC.css"; // Import your custom CSS
 
 function HomeC() {
   const navigate = useNavigate();
@@ -31,9 +31,9 @@ function HomeC() {
     <div className="container-fluid">
       <div className="row flex-nowrap">
         <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark sidebar">
-          <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-orange min-vh-100">
+          <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
             <Link
-              to="/HomeA"
+              to="/homec"
               className="d-flex align-items-center pb-3 mb-md-1 mt-md-3 me-md-auto text-orange text-decoration-none"
             >
               <span className="fs-5 fw-bolder d-none d-sm-inline">
@@ -47,7 +47,7 @@ function HomeC() {
             >
               <li className="w-100">
                 <Link
-                  to="/HomeA"
+                  to="/homec"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-person ms-2"></i>
@@ -61,7 +61,7 @@ function HomeC() {
 
               <li className="w-100">
                 <Link
-                  to="/HomeA/Category"
+                  to="/homec/checkupdc"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-bell ms-2"></i>
@@ -94,3 +94,4 @@ function HomeC() {
 }
 
 export default HomeC;
+

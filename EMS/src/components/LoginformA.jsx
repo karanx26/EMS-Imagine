@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function LoginformA() {
+function LoginformA() { 
   const [lformData, setFormData] = useState({
     uid: "",
     password: "",

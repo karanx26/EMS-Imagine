@@ -9,6 +9,20 @@ import HomePage from "./components/HomePage";
 import HomeA from "./components/HomeA";
 import HomeE from "./components/HomeE";
 import HomeC from "./components/HomeC";
+import ProfileA from "./components/ProfileA";
+import ManageEmpA from "./components/ManageEmpA";
+import ManageClientA from "./components/ManageClientA";
+import ManageInventoryA from "./components/ManageInventoryA";
+
+import ProfileC from "./components/ProfileC";
+import CheckUpdC from "./components/CheckUpdC";
+
+import ProfileE from "./components/ProfileE";
+import TaskE from "./components/TaskE";
+import AttandanceE from "./components/AttandanceE";
+import ReimbursementE from "./components/ReimbursementE";
+import ManageClientE from "./components/ManageClientE";
+
 import PrivateRoute from "./components/PrivateRoute"; // Import the PrivateRoute component
 
 function App() {
@@ -29,7 +43,16 @@ function App() {
               <HomeA />
             </PrivateRoute>
           }
-        ></Route>
+        >
+          <Route path="" element={<ProfileA />} />
+          <Route path="/homea/manageempa" element={<ManageEmpA />} />
+
+          <Route path="/homea/manageclienta" element={<ManageClientA />} />
+          <Route
+            path="/homea/manageinventorya"
+            element={<ManageInventoryA />}
+          />
+        </Route>
 
         <Route
           path="/homee"
@@ -38,7 +61,13 @@ function App() {
               <HomeE />
             </PrivateRoute>
           }
-        ></Route>
+        >
+          <Route path="" element={<ProfileE />} />
+          <Route path="/homee/taske" element={<TaskE />} />
+          <Route path="/homee/attandancee" element={<AttandanceE />} />
+          <Route path="/homee/reimbursemente" element={<ReimbursementE />} />
+          <Route path="/homee/managecliente" element={<ManageClientE />} />
+        </Route>
 
         <Route
           path="/homec"
@@ -47,7 +76,10 @@ function App() {
               <HomeC />
             </PrivateRoute>
           }
-        ></Route>
+        >
+          <Route path="" element={<ProfileC />} />
+          <Route path="/homec/checkupdc" element={<CheckUpdC />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
