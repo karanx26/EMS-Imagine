@@ -47,13 +47,13 @@ function App() {
           <Route path="" element={<PrivateRoute><ProfileA /></PrivateRoute>} />
           <Route path="/homea/manageempa" element={<ManageEmpA />} />
 
-          <Route path="/homea/manageclienta" element={<PrivateRoute>
+          <Route path="/homea/manageclienta" element={
             <ManageClientA />
-            </PrivateRoute>
+            
             } />
           <Route
             path="/homea/manageinventorya"
-            element={<PrivateRoute><ManageInventoryA /></PrivateRoute>}
+            element={<ManageInventoryA />}
           />
         </Route>
 
@@ -65,7 +65,7 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route path="" element={<ProfileE />} />
+          <Route path="" element={<PrivateRoute><ProfileE /></PrivateRoute>} />
           <Route path="/homee/taske" element={<TaskE />} />
           <Route path="/homee/attandancee" element={<AttandanceE />} />
           <Route path="/homee/reimbursemente" element={<ReimbursementE />} />
@@ -80,7 +80,7 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route path="" element={<ProfileC />} />
+          <Route path="" element={<PrivateRoute><ProfileC /></PrivateRoute>} />
           <Route path="/homec/checkupdc" element={<CheckUpdC />} />
         </Route>
       </Routes>
