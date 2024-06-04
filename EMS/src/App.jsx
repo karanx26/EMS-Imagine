@@ -19,7 +19,7 @@ import CheckUpdC from "./components/CheckUpdC";
 
 import ProfileE from "./components/ProfileE";
 import TaskE from "./components/TaskE";
-import AttandanceE from "./components/AttandanceE";
+import AttendanceE from "./components/AttendanceE";
 import ReimbursementE from "./components/ReimbursementE";
 import ManageClientE from "./components/ManageClientE";
 
@@ -44,7 +44,7 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route path="" element={<PrivateRoute><ProfileA /></PrivateRoute>} />
+          <Route path="" element={<ProfileA />} />
           <Route path="/homea/manageempa" element={<ManageEmpA />} />
 
           <Route path="/homea/manageclienta" element={
@@ -65,9 +65,9 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route path="" element={<PrivateRoute><ProfileE /></PrivateRoute>} />
+          <Route path="" element={<ProfileE />} />
           <Route path="/homee/taske" element={<TaskE />} />
-          <Route path="/homee/attandancee" element={<AttandanceE />} />
+          <Route path="/homee/attendancee" element={<AttendanceE />} />
           <Route path="/homee/reimbursemente" element={<ReimbursementE />} />
           <Route path="/homee/managecliente" element={<ManageClientE />} />
         </Route>
@@ -80,7 +80,7 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route path="" element={<PrivateRoute><ProfileC /></PrivateRoute>} />
+          <Route path="" element={<ProfileC />} />
           <Route path="/homec/checkupdc" element={<CheckUpdC />} />
         </Route>
       </Routes>
