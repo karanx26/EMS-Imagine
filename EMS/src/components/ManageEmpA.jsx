@@ -5,6 +5,10 @@ import axios from "axios";
 
 function ManageEmpA() 
 {
+
+  localStorage.removeItem("isLoggedIn");
+  window.localStorage.removeItem("isLoggedIn");
+  
   return(
     <>
       <h1>Manage Employee</h1>

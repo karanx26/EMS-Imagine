@@ -5,6 +5,8 @@ import axios from "axios";
 
 function CheckUpdC() 
 {
+  localStorage.removeItem("isLoggedIn");
+  window.localStorage.removeItem("isLoggedIn");
   return(
     <>
       <h1>Check Updates</h1>

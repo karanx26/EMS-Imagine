@@ -5,6 +5,8 @@ import axios from "axios";
 
 function ReimbursementE() 
 {
+  localStorage.removeItem("isLoggedIn");
+  window.localStorage.removeItem("isLoggedIn");
   return(
     <>
       <h1>Reimbursement</h1>

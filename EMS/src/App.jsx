@@ -44,13 +44,16 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route path="" element={<ProfileA />} />
+          <Route path="" element={<PrivateRoute><ProfileA /></PrivateRoute>} />
           <Route path="/homea/manageempa" element={<ManageEmpA />} />
 
-          <Route path="/homea/manageclienta" element={<ManageClientA />} />
+          <Route path="/homea/manageclienta" element={<PrivateRoute>
+            <ManageClientA />
+            </PrivateRoute>
+            } />
           <Route
             path="/homea/manageinventorya"
-            element={<ManageInventoryA />}
+            element={<PrivateRoute><ManageInventoryA /></PrivateRoute>}
           />
         </Route>
 
