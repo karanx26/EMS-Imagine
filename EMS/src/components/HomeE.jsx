@@ -67,11 +67,11 @@ function HomeE() {
 
               <li className="w-100">
                 <Link
-                  to="/homee/attandancee"
+                  to="/homee/attendancee"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-clipboard ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Attandance</span>
+                  <span className="ms-2 d-none d-sm-inline">Attendance</span>
                 </Link>
               </li>
 
