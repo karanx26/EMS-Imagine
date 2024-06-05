@@ -22,6 +22,7 @@ import TaskE from "./components/TaskE";
 import AttendanceE from "./components/AttendanceE";
 import ReimbursementE from "./components/ReimbursementE";
 import ManageClientE from "./components/ManageClientE";
+import LeaveE from "./components/LeaveE";
 
 import PrivateRoute from "./components/PrivateRoute"; // Import the PrivateRoute component
 
@@ -71,6 +72,7 @@ function App() {
           <Route path="/homee/attendancee" element={<AttendanceE />} />
           <Route path="/homee/reimbursemente" element={<ReimbursementE />} />
           <Route path="/homee/managecliente" element={<ManageClientE />} />
+          <Route path="/homee/leavee" element={<LeaveE />} />
         </Route>
 
         <Route
