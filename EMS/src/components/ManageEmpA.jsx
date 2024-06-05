@@ -28,7 +28,7 @@ function ManageEmpA() {
           <i className="bi bi-envelope-open-fill"></i>
           Leave Application
         </Link>
-        <Link to="/add-employee" className="manage-button">
+        <Link to="/homea/add-employee" className="manage-button">
           <i className="bi bi-person-plus-fill"></i>
           Add Employees
         </Link>

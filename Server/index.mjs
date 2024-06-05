@@ -32,7 +32,22 @@ const collectiona = mongoose.model("admins", newSchema);
 
 const collectionc = mongoose.model("clients", newSchema);
 
-const collectione = mongoose.model("employees", newSchema);
+const employeeSchema = new mongoose.Schema({
+    uid: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    name: { type: String, required: true },
+    phone: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    department: { type: String, required: true },
+    dob: { type: Date, required: true },
+    joiningDate: { type: Date, required: true },
+    salary: { type: Number, required: true },
+    address: { type: String, required: true }
+});
+
+
+
+const collectione = mongoose.model("employees", employeeSchema);
 
 export {collectiona};
 export { collectionc};
