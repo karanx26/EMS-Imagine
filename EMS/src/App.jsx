@@ -35,6 +35,12 @@ function App() {
         <Route path="/loginforme" element={<LoginformE />} />
         <Route path="/loginformc" element={<LoginformC />} />
 
+
+
+
+
+
+
         {/* Wrap protected routes with PrivateRoute */}
         <Route
           path="/homea"
