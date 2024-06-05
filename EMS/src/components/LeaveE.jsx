@@ -27,6 +27,9 @@ const LeaveE = () => {
     console.log('Form data submitted:', formData);
   };
 
+  localStorage.removeItem("isLoggedIn");
+  window.localStorage.removeItem("isLoggedIn");
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
