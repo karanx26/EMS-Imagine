@@ -24,27 +24,6 @@ app.get("/admins", async (req, res) => {
     }
 });
 
-app.get('/admin/:uid', (req, res) => {
-    const uid = req.params.uid;
-
-    // Ensure uid is a valid ObjectId
-    if (!ObjectId.isValid(uid)) {
-        return res.status(400).json({ Status: false, Error: "Invalid UID" });
-    }
-
-    collectiona.findOne({ _id: new ObjectId(uid) }, (err, result) => {
-        if (err) {
-            console.error('Query Error:', err);
-            return res.status(500).json({ Status: false, Error: "Query Error", Details: err.message });
-        }
-        if (!result) {
-            return res.status(404).json({ Status: false, Error: "Admin not found" });
-        }
-
-        return res.json({ Status: true, Result: result });
-    });
-});
-
 app.get("/clients", async (req, res) => {
   try {
       const data = await collectionc.find({}, 'uid password').lean();
