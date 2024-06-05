@@ -177,7 +177,7 @@ const LeaveE = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:8001/submit-leave', formData);
-      console.log('Form submitted:', response.data);
+      console.alert('Form submitted:', response.data);
 
       // Redirect to LeaveStatus with leave status data
       navigate('/leave-status', { state: response.data });

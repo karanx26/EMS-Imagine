@@ -1,0 +1,55 @@
+#manage-emp-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    height: 100vh;
+  }
+  
+  h1 {
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 10px; /* Adjust the gap between buttons as needed */
+    flex-wrap: wrap; /* Allow buttons to wrap to the next line if needed */
+    justify-content: center; /* Center the buttons horizontally */
+  }
+  
+  .manage-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px; /* Set a fixed width */
+    height: 50px; /* Set a fixed height */
+    background-color: orange;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 14px; /* Decrease font size */
+    white-space: nowrap; /* Prevent button text from wrapping */
+  }
+  
+  .manage-button i {
+    font-size: 20px; /* Decrease icon size */
+    margin-right: 5px; /* Adjust margin between icon and text */
+  }
+  
+  .manage-button:hover {
+    background-color: black;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 600px) {
+    .button-container {
+      flex-direction: column; /* Stack buttons vertically */
+      align-items: center; /* Center align the buttons */
+      gap: 15px; /* Increase gap between buttons */
+    }
+  }
+  
