@@ -1,63 +1,62 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import axios from "axios"; // Import your custom CSS
+import axios from "axios";
 
 function ProfileA() {
-  const [loginData, setLoginData] = useState([])
+  const [loginData, setLoginData] = useState([]);
+  const [adminData, setAdminData] = useState({
+    uid: "",
+    password: "",
+  });
 
-    var adminData = {
-        uid: "",
-        password: "",
-        // Email: "",
-        // RollNumber: "",
-        // Department: "",
-        // Address: "",
-        // City: "",
-        // Semester: "",
-        // CGPA: ""
-    }
-    // const userName = window.localStorage.getItem("userName")
-    useEffect(()=>{
-        const fetchAllRecord = async () => {
-          try{
-            const res = await axios.get("http://localhost:8001/admins")
-            setLoginData(res.data)
-            console.log(loginData)
-            console.log(res.data)
-          }
-          catch(err){
-            console.log(err)
-          }
-        };
-        fetchAllRecord();
-      },[])
-      for (var i=0; i<loginData.length; i++){
-        if (loginData[i]["uid"] == window.localStorage.getItem("uid")) {
-            adminData = loginData[i]
-        }
+  useEffect(() => {
+    const fetchAllRecord = async () => {
+      try {
+        const res = await axios.get("http://localhost:8001/admins");
+        setLoginData(res.data);
+      } catch (err) {
+        console.log(err);
       }
-      const [formData, setFormData] = useState(
-        {
-            uid: adminData["uid"],
-            // email: adminData["email"],
-            password: adminData["password"],
-            
-        });
-    
-    return (
-        <div id="adminP-container">
-            <div id="adminP">
-                <h1>Profile</h1>
-                <div className="form">
-                    <label>Unique Id: </label><input type="text" placeholder={"uid"} value={adminData["uid"]} />
-                    <label>Password: </label><input type="text" placeholder={"password"} value={adminData["password"]} />
-                    
-                    {/* <label>Password: </label><input type="text" placeholder={"password"} value={adminData["password"]} onChange={(e) =>adminData["password"] = e.target.value}/> */}
-                    
-                </div>
+    };
+    fetchAllRecord();
+  }, []);
+
+  useEffect(() => {
+    const uid = window.localStorage.getItem("uid");
+    const admin = loginData.find((item) => item.uid === uid);
+    if (admin) {
+      setAdminData(admin);
+    }
+  }, [loginData]);
+
+  localStorage.removeItem("isLoggedIn");
+  window.localStorage.removeItem("isLoggedIn");
+
+  return (
+    <>
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-7">
+            <div className="card">
+              <div className="card-header text-center">
+                <h2>Profile</h2>
+              </div>
+              <div className="card-body">
+                <form>
+                  <div className="form-group mb-3">
+                    <label><b>Unique Id : </b> {adminData.uid}</label>
+                    <br />
+                    <br />
+                    <label><b>Password : </b> {adminData.password}</label>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
-    )};
+      </div>
+    </>
+  );
+
+};
 
 export default ProfileA;
