@@ -37,6 +37,9 @@ function App() {
 
 
 
+
+
+
         {/* Wrap protected routes with PrivateRoute */}
         <Route
           path="/homea"
