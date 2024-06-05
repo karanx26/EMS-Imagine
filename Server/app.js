@@ -90,6 +90,30 @@ app.post("/loginforme", async (req, res) => {
   }
 });
 
+app.post("/homea/add-employee", async (req, res) => {
+    const { uid, password, name, phone, email, department, dob, joiningDate, salary, address } = req.body;
+
+    try {
+        const newEmployee = new employees({
+            uid,
+            password,
+            name,
+            phone,
+            email,
+            department,
+            dob,
+            joiningDate,
+            salary,
+            address
+        });
+
+        await newEmployee.save();
+        res.json({ message: "Employee added successfully" });
+    } catch (err) {
+        res.status(500).json({ message: "Error adding employee", error: err });
+    }
+});
+
 
 app.listen(8001, () => {
     console.log("Server is running on port 8001");
