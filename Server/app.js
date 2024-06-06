@@ -1,9 +1,7 @@
 import express, { json, urlencoded } from "express";
-// import {collectiona} from "./index.mjs";
-// import {collectionc} from "./index.mjs";
-// import {collectione} from "./index.mjs";
+
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema } from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, Attendance } from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 
@@ -166,21 +164,36 @@ app.post("/addempa", async (req, res) => {
     }
 });
 
-let attendanceData = []; // In-memory storage for simplicity
-
-app.post('/attendance', (req, res) => {
-  const { year, month, date, day, data } = req.body;
-  attendanceData.push({ year, month, date, day, data });
-  res.status(200).send('Attendance recorded successfully');
-});
-
-app.get('/attendance/:uid', (req, res) => {
-  const uid = req.params.uid;
-  const employeeAttendance = attendanceData.filter(record => record.data[uid]);
-  res.status(200).json(employeeAttendance);
-});
-
-
+app.post('/attendance', async (req, res) => {
+        const { year, month, date, day, data } = req.body;
+    
+        try {
+            const newAttendance = new Attendance({
+                year,
+                month,
+                date,
+                day,
+                data
+            });
+    
+            await newAttendance.save();
+            res.status(200).send('Attendance recorded successfully');
+        } catch (err) {
+            res.status(500).json({ message: "Error recording attendance", error: err });
+        }
+    });
+    
+    app.get('/attendance/:uid', async (req, res) => {
+        const { uid } = req.params;
+    
+        try {
+            const employeeAttendance = await Attendance.find({ [`data.${uid}`]: { $exists: true } }).lean();
+            res.status(200).json(employeeAttendance);
+        } catch (err) {
+            res.status(500).json({ message: "Error fetching attendance", error: err });
+        }
+    });
+    
 app.listen(8001, () => {
     console.log("Server is running on port 8001");
 });

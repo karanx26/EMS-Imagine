@@ -19,6 +19,11 @@ const AttendanceA = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const date = new Date(selectedYear, selectedMonth - 1, selectedDate);
+    setSelectedDay(date.toLocaleString('en-US', { weekday: 'long' }));
+  }, [selectedYear, selectedMonth, selectedDate]);
+
   const handleAttendanceChange = (uid, event) => {
     const { name } = event.target;
     setAttendance(prevAttendance => ({
@@ -58,19 +63,21 @@ const AttendanceA = () => {
 
   const tableStyles = {
     width: '100%',
-    borderCollapse: 'collapse'
+    borderCollapse: 'collapse',
+    marginTop: '20px'
   };
 
   const thStyles = {
     border: '1px solid #ddd',
-    padding: '8px',
+    padding: '10px',
     backgroundColor: '#f2f2f2',
-    textAlign: 'left'
+    textAlign: 'center'
   };
 
   const tdStyles = {
     border: '1px solid #ddd',
-    padding: '8px'
+    padding: '8px',
+    textAlign: 'center'
   };
 
   const checkboxStyles = {
@@ -80,50 +87,55 @@ const AttendanceA = () => {
   };
 
   return (
-    <div>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh'
+    }}>
       <h2><b>Attendance Sheet</b></h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
+        <div style={{ marginBottom: '1rem' }}>
           <label htmlFor="year">Year: </label>
           <select
             id="year"
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
+            style={{ padding: '0.5rem', marginLeft: '1rem' }}
           >
             {years.map(year => (
               <option key={year} value={year}>{year}</option>
             ))}
           </select>
         </div>
-        <div>
+        <div style={{ marginBottom: '1rem' }}>
           <label htmlFor="month">Month: </label>
           <select
             id="month"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
+            style={{ padding: '0.5rem', marginLeft: '1rem' }}
           >
             {monthNames.map((month, index) => (
               <option key={index} value={index + 1}>{month}</option>
             ))}
           </select>
         </div>
-        <div>
+        <div style={{ marginBottom: '1rem' }}>
           <label htmlFor="date">Date: </label>
           <select
             id="date"
             value={selectedDate}
-            onChange={(e) => {
-              setSelectedDate(e.target.value);
-              const date = new Date(selectedYear, selectedMonth - 1, e.target.value);
-              setSelectedDay(date.toLocaleString('en-US', { weekday: 'long' }));
-            }}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            style={{ padding: '0.5rem', marginLeft: '1rem' }}
           >
             {days.map(date => (
               <option key={date} value={date}>{date}</option>
             ))}
           </select>
         </div>
-        <div>
+        <div style={{ marginBottom: '1rem' }}>
           <label>Day: </label>
           <span>{selectedDay}</span>
         </div>
@@ -149,7 +161,7 @@ const AttendanceA = () => {
                     name="present"
                     checked={attendance[employee.uid]?.present || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={{...checkboxStyles, backgroundColor: 'green'}}
+                    style={{ ...checkboxStyles, backgroundColor: 'green' }}
                   />
                 </td>
                 <td style={tdStyles}>
@@ -158,7 +170,7 @@ const AttendanceA = () => {
                     name="absent"
                     checked={attendance[employee.uid]?.absent || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={{...checkboxStyles, backgroundColor: 'blue'}}
+                    style={{ ...checkboxStyles, backgroundColor: 'blue' }}
                   />
                 </td>
                 <td style={tdStyles}>
@@ -167,7 +179,7 @@ const AttendanceA = () => {
                     name="sickLeave"
                     checked={attendance[employee.uid]?.sickLeave || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={{...checkboxStyles, backgroundColor: 'red'}}
+                    style={{ ...checkboxStyles, backgroundColor: 'red' }}
                   />
                 </td>
                 <td style={tdStyles}>
@@ -176,7 +188,7 @@ const AttendanceA = () => {
                     name="annualLeave"
                     checked={attendance[employee.uid]?.annualLeave || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={{...checkboxStyles, backgroundColor: 'yellow'}}
+                    style={{ ...checkboxStyles, backgroundColor: 'yellow' }}
                   />
                 </td>
               </tr>
