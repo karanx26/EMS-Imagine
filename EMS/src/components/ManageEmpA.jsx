@@ -33,6 +33,7 @@ function ManageEmpA() {
   return (
     <>
     <div id="manage-emp-container">
+    
       <div className="button-container">
         <Link to="/assign-task" className="manage-button">
           <i className="bi bi-list-task"></i>
@@ -55,54 +56,47 @@ function ManageEmpA() {
           Add Employees
         </Link>
       </div>
+      <div className="px-5 mt-3">
+  <div className="card mt-3">
+    <div className="card-header text-center">
+      <h2>Employee List</h2>
     </div>
-    <div className="px-5 mt-3">
-      <div className="d-flex justify-content-center">
-        <h3>Employee List</h3>
-      </div>
-      <div className="mt-3">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Uid</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Department</th>
-              <th>Salary</th>
+    <div className="card-body">
+      <table className="table table-striped custom-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Uid</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Department</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {employee.map((e, index) => (
+            <tr key={e.uid}>
+              <td>{index + 1}</td>
+              <td>{e.uid}</td>
+              <td>{e.name}</td>
+              <td>{e.phone}</td>
+              <td>{e.department}</td>
+              <td>
+                <button className="btn btn-primary btn-sm">Edit</button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {employee.map((e) => (
-              <tr>
-                <td>{e.uid}</td>
-                <td>{e.name}</td>
-                <td>{e.phone}</td>
-                <td>{e.email}</td>
-                <td>{e.department}</td>
-                <td>{e.salary}</td>
-              
-                
-                {/* <td>
-                  <Link
-                    // to={`/dashboard/edit_employee/` + e.id}
-                    className="btn btn-info btn-sm me-2"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    className="btn btn-warning btn-sm"
-                    // onClick={() => handleDelete(e.id)}
-                  >
-                    Delete
-                  </button>
-                </td> */}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
+  </div>
+</div>
+
+
+
+
+    </div>
+    
     </>
   );
 }

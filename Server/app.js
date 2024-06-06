@@ -38,14 +38,15 @@ app.get("/clients", async (req, res) => {
 });
 
 app.get("/employees", async (req, res) => {
-  try {
-      const data = await collectione.find({}, 'uid password name phone email department dob joiningDate salary address').lean();
-
-      res.json(data);
-  } catch (err) {
-      res.status(500).json(err);
-  }
-});
+    try {
+        const data = await collectione.find({}, 'uid password name phone email department dob joiningDate salary address').sort({uid: 1}).lean();
+  
+        res.json(data);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+  });
+  
 
 app.post("/loginforma", async (req, res) => {
     const { uid, password } = req.body;
