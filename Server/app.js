@@ -1,7 +1,11 @@
 import express, { json, urlencoded } from "express";
-import {collectiona} from "./index.mjs";
-import {collectionc} from "./index.mjs";
-import {collectione} from "./index.mjs";
+// import {collectiona} from "./index.mjs";
+// import {collectionc} from "./index.mjs";
+// import {collectione} from "./index.mjs";
+import mongoose from "mongoose";
+import { collectiona, collectionc, collectione, employeeSchema } from "./index.mjs";
+
+const employees = mongoose.model("employees", employeeSchema);
 
 import cors from "cors";
 
@@ -90,7 +94,7 @@ app.post("/loginforme", async (req, res) => {
   }
 });
 
-app.post("/homea/add-employee", async (req, res) => {
+app.post("/addempa", async (req, res) => {
     const { uid, password, name, phone, email, department, dob, joiningDate, salary, address } = req.body;
 
     try {

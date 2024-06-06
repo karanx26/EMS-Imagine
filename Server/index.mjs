@@ -49,6 +49,9 @@ const employeeSchema = new mongoose.Schema({
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export {collectiona};
-export { collectionc};
-export { collectione};
+// export {collectiona};
+// export { collectionc};
+// export { collectione};
+
+export { collectiona, collectionc, collectione, employeeSchema };
+

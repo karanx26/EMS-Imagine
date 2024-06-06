@@ -25,7 +25,7 @@ const AddEmp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("/homea/add-employee", formData)
+    axios.post("http://localhost:8001/addempa", formData)
       .then(response => {
         console.log(response.data);
         alert("Employee added successfully");
