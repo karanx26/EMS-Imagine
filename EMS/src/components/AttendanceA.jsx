@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -8,6 +6,8 @@ const AttendanceA = () => {
   const [attendance, setAttendance] = useState({});
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [selectedDate, setSelectedDate] = useState(new Date().getDate());
+  const [selectedDay, setSelectedDay] = useState(new Date().toLocaleString('en-US', { weekday: 'long' }));
 
   useEffect(() => {
     axios.get("http://localhost:8001/employees")
@@ -20,12 +20,12 @@ const AttendanceA = () => {
   }, []);
 
   const handleAttendanceChange = (uid, event) => {
-    const { name, checked } = event.target;
+    const { name } = event.target;
     setAttendance(prevAttendance => ({
       ...prevAttendance,
       [uid]: {
         ...prevAttendance[uid],
-        [name]: checked
+        [name]: !prevAttendance[uid]?.[name]
       }
     }));
   };
@@ -35,20 +35,26 @@ const AttendanceA = () => {
     const attendanceData = {
       year: selectedYear,
       month: selectedMonth,
+      date: selectedDate,
+      day: selectedDay,
       data: attendance
     };
     axios.post("http://localhost:8001/attendance", attendanceData)
       .then(response => {
         console.log(response.data);
-        alert("Attendance recorded successfully");
+        alert(`Attendance recorded successfully for ${selectedDay}, ${selectedDate}-${selectedMonth}-${selectedYear}`);
       })
       .catch(error => {
         console.error("Error recording attendance:", error);
       });
   };
 
-  const years = Array.from(new Array(10), (_, index) => new Date().getFullYear() - index);
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+  const years = Array.from(new Array(20), (_, index) => new Date().getFullYear() - 10 + index); // 10 years back and 10 years ahead
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const days = Array.from(new Array(31), (_, index) => index + 1);
 
   const tableStyles = {
     width: '100%',
@@ -67,16 +73,15 @@ const AttendanceA = () => {
     padding: '8px'
   };
 
-  const checkboxStyles = (color) => ({
+  const checkboxStyles = {
     width: '20px',
     height: '20px',
-    backgroundColor: color,
     cursor: 'pointer'
-  });
+  };
 
   return (
     <div>
-      <h2>Attendance Sheet</h2>
+      <h2><b>Attendance Sheet</b></h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="year">Year: </label>
@@ -97,10 +102,30 @@ const AttendanceA = () => {
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
           >
-            {months.map(month => (
-              <option key={month} value={month}>{month}</option>
+            {monthNames.map((month, index) => (
+              <option key={index} value={index + 1}>{month}</option>
             ))}
           </select>
+        </div>
+        <div>
+          <label htmlFor="date">Date: </label>
+          <select
+            id="date"
+            value={selectedDate}
+            onChange={(e) => {
+              setSelectedDate(e.target.value);
+              const date = new Date(selectedYear, selectedMonth - 1, e.target.value);
+              setSelectedDay(date.toLocaleString('en-US', { weekday: 'long' }));
+            }}
+          >
+            {days.map(date => (
+              <option key={date} value={date}>{date}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Day: </label>
+          <span>{selectedDay}</span>
         </div>
         <table style={tableStyles}>
           <thead>
@@ -108,8 +133,9 @@ const AttendanceA = () => {
               <th style={thStyles}>UID</th>
               <th style={thStyles}>Name</th>
               <th style={thStyles}>Present</th>
-              <th style={thStyles}>Annual Leave</th>
+              <th style={thStyles}>Absent</th>
               <th style={thStyles}>Sick Leave</th>
+              <th style={thStyles}>Annual Leave</th>
             </tr>
           </thead>
           <tbody>
@@ -123,16 +149,16 @@ const AttendanceA = () => {
                     name="present"
                     checked={attendance[employee.uid]?.present || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={checkboxStyles('green')}
+                    style={{...checkboxStyles, backgroundColor: 'green'}}
                   />
                 </td>
                 <td style={tdStyles}>
                   <input
                     type="checkbox"
-                    name="annualLeave"
-                    checked={attendance[employee.uid]?.annualLeave || false}
+                    name="absent"
+                    checked={attendance[employee.uid]?.absent || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={checkboxStyles('yellow')}
+                    style={{...checkboxStyles, backgroundColor: 'blue'}}
                   />
                 </td>
                 <td style={tdStyles}>
@@ -141,14 +167,23 @@ const AttendanceA = () => {
                     name="sickLeave"
                     checked={attendance[employee.uid]?.sickLeave || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={checkboxStyles('red')}
+                    style={{...checkboxStyles, backgroundColor: 'red'}}
+                  />
+                </td>
+                <td style={tdStyles}>
+                  <input
+                    type="checkbox"
+                    name="annualLeave"
+                    checked={attendance[employee.uid]?.annualLeave || false}
+                    onChange={(e) => handleAttendanceChange(employee.uid, e)}
+                    style={{...checkboxStyles, backgroundColor: 'yellow'}}
                   />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <button type="submit" style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer' }}>
+        <button type="submit" style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#4CAF50', color: 'black', border: 'none', cursor: 'pointer' }}>
           Submit Attendance
         </button>
       </form>
@@ -157,5 +192,3 @@ const AttendanceA = () => {
 };
 
 export default AttendanceA;
-
-
