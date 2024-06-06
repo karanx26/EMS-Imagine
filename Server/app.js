@@ -39,7 +39,8 @@ app.get("/clients", async (req, res) => {
 
 app.get("/employees", async (req, res) => {
   try {
-      const data = await collectione.find({}, 'uid password').lean();
+      const data = await collectione.find({}, 'uid password name phone email department dob joiningDate salary address').lean();
+
       res.json(data);
   } catch (err) {
       res.status(500).json(err);

@@ -6,6 +6,14 @@ function ProfileE() {
   const [employeeData, setemployeeData] = useState({
     uid: "",
     password: "",
+    name: "",
+    phone: "",
+    email: "",
+    department: "",
+    dob: "",
+    joiningDate: "",
+    salary: "",
+    address: ""
   });
 
   useEffect(() => {
@@ -46,7 +54,29 @@ function ProfileE() {
                     <label><b>Unique Id : </b> {employeeData.uid}</label>
                     <br />
                     <br />
-                    <label><b>Password : </b> {employeeData.password}</label>
+                    <label><b>Name : </b> {employeeData.name}</label>
+                    <br />
+                    <br />
+                    <label><b>Phone no : </b> {employeeData.phone}</label>
+                    <br />
+                    <br />
+                    <label><b>Email : </b> {employeeData.email}</label>
+                    <br />
+                    <br />
+                    <label><b>Department : </b> {employeeData.department}</label>
+                    <br />
+                    <br />
+                    <label><b>Date of Birth : </b> {employeeData.dob}</label>
+                    <br />
+                    <br />
+                    <label><b>Joining Date : </b> {employeeData.joiningDate}</label>
+                    <br />
+                    <br />
+                    <label><b>Salary : </b> {employeeData.salary}</label>
+                    <br />
+                    <br />
+                    <label><b>Address : </b> {employeeData.address}</label>
+                    <br />
                   </div>
                 </form>
               </div>

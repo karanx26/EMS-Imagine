@@ -37,10 +37,10 @@ const employeeSchema = new mongoose.Schema({
     password: { type: String, required: true },
     name: { type: String, required: true },
     phone: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
     department: { type: String, required: true },
-    dob: { type: Date, required: true },
-    joiningDate: { type: Date, required: true },
+    dob: { type: String, required: true },
+    joiningDate: { type: String, required: true },
     salary: { type: Number, required: true },
     address: { type: String, required: true }
 });
