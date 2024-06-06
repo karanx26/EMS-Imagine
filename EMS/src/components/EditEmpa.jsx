@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import "../styles/EditEmpa.css"; // Import custom CSS for additional styling if needed
 
 function EditEmpa() {
   const { uid } = useParams();
+  const navigate = useNavigate(); // Using useNavigate hook
   const [employee, setEmployee] = useState(null);
 
   useEffect(() => {
@@ -28,12 +29,28 @@ function EditEmpa() {
       const res = await axios.put(`http://localhost:8001/employees/${uid}`, employee);
       if (res.status === 200) {
         alert("Employee details updated successfully!");
+        navigate("/homea/manageempa");
       } else {
         alert("Failed to update employee details.");
       }
     } catch (err) {
       console.log(err);
       alert("An error occurred while updating employee details.");
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await axios.delete(`http://localhost:8001/employees/${uid}`);
+      if (res.status === 200) {
+        alert("Employee deleted successfully!");
+        navigate("/homea/manageempa"); // Redirect to the employees list or home page after deletion
+      } else {
+        alert("Failed to delete employee.");
+      }
+    } catch (err) {
+      console.log(err);
+      alert("An error occurred while deleting the employee.");
     }
   };
 
@@ -108,8 +125,9 @@ function EditEmpa() {
                   </div>
                 </div>
                 <div className="form-group row">
-                  <div className="col-sm-9 offset-sm-3">
-                    <button type="button" className="btn btn-primary mt-3" onClick={handleUpdate}>Update</button>
+                  <div className="d-flex justify-content-center">
+                    <button type="button" className="btn btn-primary mt-3" style={{ marginRight: '20px' }}  onClick={handleUpdate}>Update</button>
+                    <button type="button" className="btn btn-danger mt-3" style={{ marginLeft: '20px' }} onClick={handleDelete}>Delete</button>
                   </div>
                 </div>
               </form>

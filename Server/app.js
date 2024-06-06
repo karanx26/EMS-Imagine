@@ -76,6 +76,22 @@ app.get("/employees", async (req, res) => {
       res.status(500).json({ message: 'Error updating employee', error });
     }
   });
+
+  app.delete('/employees/:uid', async (req, res) => {
+    const { uid } = req.params;
+  
+    try {
+      const employee = await collectione.findOneAndDelete({ uid });
+  
+      if (!employee) {
+        return res.status(404).json({ message: 'Employee not found' });
+      }
+  
+      res.status(200).json({ message: 'Employee deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting employee', error });
+    }
+  });
   
 
 app.post("/loginforma", async (req, res) => {
