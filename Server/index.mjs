@@ -45,6 +45,17 @@ const employeeSchema = new mongoose.Schema({
     address: { type: String, required: true }
 });
 
+const attendanceSchema = new mongoose.Schema({
+    year: Number,
+    month: Number,
+    date: Number,
+    day: String,
+    data: Object
+  });
+  
+  const Attendance = mongoose.model('Attendance', attendanceSchema);
+  
+
 
 
 const collectione = mongoose.model("employees", employeeSchema);
@@ -53,5 +64,5 @@ const collectione = mongoose.model("employees", employeeSchema);
 // export { collectionc};
 // export { collectione};
 
-export { collectiona, collectionc, collectione, employeeSchema };
+export { collectiona, collectionc, collectione, employeeSchema,attendanceSchema };
 

@@ -3,7 +3,7 @@ import express, { json, urlencoded } from "express";
 // import {collectionc} from "./index.mjs";
 // import {collectione} from "./index.mjs";
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema } from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema } from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 
@@ -118,6 +118,20 @@ app.post("/addempa", async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: "Error adding employee", error: err });
     }
+});
+
+let attendanceData = []; // In-memory storage for simplicity
+
+app.post('/attendance', (req, res) => {
+  const { year, month, date, day, data } = req.body;
+  attendanceData.push({ year, month, date, day, data });
+  res.status(200).send('Attendance recorded successfully');
+});
+
+app.get('/attendance/:uid', (req, res) => {
+  const uid = req.params.uid;
+  const employeeAttendance = attendanceData.filter(record => record.data[uid]);
+  res.status(200).json(employeeAttendance);
 });
 
 
