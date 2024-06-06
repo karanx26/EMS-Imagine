@@ -11,8 +11,10 @@ import HomeE from "./components/HomeE";
 import HomeC from "./components/HomeC";
 import ProfileA from "./components/ProfileA";
 import ManageEmpA from "./components/ManageEmpA";
+import AttendanceA from "./components/AttendanceA";
 import ManageClientA from "./components/ManageClientA";
 import ManageInventoryA from "./components/ManageInventoryA";
+
 
 import ProfileC from "./components/ProfileC";
 import CheckUpdC from "./components/CheckUpdC";
@@ -50,6 +52,7 @@ function App() {
         >
           <Route path="" element={<ProfileA />} />
           <Route path="/homea/manageempa" element={<ManageEmpA />} />
+          <Route path="/homea/attendancea" element={<AttendanceA />} />
           <Route path="/homea/addempa" element={<AddEmp />} />
 
           <Route path="/homea/manageclienta" element={
