@@ -12,7 +12,6 @@ function ProfileE() {
     department: "",
     dob: "",
     joiningDate: "",
-    salary: "",
     address: ""
   });
 
@@ -70,9 +69,6 @@ function ProfileE() {
                     <br />
                     <br />
                     <label><b>Joining Date : </b> {employeeData.joiningDate}</label>
-                    <br />
-                    <br />
-                    <label><b>Salary : </b> {employeeData.salary}</label>
                     <br />
                     <br />
                     <label><b>Address : </b> {employeeData.address}</label>

@@ -26,6 +26,7 @@ import ReimbursementE from "./components/ReimbursementE";
 import ManageClientE from "./components/ManageClientE";
 import LeaveE from "./components/LeaveE";
 import AddEmp from "./components/AddEmp";
+import EditEmpa from "./components/EditEmpa";
 
 
 import PrivateRoute from "./components/PrivateRoute"; // Import the PrivateRoute component
@@ -54,6 +55,7 @@ function App() {
           <Route path="/homea/manageempa" element={<ManageEmpA />} />
           <Route path="/homea/attendancea" element={<AttendanceA />} />
           <Route path="/homea/addempa" element={<AddEmp />} />
+          <Route path="/homea/editempa/:uid" element={<EditEmpa />} />
 
           <Route path="/homea/manageclienta" element={
             <ManageClientA />

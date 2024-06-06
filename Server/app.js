@@ -46,6 +46,36 @@ app.get("/employees", async (req, res) => {
         res.status(500).json(err);
     }
   });
+
+  app.get('/employees/:uid', async (req, res) => {
+    const { uid } = req.params;
+    try {
+      const employee = await collectione.findOne({ uid }).lean();
+      if (!employee) {
+        return res.status(404).json({ message: 'Employee not found' });
+      }
+      res.json(employee);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
+  app.put('/employees/:uid', async (req, res) => {
+    const { uid } = req.params;
+    const updatedData = req.body;
+  
+    try {
+      const employee = await collectione.findOneAndUpdate({ uid }, updatedData, { new: true });
+  
+      if (!employee) {
+        return res.status(404).json({ message: 'Employee not found' });
+      }
+  
+      res.status(200).json(employee);
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating employee', error });
+    }
+  });
   
 
 app.post("/loginforma", async (req, res) => {
