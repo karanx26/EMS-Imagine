@@ -24,7 +24,6 @@ function ManageEmpA() {
     fetchAllRecord();
   }, []);
 
-
   useEffect(() => {
     localStorage.removeItem("isLoggedIn");
     window.localStorage.removeItem("isLoggedIn");
@@ -39,7 +38,7 @@ function ManageEmpA() {
           <i className="bi bi-list-task"></i>
           Task Assignment
         </Link>
-        <Link to="/attendance" className="manage-button">
+        <Link to="/homea/attendancea" className="manage-button">
           <i className="bi bi-calendar-check-fill"></i>
           Attendance
         </Link>
