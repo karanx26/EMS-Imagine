@@ -33,7 +33,7 @@ function ManageEmpA() {
     <>
       <div id="manage-emp-container">
         <div className="button-container">
-          <Link to="/assign-task" className="manage-button">
+          <Link to="/homea/taska" className="manage-button">
             <i className="bi bi-list-task"></i>
             Task Assignment
           </Link>
