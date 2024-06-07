@@ -8,6 +8,31 @@ const AttendanceE = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Define CSS styles as constants
+  const containerStyle = {
+    margin: "40px auto", // Center the container horizontally
+    padding: "20px",
+    border: "1px solid #ccc",
+    width: '60%',
+    maxWidth: '600px',
+  };
+
+  const tableStyle = {
+    width: "100%",
+    borderCollapse: "collapse"
+  };
+
+  const cellStyle = {
+    border: "1px solid #ddd",
+    padding: "8px"
+  };
+
+  const headerCellStyle = {
+    ...cellStyle,
+    backgroundColor: "#f2f2f2",
+    fontWeight: "bold"
+  };
+
   useEffect(() => {
     const fetchAttendanceRecords = async () => {
       try {
@@ -33,29 +58,29 @@ const AttendanceE = () => {
   }
 
   return (
-    <div>
-      <h2>Attendance Records for UID: {uid}</h2>
+    <div style={containerStyle}>
+      <h2 className="text-center">Attendance Records</h2>
       {attendanceRecords.length === 0 ? (
         <p>No attendance records found.</p>
       ) : (
-        <table>
+        <table style={tableStyle} className="text-center">
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Day</th>
-              <th>Present</th>
-              <th>Absent</th>
-              <th>Leave</th>
+              <th style={headerCellStyle}>Date</th>
+              <th style={headerCellStyle}>Day</th>
+              <th style={headerCellStyle}>Present</th>
+              <th style={headerCellStyle}>Absent</th>
+              <th style={headerCellStyle}>Leave</th>
             </tr>
           </thead>
           <tbody>
             {attendanceRecords.map((record, index) => (
               <tr key={index}>
-                <td>{`${record.date}-${record.month}-${record.year}`}</td>
-                <td>{record.day}</td>
-                <td>{record.data[uid]?.present ? "Yes" : "No"}</td>
-                <td>{record.data[uid]?.absent ? "Yes" : "No"}</td>
-                <td>{record.data[uid]?.leave ? "Yes" : "No"}</td>
+                <td style={cellStyle}>{`${record.date}-${record.month}-${record.year}`}</td>
+                <td style={cellStyle}>{record.day}</td>
+                <td style={cellStyle}>{record.data[uid]?.present ? "Yes" : "-"}</td>
+                <td style={cellStyle}>{record.data[uid]?.absent ? "Yes" : "-"}</td>
+                <td style={cellStyle}>{record.data[uid]?.leave ? "Yes" : "-"}</td>
               </tr>
             ))}
           </tbody>
