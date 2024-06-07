@@ -1,7 +1,7 @@
 import express, { json, urlencoded } from "express";
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, Attendance } from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema} from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 const attendance = mongoose.model('attendance', attendanceSchema);
