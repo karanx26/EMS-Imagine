@@ -242,13 +242,12 @@ app.post('/attendance', async (req, res) => {
         }
     });
 
+    
     app.get(`/tasks/:uid`, async (req, res) => {
         const { uid } = req.params;
-        console.log(`Fetching tasks for uid: ${uid}`); // Log the uid
         try {
             const tasks = await Task.find({ uid }).lean();
             if (!tasks.length) {
-                console.log(`No tasks found for uid: ${uid}`); // Log if no tasks found
                 return res.status(404).json({ message: 'No tasks found for this employee' });
             }
             res.json(tasks);
