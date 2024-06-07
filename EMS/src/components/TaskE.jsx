@@ -27,27 +27,35 @@ const TaskE = () => {
 
   const containerStyle = {
     maxWidth: "800px",
-    margin: "0 auto",
+    margin: "40px auto",
     padding: "20px",
     border: "1px solid #ccc",
     borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)"
+    alignItems: "center",
+    justifyContent: "center",
+    
   };
 
   const tableStyle = {
     width: "100%",
     borderCollapse: "collapse",
-    marginBottom: "20px"
+    marginBottom: "10px",
+    border: "2px solid #ddd",
+   
   };
 
   const thTdStyle = {
     padding: "10px",
     border: "1px solid #ddd",
-    textAlign: "left"
+    textAlign: "left",
+    
   };
 
+ 
+
+
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} >
       {loading ? (
         <p>Loading tasks...</p>
       ) : error ? (
@@ -56,7 +64,7 @@ const TaskE = () => {
         <table style={tableStyle}>
           <thead>
             <tr>
-              <th style={thTdStyle}>Task</th>
+              <th style={thTdStyle} b>Task</th>
               <th style={thTdStyle}>Deadline</th>
             </tr>
           </thead>
