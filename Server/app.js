@@ -1,7 +1,7 @@
 import express, { json, urlencoded } from "express";
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema } from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, Attendance } from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 const attendance = mongoose.model('attendance', attendanceSchema);
@@ -221,8 +221,47 @@ app.post('/attendance', async (req, res) => {
         }
     });
     
+    app.post("/tasks", async (req, res) => {
+        const { tasks } = req.body;
+    
+        try {
+            const taskPromises = tasks.map(task => {
+                const newTask = new Task({
+                    uid: task.uid,
+                    task: task.task,
+                    deadline: new Date(task.deadline),
+                });
+                return newTask.save();
+            });
+    
+            await Promise.all(taskPromises);
+            res.status(200).send('Tasks assigned successfully');
+        } catch (error) {
+            console.error('Error assigning tasks:', error);
+            res.status(500).send('Error assigning tasks');
+        }
+    });
+
+    app.get('/tasks/:uid', async (req, res) => {
+        const { uid } = req.params;
+        console.log(`Fetching tasks for uid: ${uid}`); // Log the uid
+        try {
+            const tasks = await Task.find({ uid }).lean();
+            if (!tasks.length) {
+                console.log(`No tasks found for uid: ${uid}`); // Log if no tasks found
+                return res.status(404).json({ message: 'No tasks found for this employee' });
+            }
+            res.json(tasks);
+        } catch (err) {
+            console.error(`Error fetching tasks for uid: ${uid}`, err); // Log the error
+            res.status(500).json({ message: 'Error fetching tasks', error: err });
+        }
+    });
+    
+    
+
+
 app.listen(8001, () => {
     console.log("Server is running on port 8001");
 });
-
 

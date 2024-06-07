@@ -45,39 +45,36 @@ const employeeSchema = new mongoose.Schema({
     address: { type: String, required: true }
 });
 
-// const attendanceSchema = new mongoose.Schema({
-//     year: Number,
-//     month: Number,
-//     date: Number,
-//     day: String,
-//     data: Object
-//   });
-  
-const individualAttendanceSchema = new mongoose.Schema({
-    uid: { type: String, required: true },
-    present: { type: Boolean },
-    absent: { type: Boolean },
-    leave: { type: Boolean },
-  }, { _id: false });
-  
-  // Define the main attendance schema
-  const attendanceSchema = new mongoose.Schema({
-    year: { type: Number, required: true },
-    month: { type: Number, required: true },
-    date: { type: Number, required: true },
-    day: { type: String, required: true },
-    data: {
-      type: Map,
-      of: individualAttendanceSchema,
-      required: true,
-    },
+const attendanceSchema = new mongoose.Schema({
+    year: Number,
+    month: Number,
+    date: Number,
+    day: String,
+    data: Object
   });
   
+  const Attendance = mongoose.model('Attendance', attendanceSchema);
   
+
+
+
+
+
+
+const taskSchema = new mongoose.Schema({
+  uid: { type: String,required: true, },
+  task: {type: String,required: true,},
+  deadline: {type: Date,required: true,},
+});
+
+const Task = mongoose.model('Task', taskSchema);
+
+
+
 
 
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema};
+export { collectiona, collectionc, collectione, employeeSchema, Attendance};
 
