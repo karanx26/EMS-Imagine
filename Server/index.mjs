@@ -79,7 +79,7 @@ const taskSchema = new mongoose.Schema({
   deadline: {type: Date,required: true,},
 });
 
-const Task = mongoose.model('Task', taskSchema);
+
 
 
 
@@ -88,5 +88,5 @@ const Task = mongoose.model('Task', taskSchema);
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema};
+export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema};
 

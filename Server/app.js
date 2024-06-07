@@ -1,11 +1,11 @@
 import express, { json, urlencoded } from "express";
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema} from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema} from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 const attendance = mongoose.model('attendance', attendanceSchema);
-
+const Task = mongoose.model('Task', taskSchema);
 import cors from "cors";
 
 const app = express();
@@ -242,7 +242,7 @@ app.post('/attendance', async (req, res) => {
         }
     });
 
-    app.get('/tasks/:uid', async (req, res) => {
+    app.get(`/tasks/:uid`, async (req, res) => {
         const { uid } = req.params;
         console.log(`Fetching tasks for uid: ${uid}`); // Log the uid
         try {
