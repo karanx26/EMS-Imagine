@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 
 const AddEmp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     uid: "",
     password: "",
@@ -43,6 +45,7 @@ const AddEmp = () => {
           salary: "",
           address: ""
         });
+        navigate("/homea/manageempa");
       })
       .catch(error => {
         console.error("Error adding employee:", error);
