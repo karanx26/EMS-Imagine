@@ -1,9 +1,10 @@
 import express, { json, urlencoded } from "express";
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, Attendance } from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema } from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
+const attendance = mongoose.model('attendance', attendanceSchema);
 
 import cors from "cors";
 
@@ -170,7 +171,7 @@ app.post('/attendance', async (req, res) => {
         const { year, month, date, day, data } = req.body;
     
         try {
-            const newAttendance = new Attendance({
+            const newAttendance = new attendance({
                 year,
                 month,
                 date,
@@ -184,15 +185,39 @@ app.post('/attendance', async (req, res) => {
             res.status(500).json({ message: "Error recording attendance", error: err });
         }
     });
+
+    app.get("/attendance", async (req, res) => {
+        try {
+          const data = await Attendance.find({}, 'data').lean();
+          res.json(data);
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      });
     
     app.get('/attendance/:uid', async (req, res) => {
         const { uid } = req.params;
+      
+        try {
+          const employeeAttendance = await attendance.find({ [`data.${uid}`]: { $exists: true } }).lean();
+          if (employeeAttendance.length === 0) {
+            return res.status(404).json({ message: "No attendance records found for the given UID" });
+          }
+          res.status(200).json(employeeAttendance);
+        } catch (err) {
+          console.error("Error fetching attendance:", err);
+          res.status(500).json({ message: "Error fetching attendance", error: err });
+        }
+      });
+
+    app.get('/attendance/:year/:month', async (req, res) => {
+        const { year, month } = req.params;
     
         try {
-            const employeeAttendance = await Attendance.find({ [`data.${uid}`]: { $exists: true } }).lean();
-            res.status(200).json(employeeAttendance);
+            const attendanceRecords = await attendance.find({ year, month }).lean();
+            res.status(200).json(attendanceRecords);
         } catch (err) {
-            res.status(500).json({ message: "Error fetching attendance", error: err });
+            res.status(500).json({ message: "Error fetching attendance records", error: err });
         }
     });
     

@@ -67,7 +67,7 @@ function HomeE() {
 
               <li className="w-100">
                 <Link
-                  to="/homee/attendancee"
+                  to={`/homee/attendance/${userId}`}
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-clipboard ms-2"></i>

@@ -1,62 +1,61 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const AttendanceE = ({ uid }) => {
+const AttendanceE = () => {
+  const { uid } = useParams(); // Retrieve the uid parameter from the URL
   const [attendanceRecords, setAttendanceRecords] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:8001/attendance/${uid}`)
-      .then(response => {
-        setAttendanceRecords(response.data);
-      })
-      .catch(error => {
-        console.error("Error fetching attendance records:", error);
-      });
-  }, [uid]);
+    const fetchAttendanceRecords = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8001/attendance/${uid}`);
+        setAttendanceRecords(res.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching attendance records:", err);
+        setError("Failed to fetch attendance records.");
+        setLoading(false);
+      }
+    };
 
-  const tableStyles = {
-    width: '100%',
-    borderCollapse: 'collapse'
-  };
+    fetchAttendanceRecords();
+  }, [uid]); // Fetch attendance records whenever uid changes
 
-  const thStyles = {
-    border: '1px solid #ddd',
-    padding: '8px',
-    backgroundColor: '#f2f2f2',
-    textAlign: 'left'
-  };
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-  const tdStyles = {
-    border: '1px solid #ddd',
-    padding: '8px'
-  };
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div>
-      <h2>Attendance Records</h2>
+      <h2>Attendance Records for UID: {uid}</h2>
       {attendanceRecords.length === 0 ? (
         <p>No attendance records found.</p>
       ) : (
-        <table style={tableStyles}>
+        <table>
           <thead>
             <tr>
-              <th style={thStyles}>Date</th>
-              <th style={thStyles}>Day</th>
-              <th style={thStyles}>Present</th>
-              <th style={thStyles}>Absent</th>
-              <th style={thStyles}>Sick Leave</th>
-              <th style={thStyles}>Annual Leave</th>
+              <th>Date</th>
+              <th>Day</th>
+              <th>Present</th>
+              <th>Absent</th>
+              <th>Leave</th>
             </tr>
           </thead>
           <tbody>
             {attendanceRecords.map((record, index) => (
               <tr key={index}>
-                <td style={tdStyles}>{`${record.date}-${record.month}-${record.year}`}</td>
-                <td style={tdStyles}>{record.day}</td>
-                <td style={tdStyles}>{record.data[uid].present ? 'Yes' : 'No'}</td>
-                <td style={tdStyles}>{record.data[uid].absent ? 'Yes' : 'No'}</td>
-                <td style={tdStyles}>{record.data[uid].sickLeave ? 'Yes' : 'No'}</td>
-                <td style={tdStyles}>{record.data[uid].annualLeave ? 'Yes' : 'No'}</td>
+                <td>{`${record.date}-${record.month}-${record.year}`}</td>
+                <td>{record.day}</td>
+                <td>{record.data[uid]?.present ? "Yes" : "No"}</td>
+                <td>{record.data[uid]?.absent ? "Yes" : "No"}</td>
+                <td>{record.data[uid]?.leave ? "Yes" : "No"}</td>
               </tr>
             ))}
           </tbody>

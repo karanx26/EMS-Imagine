@@ -25,12 +25,15 @@ const AttendanceA = () => {
   }, [selectedYear, selectedMonth, selectedDate]);
 
   const handleAttendanceChange = (uid, event) => {
-    const { name } = event.target;
+    const { value } = event.target;
     setAttendance(prevAttendance => ({
       ...prevAttendance,
       [uid]: {
-        ...prevAttendance[uid],
-        [name]: !prevAttendance[uid]?.[name]
+        uid: uid,        
+        present: false,
+        absent: false,
+        leave: false,
+        [value]: true
       }
     }));
   };
@@ -61,6 +64,22 @@ const AttendanceA = () => {
   ];
   const days = Array.from(new Array(31), (_, index) => index + 1);
 
+  const calculateSummary = () => {
+    let present = 0;
+    let absent = 0;
+    let onLeave = 0;
+
+    Object.values(attendance).forEach(record => {
+      if (record.present) present++;
+      if (record.absent) absent++;
+      if (record.leave) onLeave++;
+    });
+
+    return { present, absent, onLeave };
+  };
+
+  const summary = calculateSummary();
+
   const tableStyles = {
     width: '100%',
     borderCollapse: 'collapse',
@@ -80,11 +99,51 @@ const AttendanceA = () => {
     textAlign: 'center'
   };
 
-  const checkboxStyles = {
-    width: '20px',
-    height: '20px',
+  const radioStyles = {
     cursor: 'pointer'
   };
+
+  const selectStyles = {
+    padding: '0.5rem',
+    margin: '0 0.5rem',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+    fontSize: '1rem',
+    backgroundColor: 'white'
+  };
+
+  const dateContainerStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '1rem',    
+    border: '1px solid #ccc',
+    padding: '1rem',
+    borderRadius: '8px',
+    backgroundColor: '#f9f9f9',
+  };
+
+  const summaryCardStyles = {
+    flex: '1',
+    // paddingBottom: '10px', // Reduced padding
+    paddingTop: '12px',
+    margin: '0 5px', // Reduced margin
+    marginBottom: '20px',
+    borderRadius: '8px',
+    border: '1px solid #ccc',
+    textAlign: 'center',
+    backgroundColor: '#f9f9f9',
+  };
+  
+  const summaryContainerStyles = {
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: '20px',
+    width: '60%',
+    maxWidth: '600px',
+    flexWrap: 'wrap' // Allow cards to wrap
+  };
+  
 
   return (
     <div style={{
@@ -92,53 +151,65 @@ const AttendanceA = () => {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      height: '100vh'
+      padding: '20px',
+      margin: '20px',
     }}>
-      <h2><b>Attendance Sheet</b></h2>
+      <h2>Attendance</h2>
+      <div style={summaryContainerStyles}>
+        <div style={summaryCardStyles}>
+          <h6>Total Present</h6>
+          <p>{summary.present}</p>
+        </div>
+        <div style={summaryCardStyles}>
+          <h6>Total Absent</h6>
+          <p>{summary.absent}</p>
+        </div>
+        <div style={summaryCardStyles}>
+          <h6>Total On Leave</h6>
+          <p>{summary.onLeave}</p>
+        </div>
+      </div>
       <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="year">Year: </label>
+        <div style={dateContainerStyles}>
+          <label htmlFor="year">Year:</label>
           <select
             id="year"
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
-            style={{ padding: '0.5rem', marginLeft: '1rem' }}
+            style={selectStyles}
           >
             {years.map(year => (
               <option key={year} value={year}>{year}</option>
             ))}
           </select>
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="month">Month: </label>
+          <label htmlFor="month">Month:</label>
           <select
             id="month"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            style={{ padding: '0.5rem', marginLeft: '1rem' }}
+            style={selectStyles}
           >
             {monthNames.map((month, index) => (
               <option key={index} value={index + 1}>{month}</option>
             ))}
           </select>
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="date">Date: </label>
+          <label htmlFor="date">Date:</label>
           <select
             id="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            style={{ padding: '0.5rem', marginLeft: '1rem' }}
+            style={selectStyles}
           >
             {days.map(date => (
               <option key={date} value={date}>{date}</option>
             ))}
           </select>
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
+          
           <label>Day: </label>
-          <span>{selectedDay}</span>
+          <span style={selectStyles}>{selectedDay}</span>
         </div>
+        
+        
         <table style={tableStyles}>
           <thead>
             <tr>
@@ -146,8 +217,7 @@ const AttendanceA = () => {
               <th style={thStyles}>Name</th>
               <th style={thStyles}>Present</th>
               <th style={thStyles}>Absent</th>
-              <th style={thStyles}>Sick Leave</th>
-              <th style={thStyles}>Annual Leave</th>
+              <th style={thStyles}>Leave</th>
             </tr>
           </thead>
           <tbody>
@@ -157,48 +227,43 @@ const AttendanceA = () => {
                 <td style={tdStyles}>{employee.name}</td>
                 <td style={tdStyles}>
                   <input
-                    type="checkbox"
-                    name="present"
+                    type="radio"
+                    name={`attendance-${employee.uid}`}
+                    value="present"
                     checked={attendance[employee.uid]?.present || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={{ ...checkboxStyles, backgroundColor: 'green' }}
+                    style={radioStyles}
                   />
                 </td>
                 <td style={tdStyles}>
                   <input
-                    type="checkbox"
-                    name="absent"
+                    type="radio"
+                    name={`attendance-${employee.uid}`}
+                    value="absent"
                     checked={attendance[employee.uid]?.absent || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={{ ...checkboxStyles, backgroundColor: 'blue' }}
+                    style={radioStyles}
                   />
                 </td>
                 <td style={tdStyles}>
                   <input
-                    type="checkbox"
-                    name="sickLeave"
-                    checked={attendance[employee.uid]?.sickLeave || false}
+                    type="radio"
+                    name={`attendance-${employee.uid}`}
+                    value="leave"
+                    checked={attendance[employee.uid]?.leave || false}
                     onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={{ ...checkboxStyles, backgroundColor: 'red' }}
-                  />
-                </td>
-                <td style={tdStyles}>
-                  <input
-                    type="checkbox"
-                    name="annualLeave"
-                    checked={attendance[employee.uid]?.annualLeave || false}
-                    onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={{ ...checkboxStyles, backgroundColor: 'yellow' }}
+                    style={radioStyles}
                   />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <button type="submit" style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#4CAF50', color: 'black', border: 'none', cursor: 'pointer' }}>
-          Submit Attendance
+        <button type="submit" style={{ marginTop: '30px', padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer' }}>
+          Submit
         </button>
       </form>
+      
     </div>
   );
 };
