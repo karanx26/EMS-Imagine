@@ -78,7 +78,7 @@ function App() {
           }
         >
           <Route path="" element={<ProfileE />} />
-          <Route path="/homee/taske" element={<TaskE />} />
+          <Route path="/homee/taske/:uid" element={<TaskE />} />
           <Route path="/homee/attendance/:uid" element={<AttendanceE />} />
           <Route path="/homee/reimbursemente" element={<ReimbursementE />} />
           <Route path="/homee/managecliente" element={<ManageClientE />} />

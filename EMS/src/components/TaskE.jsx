@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useParams } from "react-router-dom";
 
-const TaskView = ({ uid }) => {
+const TaskE = () => {
+  const { uid } = useParams();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -74,4 +76,4 @@ const TaskView = ({ uid }) => {
   );
 };
 
-export default TaskView;
+export default TaskE;
