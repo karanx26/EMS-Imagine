@@ -54,11 +54,27 @@ const attendanceSchema = new mongoose.Schema({
   });
   
   const Attendance = mongoose.model('Attendance', attendanceSchema);
+ 
   
+
+
+
+
+
+const taskSchema = new mongoose.Schema({
+  uid: { type: String,required: true, },
+  task: {type: String,required: true,},
+  deadline: {type: Date,required: true,},
+});
+
+const Task = mongoose.model('Task', taskSchema);
+
+
+
 
 
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export { collectiona, collectionc, collectione, employeeSchema, Attendance};
+export { collectiona, collectionc, collectione, employeeSchema, Attendance, Task, taskSchema, attendanceSchema};
 
