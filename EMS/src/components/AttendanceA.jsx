@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AttendanceA = () => {
+  const navigate = useNavigate(); 
   const [employees, setEmployees] = useState([]);
   const [attendance, setAttendance] = useState({});
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -51,9 +54,12 @@ const AttendanceA = () => {
       .then(response => {
         console.log(response.data);
         alert(`Attendance recorded successfully for ${selectedDay}, ${selectedDate}-${selectedMonth}-${selectedYear}`);
+        navigate("/homea/manageempa");
       })
+      
       .catch(error => {
         console.error("Error recording attendance:", error);
+        
       });
   };
 

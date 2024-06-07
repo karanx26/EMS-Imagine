@@ -195,20 +195,25 @@ app.post('/attendance', async (req, res) => {
         }
       });
     
-    app.get('/attendance/:uid', async (req, res) => {
+      app.get('/attendance/:uid', async (req, res) => {
         const { uid } = req.params;
       
         try {
-          const employeeAttendance = await attendance.find({ [`data.${uid}`]: { $exists: true } }).lean();
+          const employeeAttendance = await attendance.find({ [`data.${uid}`]: { $exists: true } })
+            .sort({ year: -1, month: -1, date: -1 })  // Sorting by year, month, and date in descending order
+            .lean();
+      
           if (employeeAttendance.length === 0) {
             return res.status(404).json({ message: "No attendance records found for the given UID" });
           }
+      
           res.status(200).json(employeeAttendance);
         } catch (err) {
           console.error("Error fetching attendance:", err);
           res.status(500).json({ message: "Error fetching attendance", error: err });
         }
       });
+      
 
     app.get('/attendance/:year/:month', async (req, res) => {
         const { year, month } = req.params;
@@ -242,7 +247,7 @@ app.post('/attendance', async (req, res) => {
         }
     });
 
-    
+
     app.get(`/tasks/:uid`, async (req, res) => {
         const { uid } = req.params;
         try {
