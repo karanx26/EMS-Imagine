@@ -340,6 +340,46 @@ app.post('/attendance', async (req, res) => {
       }
     });
 
+    app.get("/tasks", async (req, res) => {
+      try {
+          const data = await Task.find({}, 'uid task deadline status').lean();
+          res.json(data);
+      } catch (err) {
+          res.status(500).json(err);
+      }
+  }
+);
+
+app.put('/tasks/:id/status', async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  try {
+    const task = await Task.findByIdAndUpdate(id, { status }, { new: true }).lean();
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    res.json(task);
+  } catch (err) {
+    console.error("Error updating task status:", err);
+    res.status(500).json({ message: 'Error updating task status', error: err });
+  }
+});
+
+app.delete('/tasks/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const task = await Task.findByIdAndDelete(id).lean();
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    res.json({ message: 'Task deleted successfully' });
+  } catch (err) {
+    console.error("Error deleting task:", err);
+    res.status(500).json({ message: 'Error deleting task', error: err });
+  }
+}
+);
+
 app.listen(8001, () => {
     console.log("Server is running on port 8001");
 });

@@ -15,21 +15,7 @@ const TaskA = () => {
       }
     };
 
-    const fetchTasks = async () => {
-      try {
-        const response = await axios.get("http://localhost:8001/tasks");
-        const tasksData = response.data.reduce((acc, task) => {
-          acc[task.uid] = task;
-          return acc;
-        }, {});
-        setTasks(tasksData);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
-
     fetchEmployees();
-    fetchTasks();
   }, []);
 
   const handleTaskChange = (uid, field, value) => {
@@ -46,7 +32,7 @@ const TaskA = () => {
     e.preventDefault();
 
     try {
-      const tasksArray = Object.keys(tasks).map(uid => ({
+      const tasksArray = Object.keys(tasks).map((uid) => ({
         uid,
         ...tasks[uid],
         status: "Not Started",
@@ -66,29 +52,29 @@ const TaskA = () => {
     padding: "20px",
     border: "1px solid #ccc",
     borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)"
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
   };
 
   const tableStyle = {
     width: "100%",
     borderCollapse: "collapse",
-    marginBottom: "20px"
+    marginBottom: "20px",
   };
 
   const thTdStyle = {
     border: "1px solid #ddd",
     padding: "8px",
-    textAlign: "left"
+    textAlign: "left",
   };
 
   const thStyle = {
-    backgroundColor: "#f2f2f2"
+    backgroundColor: "#f2f2f2",
   };
 
   const inputStyle = {
     width: "100%",
     padding: "8px",
-    boxSizing: "border-box"
+    boxSizing: "border-box",
   };
 
   const buttonStyle = {
@@ -97,7 +83,7 @@ const TaskA = () => {
     color: "white",
     border: "none",
     borderRadius: "5px",
-    cursor: "pointer"
+    cursor: "pointer",
   };
 
   return (
@@ -110,7 +96,6 @@ const TaskA = () => {
               <th style={{ ...thTdStyle, ...thStyle }}>Employee Name</th>
               <th style={{ ...thTdStyle, ...thStyle }}>Task</th>
               <th style={{ ...thTdStyle, ...thStyle }}>Deadline</th>
-              <th style={{ ...thTdStyle, ...thStyle }}>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -137,14 +122,13 @@ const TaskA = () => {
                     }
                   />
                 </td>
-                <td style={thTdStyle}>
-                  {tasks[employee.uid]?.status || "Not Started"}
-                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <button type="submit" style={buttonStyle}>Assign Tasks</button>
+        <button type="submit" style={buttonStyle}>
+          Assign Tasks
+        </button>
       </form>
     </div>
   );
