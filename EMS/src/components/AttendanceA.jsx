@@ -318,7 +318,7 @@ const AttendanceA = () => {
           type="submit"
           style={{
             marginTop: '30px',
-            padding: '10px 20px',
+            padding: '5px 10px',
             backgroundColor: loading ? '#ddd' : '#4CAF50',
             color: 'white',
             border: 'none',
@@ -334,7 +334,7 @@ const AttendanceA = () => {
             onClick={handleUpdate}
             style={{
               marginTop: '30px',
-              padding: '10px 20px',
+              padding: '5px 10px',
               backgroundColor: '#f39c12',
               color: 'white',
               border: 'none',
@@ -354,11 +354,11 @@ const AttendanceA = () => {
           }
           style={{
             marginTop: '30px',
-            padding: '10px 20px',
+            padding: '5px 10px',
             backgroundColor: '#337ab7',
             color: 'white',
             border: 'none',
-            cursor: 'pointer',
+            cursor: 'pointer',            
           }}
         >
           View Monthly Attendance

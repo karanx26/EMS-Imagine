@@ -258,6 +258,42 @@ app.post('/attendance', async (req, res) => {
           res.status(500).send(error);
         }
       });
+
+
+      app.get('/attendance/:year/:month/employee/:uid', async (req, res) => {
+        const { year, month, uid } = req.params;
+        try {
+          const attendanceRecords = await attendance.aggregate([
+            {
+              $match: {
+                year: parseInt(year),
+                month: parseInt(month),
+                [`data.${uid}`]: { $exists: true }
+              }
+            },
+            {
+              $project: {
+          date: 1,
+          day: 1,
+          status: `$data.${uid}`
+        }
+      },
+      {
+        $sort: {
+          date: 1 // Ensure the records are sorted by date
+        }
+      }
+    ]);
+      
+          if (attendanceRecords.length === 0) {
+            return res.status(404).json({ message: 'No attendance records found for the specified employee and month.' });
+          }
+      
+          res.json(attendanceRecords);
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      });
       
     
       app.post("/tasks", async (req, res) => {
