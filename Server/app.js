@@ -296,89 +296,61 @@ app.post('/attendance', async (req, res) => {
       });
       
     
-      app.post("/tasks", async (req, res) => {
+   
+
+    app.post("/tasks", async (req, res) => {
+      try {
         const { tasks } = req.body;
-        try {
-            const taskPromises = tasks.map(task => {
-                const newTask = new Task({
-                    uid: task.uid,
-                    task: task.task,
-                    deadline: new Date(task.deadline),
-                });
-                return newTask.save();
-            });
-            await Promise.all(taskPromises);
-            res.status(200).send('Tasks assigned successfully');
-        } catch (error) {
-            res.status(500).send('Error assigning tasks');
-        }
-    });
-    
-    app.get("/tasks/:uid", async (req, res) => {
-      const { uid } = req.params;
-      try {
-        const tasks = await Task.find({ uid }).lean(); // Assuming 'Task' is your Mongoose model
-        res.json({ tasks });
+        const task = tasks[0]; // Since tasks array contains only one task
+        const newTask = new Task(task);
+        await newTask.save();
+        res.status(201).send("Task assigned successfully!");
       } catch (error) {
-        console.error("Error fetching tasks:", error);
-        res.status(500).json({ message: "Error fetching tasks", error });
+        res.status(500).send("Error assigning task:", error.message);
       }
     });
     
- 
-    app.post('/tasks/:id/status', async (req, res) => {
-      const { id } = req.params;
-      const { status } = req.body;
+    app.get("/tasks", async (req, res) => {
+      const { status } = req.query;
       try {
-        const task = await Task.findByIdAndUpdate(id, { status }, { new: true }).lean();
-        if (!task) {
-          return res.status(404).json({ message: 'Task not found' });
-        }
-        res.json(task);
-      } catch (err) {
-        res.status(500).json({ message: 'Error updating task status', error: err });
+        const tasks = await Task.find(status ? { status } : {}).sort({ deadline: 1 });
+        res.json(tasks);
+      } catch (error) {
+        res.status(500).send("Error fetching tasks:", error);
       }
     });
 
-    app.get("/tasks", async (req, res) => {
+    app.get("/tasks/:uid", async (req, res) => {
       try {
-          const data = await Task.find({}, 'uid task deadline status').lean();
-          res.json(data);
-      } catch (err) {
-          res.status(500).json(err);
+        const tasks = await Task.find({ uid: req.params.uid }).sort({ deadline: 1 });
+        res.status(200).json({ tasks });
+      } catch (error) {
+        res.status(500).json({ error: "Error fetching tasks" });
       }
-  }
-);
+    });
+    
+    // Update task status
+    app.post("/tasks/:taskId/status", async (req, res) => {
+      try {
+        const { status } = req.body;
+        await Task.findByIdAndUpdate(req.params.taskId, { status });
+        res.status(200).send("Task status updated successfully");
+      } catch (error) {
+        res.status(500).json({ error: "Error updating task status" });
+      }
+    });
 
-app.put('/tasks/:id/status', async (req, res) => {
-  const { id } = req.params;
-  const { status } = req.body;
-  try {
-    const task = await Task.findByIdAndUpdate(id, { status }, { new: true }).lean();
-    if (!task) {
-      return res.status(404).json({ message: 'Task not found' });
-    }
-    res.json(task);
-  } catch (err) {
-    console.error("Error updating task status:", err);
-    res.status(500).json({ message: 'Error updating task status', error: err });
-  }
-});
-
-app.delete('/tasks/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const task = await Task.findByIdAndDelete(id).lean();
-    if (!task) {
-      return res.status(404).json({ message: 'Task not found' });
-    }
-    res.json({ message: 'Task deleted successfully' });
-  } catch (err) {
-    console.error("Error deleting task:", err);
-    res.status(500).json({ message: 'Error deleting task', error: err });
-  }
-}
-);
+    app.delete("/tasks/:id", async (req, res) => {
+      try {
+        const taskId = req.params.id;
+        await Task.findByIdAndDelete(taskId);
+        res.status(200).send("Task deleted successfully!");
+      } catch (error) {
+        res.status(500).send("Error deleting task:", error);
+      }
+    });
+    
+    
 
 app.listen(8001, () => {
     console.log("Server is running on port 8001");
