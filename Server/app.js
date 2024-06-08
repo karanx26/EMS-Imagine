@@ -213,6 +213,34 @@ app.post('/attendance', async (req, res) => {
           res.status(500).json({ message: "Error fetching attendance", error: err });
         }
       });
+
+      app.get('/attendance/:year/:month/:date', async (req, res) => {
+        const { year, month, date } = req.params;
+      
+        try {
+          const attendanceRecords = await attendance.find({ year, month, date }).lean();
+          res.status(200).json(attendanceRecords);
+        } catch (err) {
+          console.error("Error fetching attendance records:", err);
+          res.status(500).json({ message: "Error fetching attendance records", error: err });
+        }
+      });
+
+      app.put('/attendance/:year/:month/:date', async (req, res) => {
+        const { year, month, date } = req.params;
+        const updatedAttendance = req.body;
+        try {
+          await attendance.findOneAndUpdate(
+            { year, month, date },
+            updatedAttendance,
+            { new: true }
+          );
+          res.json({ message: 'Attendance updated successfully' });
+        } catch (error) {
+          res.status(500).json({ message: 'Error updating attendance' });
+        }
+      });
+      
       
 
     app.get('/attendance/:year/:month', async (req, res) => {

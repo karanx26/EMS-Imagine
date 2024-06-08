@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AttendanceA = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
   const [attendance, setAttendance] = useState({});
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [selectedDate, setSelectedDate] = useState(new Date().getDate());
   const [selectedDay, setSelectedDay] = useState(new Date().toLocaleString('en-US', { weekday: 'long' }));
+  const [loading, setLoading] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:8001/employees")
@@ -32,7 +33,7 @@ const AttendanceA = () => {
     setAttendance(prevAttendance => ({
       ...prevAttendance,
       [uid]: {
-        uid: uid,        
+        uid: uid,
         present: false,
         absent: false,
         leave: false,
@@ -41,8 +42,9 @@ const AttendanceA = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
     const attendanceData = {
       year: selectedYear,
       month: selectedMonth,
@@ -50,17 +52,69 @@ const AttendanceA = () => {
       day: selectedDay,
       data: attendance
     };
-    axios.post("http://localhost:8001/attendance", attendanceData)
-      .then(response => {
-        console.log(response.data);
-        alert(`Attendance recorded successfully for ${selectedDay}, ${selectedDate}-${selectedMonth}-${selectedYear}`);
+
+    if (isUpdate) {
+      // Update existing attendance
+      try {
+        setLoading(true);
+        await axios.put(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/${selectedDate}`, attendanceData);
+        alert(`Attendance updated successfully for ${selectedDay}, ${selectedDate}-${selectedMonth}-${selectedYear}`);
         navigate("/homea/manageempa");
-      })
-      
-      .catch(error => {
-        console.error("Error recording attendance:", error);
-        
-      });
+      } catch (error) {
+        console.error("Error updating attendance:", error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      // Check if attendance already exists for the selected date
+      try {
+        setLoading(true);
+        const res = await axios.get(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/${selectedDate}`);
+        if (res.data.length > 0) {
+          alert(`Attendance for ${selectedDay}, ${selectedDate}-${selectedMonth}-${selectedYear} already exists.`);
+          setLoading(false);
+          return;
+        }
+      } catch (error) {
+        console.error("Error checking existing attendance:", error);
+        setLoading(false);
+        return;
+      }
+
+      // Submit new attendance
+      axios.post("http://localhost:8001/attendance", attendanceData)
+        .then(response => {
+          console.log(response.data);
+          alert(`Attendance recorded successfully for ${selectedDay}, ${selectedDate}-${selectedMonth}-${selectedYear}`);
+          navigate("/homea/manageempa");
+        })
+        .catch(error => {
+          console.error("Error recording attendance:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  };
+
+  const handleUpdate = async () => {
+    // Fetch existing attendance for the selected date
+    try {
+      setLoading(true);
+      const res = await axios.get(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/${selectedDate}`);
+      if (res.data.length > 0) {
+        const existingAttendance = res.data[0].data;
+        setAttendance(existingAttendance);
+        setIsUpdate(true);
+        alert(`Attendance data loaded for ${selectedDay}, ${selectedDate}-${selectedMonth}-${selectedYear}. You can now update the attendance.`);
+      } else {
+        alert(`No existing attendance data found for ${selectedDay}, ${selectedDate}-${selectedMonth}-${selectedYear}.`);
+      }
+    } catch (error) {
+      console.error("Error fetching attendance data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const years = Array.from(new Array(20), (_, index) => new Date().getFullYear() - 10 + index); // 10 years back and 10 years ahead
@@ -122,7 +176,7 @@ const AttendanceA = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '1rem',    
+    marginBottom: '1rem',
     border: '1px solid #ccc',
     padding: '1rem',
     borderRadius: '8px',
@@ -131,25 +185,23 @@ const AttendanceA = () => {
 
   const summaryCardStyles = {
     flex: '1',
-    // paddingBottom: '10px', // Reduced padding
     paddingTop: '12px',
-    margin: '0 5px', // Reduced margin
+    margin: '0 5px',
     marginBottom: '20px',
     borderRadius: '8px',
     border: '1px solid #ccc',
     textAlign: 'center',
     backgroundColor: '#f9f9f9',
   };
-  
+
   const summaryContainerStyles = {
     display: 'flex',
     justifyContent: 'space-around',
     marginTop: '20px',
     width: '60%',
     maxWidth: '600px',
-    flexWrap: 'wrap' // Allow cards to wrap
+    flexWrap: 'wrap'
   };
-  
 
   return (
     <div style={{
@@ -210,12 +262,9 @@ const AttendanceA = () => {
               <option key={date} value={date}>{date}</option>
             ))}
           </select>
-          
           <label>Day: </label>
           <span style={selectStyles}>{selectedDay}</span>
         </div>
-        
-        
         <table style={tableStyles}>
           <thead>
             <tr>
@@ -265,11 +314,39 @@ const AttendanceA = () => {
             ))}
           </tbody>
         </table>
-        <button type="submit" style={{ marginTop: '30px', padding: '10px 20px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer' }}>
-          Submit
+        <button
+          type="submit"
+          style={{
+            marginTop: '30px',
+            padding: '10px 20px',
+            backgroundColor: loading ? '#ddd' : '#4CAF50',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+          disabled={loading}
+        >
+          {loading ? 'Submitting...' : isUpdate ? 'Update' : 'Submit'}
         </button>
+        {!isUpdate && (
+          <button
+            type="button"
+            onClick={handleUpdate}
+            style={{
+              marginTop: '30px',
+              marginLeft: '20px',
+              padding: '10px 20px',
+              backgroundColor: '#f39c12',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+            disabled={loading}
+          >
+            Load for Update
+          </button>
+        )}
       </form>
-      
     </div>
   );
 };
