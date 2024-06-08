@@ -260,9 +260,8 @@ app.post('/attendance', async (req, res) => {
       });
       
     
-    app.post("/tasks", async (req, res) => {
+      app.post("/tasks", async (req, res) => {
         const { tasks } = req.body;
-    
         try {
             const taskPromises = tasks.map(task => {
                 const newTask = new Task({
@@ -272,42 +271,38 @@ app.post('/attendance', async (req, res) => {
                 });
                 return newTask.save();
             });
-    
             await Promise.all(taskPromises);
             res.status(200).send('Tasks assigned successfully');
         } catch (error) {
-            console.error('Error assigning tasks:', error);
             res.status(500).send('Error assigning tasks');
         }
     });
-
-
-    app.get(`/tasks/:uid`, async (req, res) => {
-        const { uid } = req.params;
-        try {
-            const tasks = await Task.find({ uid }).lean();
-            if (!tasks.length) {
-                return res.status(404).json({ message: 'No tasks found for this employee' });
-            }
-            res.json(tasks);
-        } catch (err) {
-            console.error(`Error fetching tasks for uid: ${uid}`, err); // Log the error
-            res.status(500).json({ message: 'Error fetching tasks', error: err });
-        }
-    });
     
-    app.put("/tasks/:id/status", async (req, res) => {
-      const { id } = req.params;
-      const { status } = req.body;
-    
+    app.get("/tasks/:uid", async (req, res) => {
+      const { uid } = req.params;
       try {
-        const task = await Task.findByIdAndUpdate(id, { status }, { new: true });
-        res.status(200).json(task);
+        const tasks = await Task.find({ uid }).lean(); // Assuming 'Task' is your Mongoose model
+        res.json({ tasks });
       } catch (error) {
-        res.status(500).json({ error: "Failed to update task status" });
+        console.error("Error fetching tasks:", error);
+        res.status(500).json({ message: "Error fetching tasks", error });
       }
     });
-
+    
+ 
+    app.post('/tasks/:id/status', async (req, res) => {
+      const { id } = req.params;
+      const { status } = req.body;
+      try {
+        const task = await Task.findByIdAndUpdate(id, { status }, { new: true }).lean();
+        if (!task) {
+          return res.status(404).json({ message: 'Task not found' });
+        }
+        res.json(task);
+      } catch (err) {
+        res.status(500).json({ message: 'Error updating task status', error: err });
+      }
+    });
 
 app.listen(8001, () => {
     console.log("Server is running on port 8001");
