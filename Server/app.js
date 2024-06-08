@@ -243,13 +243,15 @@ app.post('/attendance', async (req, res) => {
       
       
 
-      app.get('/attendance/:uid/:year/:month', async (req, res) => {
+      app.get('/attendance/monthly/:uid/:year/:month', async (req, res) => {
         const { uid, year, month } = req.params;
         try {
-          const attendanceRecords = await Attendance.find({ year, month });
+          const attendanceRecords = await attendance.find({ year, month });
           const monthlyAttendance = attendanceRecords.map(record => ({
             date: record.date,
-            status: record.data.get(uid)
+            present: record.data.get(uid)?.present || false,
+            absent: record.data.get(uid)?.absent || false,
+            leave: record.data.get(uid)?.leave || false
           }));
           res.json(monthlyAttendance);
         } catch (error) {

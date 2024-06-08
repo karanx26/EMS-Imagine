@@ -6,8 +6,6 @@ const AttendanceA = () => {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState([]);
   const [attendance, setAttendance] = useState({});
-  const [monthlyAttendance, setMonthlyAttendance] = useState([]);
-  const [selectedEmployee, setSelectedEmployee] = useState("");
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [selectedDate, setSelectedDate] = useState(new Date().getDate());
@@ -56,6 +54,7 @@ const AttendanceA = () => {
     };
 
     if (isUpdate) {
+      // Update existing attendance
       try {
         setLoading(true);
         await axios.put(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/${selectedDate}`, attendanceData);
@@ -67,6 +66,7 @@ const AttendanceA = () => {
         setLoading(false);
       }
     } else {
+      // Check if attendance already exists for the selected date
       try {
         setLoading(true);
         const res = await axios.get(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/${selectedDate}`);
@@ -81,6 +81,7 @@ const AttendanceA = () => {
         return;
       }
 
+      // Submit new attendance
       axios.post("http://localhost:8001/attendance", attendanceData)
         .then(response => {
           console.log(response.data);
@@ -97,6 +98,7 @@ const AttendanceA = () => {
   };
 
   const handleUpdate = async () => {
+    // Fetch existing attendance for the selected date
     try {
       setLoading(true);
       const res = await axios.get(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/${selectedDate}`);
@@ -115,22 +117,7 @@ const AttendanceA = () => {
     }
   };
 
-  const handleEmployeeChange = async (e) => {
-    const uid = e.target.value;
-    setSelectedEmployee(uid);
-    await fetchMonthlyAttendance(uid, selectedYear, selectedMonth);
-  };
-
-  const fetchMonthlyAttendance = async (uid, year, month) => {
-    try {
-      const response = await axios.get(`http://localhost:8001/attendance/${uid}/${year}/${month}`);
-      setMonthlyAttendance(response.data);
-    } catch (error) {
-      console.error("Error fetching monthly attendance:", error);
-    }
-  };
-
-  const years = Array.from(new Array(20), (_, index) => new Date().getFullYear() - 10 + index);
+  const years = Array.from(new Array(20), (_, index) => new Date().getFullYear() - 10 + index); // 10 years back and 10 years ahead
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -216,23 +203,6 @@ const AttendanceA = () => {
     flexWrap: 'wrap'
   };
 
-  const monthlyAttendanceTableStyles = {
-    marginTop: '30px',
-    width: '80%',
-    maxWidth: '800px',
-    borderCollapse: 'collapse',
-  };
-
-  const monthlyThTdStyles = {
-    border: '1px solid #ddd',
-    padding: '8px',
-    textAlign: 'center',
-  };
-
-  const monthlyThStyles = {
-    backgroundColor: '#f2f2f2',
-  };
-
   return (
     <div style={{
       display: 'flex',
@@ -294,20 +264,6 @@ const AttendanceA = () => {
           </select>
           <label>Day: </label>
           <span style={selectStyles}>{selectedDay}</span>
-        </div>
-        <div style={{ margin: '20px 0' }}>
-          <label htmlFor="employee">Employee:</label>
-          <select
-            id="employee"
-            value={selectedEmployee}
-            onChange={handleEmployeeChange}
-            style={selectStyles}
-          >
-            <option value="">Select Employee</option>
-            {employees.map(employee => (
-              <option key={employee.uid} value={employee.uid}>{employee.name}</option>
-            ))}
-          </select>
         </div>
         <table style={tableStyles}>
           <thead>
@@ -371,14 +327,13 @@ const AttendanceA = () => {
           disabled={loading}
         >
           {loading ? 'Submitting...' : isUpdate ? 'Update' : 'Submit'}
-        </button>
+        </button><br />
         {!isUpdate && (
           <button
             type="button"
             onClick={handleUpdate}
             style={{
               marginTop: '30px',
-              marginLeft: '20px',
               padding: '10px 20px',
               backgroundColor: '#f39c12',
               color: 'white',
@@ -390,28 +345,25 @@ const AttendanceA = () => {
             Load for Update
           </button>
         )}
+        <br />
+
+        <button
+          type="button"
+          onClick={
+            () => navigate("/homea/monthlyattendancea")
+          }
+          style={{
+            marginTop: '30px',
+            padding: '10px 20px',
+            backgroundColor: '#337ab7',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          View Monthly Attendance
+        </button>
       </form>
-      {selectedEmployee && (
-        <div>
-          <h3>Monthly Attendance for {employees.find(emp => emp.uid === selectedEmployee)?.name} ({selectedYear} - {monthNames[selectedMonth - 1]})</h3>
-          <table style={monthlyAttendanceTableStyles}>
-            <thead>
-              <tr>
-                <th style={{ ...monthlyThTdStyles, ...monthlyThStyles }}>Date</th>
-                <th style={{ ...monthlyThTdStyles, ...monthlyThStyles }}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {monthlyAttendance.map((record, index) => (
-                <tr key={index}>
-                  <td style={monthlyThTdStyles}>{record.date}</td>
-                  <td style={monthlyThTdStyles}>{record.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
     </div>
   );
 };
