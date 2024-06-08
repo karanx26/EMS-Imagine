@@ -243,16 +243,20 @@ app.post('/attendance', async (req, res) => {
       
       
 
-    app.get('/attendance/:year/:month', async (req, res) => {
-        const { year, month } = req.params;
-    
+      app.get('/attendance/:uid/:year/:month', async (req, res) => {
+        const { uid, year, month } = req.params;
         try {
-            const attendanceRecords = await attendance.find({ year, month }).lean();
-            res.status(200).json(attendanceRecords);
-        } catch (err) {
-            res.status(500).json({ message: "Error fetching attendance records", error: err });
+          const attendanceRecords = await Attendance.find({ year, month });
+          const monthlyAttendance = attendanceRecords.map(record => ({
+            date: record.date,
+            status: record.data.get(uid)
+          }));
+          res.json(monthlyAttendance);
+        } catch (error) {
+          res.status(500).send(error);
         }
-    });
+      });
+      
     
     app.post("/tasks", async (req, res) => {
         const { tasks } = req.body;
