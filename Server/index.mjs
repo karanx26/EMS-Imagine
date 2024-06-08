@@ -72,13 +72,12 @@ const individualAttendanceSchema = new mongoose.Schema({
 
 
 
-
-const taskSchema = new mongoose.Schema({
-  uid: { type: String,required: true, },
-  task: {type: String,required: true,},
-  deadline: {type: Date,required: true,},
-});
-
+  const taskSchema = new mongoose.Schema({
+    uid: { type: String, required: true },
+    task: { type: String, required: true },
+    deadline: { type: Date, required: true },
+    status: { type: String, enum: ['pending', 'completed'], default: 'pending' },
+  });
 
 
 

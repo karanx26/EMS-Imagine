@@ -290,7 +290,17 @@ app.post('/attendance', async (req, res) => {
         }
     });
     
+    app.put("/tasks/:id/status", async (req, res) => {
+      const { id } = req.params;
+      const { status } = req.body;
     
+      try {
+        const task = await Task.findByIdAndUpdate(id, { status }, { new: true });
+        res.status(200).json(task);
+      } catch (error) {
+        res.status(500).json({ error: "Failed to update task status" });
+      }
+    });
 
 
 app.listen(8001, () => {
