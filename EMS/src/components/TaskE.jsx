@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,21 +11,6 @@ const TaskE = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchTasks = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:8001/tasks/${uid}`);
-  //       setTasks(response.data);
-  //     } catch (err) {
-  //       setError("Error fetching tasks");
-  //       console.error("Error fetching tasks:", err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchTasks();
-  // }, [uid]);
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -40,15 +27,12 @@ const TaskE = () => {
     fetchTasks();
   }, [uid]);
 
-
-
-
   const handleStatusChange = async (taskId) => {
     try {
-      await axios.put(`http://localhost:8001/tasks/${uid}/status`, { status: "Done" });
+      const response = await axios.post(`http://localhost:8001/tasks/${taskId}/status`, { status: "Done" });
       setTasks((prevTasks) =>
         prevTasks.map((task) =>
-          task.id === taskId ? { ...task, status: "Done" } : task
+          task._id === taskId ? { ...task, status: "Done" } : task
         )
       );
     } catch (err) {
@@ -115,7 +99,7 @@ const TaskE = () => {
                   {task.status !== "Done" && (
                     <button
                       style={buttonStyle}
-                      onClick={() => handleStatusChange(task.id)}
+                      onClick={() => handleStatusChange(task._id)}
                     >
                       Mark as Done
                     </button>
