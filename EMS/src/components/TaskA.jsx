@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 const TaskA = () => {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState("");
@@ -85,98 +87,146 @@ const TaskA = () => {
   };
 
   const containerStyle = {
-    maxWidth: "800px",
-    margin: "0 auto",
+    width: "70%",
+    margin: "50px auto",
     padding: "20px",
-    border: "1px solid #ccc",
+    border: "1px solid #ddd",
     borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#fff",
   };
 
   const tableStyle = {
-    width: "100%",
+    width: "80%",
     borderCollapse: "collapse",
     marginBottom: "20px",
+    margin: "35px auto",
   };
 
   const thTdStyle = {
     border: "1px solid #ddd",
-    padding: "8px",
+    padding: "12px",
     textAlign: "left",
   };
 
   const thStyle = {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#f9f9f9",
   };
 
   const inputStyle = {
     width: "100%",
-    padding: "8px",
+    padding: "10px",
+    margin: "8px 0",
     boxSizing: "border-box",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+    transition: "all 0.3s ease",
   };
 
   const buttonStyle = {
-    padding: "10px 20px",
-    backgroundColor: "#4CAF50",
+    padding: "5px 10px",
+    backgroundColor: "#007bff",
     color: "white",
     border: "none",
     borderRadius: "5px",
     cursor: "pointer",
-    margin: "5px",
+    margin: "10px 10px",
+    transition: "background-color 0.3s ease",
+    display: "flex",
+    justifyContent: "center",
+  };
+
+  const buttonStyleDelete = {
+    ...buttonStyle,
+    backgroundColor: "#dc3545",
+  };
+  const buttonStylePending = {
+    ...buttonStyle,
+    backgroundColor: "orange",
+  };
+  const buttonStyleComplete = {
+    ...buttonStyle,
+    backgroundColor: "green",
+  };
+
+  const buttonContainerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "20px",
+  };
+
+  const headingCardStyle = {
+    textAlign: "center",
+    backgroundColor: "#f8f9fa",
+    padding: "10px",
+    borderRadius: "5px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    margin: "40px auto",
+    width: "80%",
+    color: "black",
   };
 
   return (
-    <div style={containerStyle}>
-      <h2>Task Assignment</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Employee:</label>
-          <select
-            value={selectedEmployee}
-            onChange={(e) => setSelectedEmployee(e.target.value)}
-            style={inputStyle}
-          >
-            <option value="" disabled>
-              Select an employee
-            </option>
-            {employees.map((employee) => (
-              <option key={employee.uid} value={employee.uid}>
-                {employee.name}
+    <>
+      <div style={containerStyle}>
+        <h2 className="text-center">Task Assignment</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Employee:</label>
+            <select
+              value={selectedEmployee}
+              onChange={(e) => setSelectedEmployee(e.target.value)}
+              style={inputStyle}
+            >
+              <option value="" disabled>
+                Select an employee
               </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label>Task:</label>
-          <input
-            type="text"
-            style={inputStyle}
-            value={taskDetails.task}
-            onChange={(e) => handleTaskChange("task", e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Deadline:</label>
-          <input
-            type="date"
-            style={inputStyle}
-            value={taskDetails.deadline}
-            onChange={(e) => handleTaskChange("deadline", e.target.value)}
-          />
-        </div>
-        <button type="submit" style={buttonStyle}>
-          Assign Task
+              {employees.map((employee) => (
+                <option key={employee.uid} value={employee.uid}>
+                  {employee.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label>Task:</label>
+            <input
+              type="text"
+              style={inputStyle}
+              value={taskDetails.task}
+              onChange={(e) => handleTaskChange("task", e.target.value)}
+              placeholder="Enter task details"
+            />
+          </div>
+          <div>
+            <label>Deadline:</label>
+            <input
+              type="date"
+              style={inputStyle}
+              value={taskDetails.deadline}
+              onChange={(e) => handleTaskChange("deadline", e.target.value)}
+            />
+          </div>
+          <div style={buttonContainerStyle}>
+            <button type="submit" style={buttonStyle}>
+              Assign Task
+            </button>
+          </div>
+        </form>
+      </div>
+      <div style={buttonContainerStyle}>
+        <button onClick={fetchPendingTasks} style={buttonStylePending}>
+          Show All Pending Tasks
         </button>
-      </form>
-      <button onClick={fetchPendingTasks} style={buttonStyle}>
-        Show All Pending Tasks
-      </button>
-      <button onClick={fetchCompletedTasks} style={buttonStyle}>
-        Show All Completed Tasks
-      </button>
+        <button onClick={fetchCompletedTasks} style={buttonStyleComplete}>
+          Show All Completed Tasks
+        </button>
+      </div>
       {showPending && (
         <div>
-          <h3>Pending Tasks</h3>
+          <div style={headingCardStyle}>
+            <h3>Pending Tasks</h3>
+          </div>
           <table style={tableStyle}>
             <thead>
               <tr>
@@ -193,7 +243,7 @@ const TaskA = () => {
                   <td style={thTdStyle}>{employees.find(e => e.uid === task.uid)?.name}</td>
                   <td style={thTdStyle}>{new Date(task.deadline).toLocaleDateString()}</td>
                   <td style={thTdStyle}>
-                    <button style={buttonStyle} onClick={() => handleDeleteTask(task._id)}>
+                    <button style={buttonStyleDelete} onClick={() => handleDeleteTask(task._id)}>
                       Delete
                     </button>
                   </td>
@@ -205,7 +255,9 @@ const TaskA = () => {
       )}
       {showCompleted && (
         <div>
-          <h3>Completed Tasks</h3>
+          <div style={headingCardStyle}>
+            <h3>Completed Tasks</h3>
+          </div>
           <table style={tableStyle}>
             <thead>
               <tr>
@@ -222,7 +274,7 @@ const TaskA = () => {
                   <td style={thTdStyle}>{employees.find(e => e.uid === task.uid)?.name}</td>
                   <td style={thTdStyle}>{new Date(task.deadline).toLocaleDateString()}</td>
                   <td style={thTdStyle}>
-                    <button style={buttonStyle} onClick={() => handleDeleteTask(task._id)}>
+                    <button style={buttonStyleDelete} onClick={() => handleDeleteTask(task._id)}>
                       Delete
                     </button>
                   </td>
@@ -232,7 +284,7 @@ const TaskA = () => {
           </table>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
