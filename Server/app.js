@@ -273,25 +273,22 @@ app.post('/attendance', async (req, res) => {
             },
             {
               $project: {
-          date: 1,
-          day: 1,
-          status: `$data.${uid}`
-        }
-      },
-      {
-        $sort: {
-          date: 1 // Ensure the records are sorted by date
-        }
-      }
-    ]);
-      
-          if (attendanceRecords.length === 0) {
-            return res.status(404).json({ message: 'No attendance records found for the specified employee and month.' });
-          }
+                date: 1,
+                day: 1,
+                status: `$data.${uid}`
+              }
+            },
+            {
+              $sort: {
+                date: 1 // Ensure the records are sorted by date
+              }
+            }
+          ]);
       
           res.json(attendanceRecords);
-        } catch (err) {
-          res.status(500).json(err);
+        } catch (error) {
+          console.error('Error fetching attendance records:', error);
+          res.status(500).json({ error: 'Internal server error' });
         }
       });
       

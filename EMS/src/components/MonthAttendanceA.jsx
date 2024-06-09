@@ -102,10 +102,6 @@ const MonthAttendanceA = () => {
     backgroundColor: '#f9f9f9',
   };
 
-
-
-  
-
   const cardStyles = {
     flex: '1',
     paddingTop: '12px',
@@ -199,31 +195,32 @@ const MonthAttendanceA = () => {
           <p>{totals.leave}</p>
         </div>
       </div>
-      <table style={tableStyles}>
-        <thead>
-          <tr>
-            <th style={thStyles}>Date</th>
-            <th style={thStyles}>Day</th>
-            <th style={thStyles}>Present</th>
-            <th style={thStyles}>Absent</th>
-            <th style={thStyles}>Leave</th>
-          </tr>
-        </thead>
-        <tbody>
-          {attendanceData.map(record => (
-            <tr key={record.date}>
-              <td style={tdStyles}>{record.date}</td>
-              <td style={tdStyles}>{record.day}</td>
-              <td style={tdStyles}>{record.status.present ? 'Yes' : '-'}</td>
-              <td style={tdStyles}>{record.status.absent ? 'Yes' : '-'}</td>
-              <td style={tdStyles}>{record.status.leave ? 'Yes' : '-'}</td>
+      {attendanceData.length > 0 ? (
+        <table style={tableStyles}>
+          <thead>
+            <tr>
+              <th style={thStyles}>Date</th>
+              <th style={thStyles}>Day</th>
+              <th style={thStyles}>Present</th>
+              <th style={thStyles}>Absent</th>
+              <th style={thStyles}>Leave</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      
-    
+          </thead>
+          <tbody>
+            {attendanceData.map(record => (
+              <tr key={record.date}>
+                <td style={tdStyles}>{record.date}</td>
+                <td style={tdStyles}>{record.day}</td>
+                <td style={tdStyles}>{record.status.present ? 'Yes' : '-'}</td>
+                <td style={tdStyles}>{record.status.absent ? 'Yes' : '-'}</td>
+                <td style={tdStyles}>{record.status.leave ? 'Yes' : '-'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No attendance records for the selected month.</p>
+      )}
     </div>
   );
 };
