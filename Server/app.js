@@ -1,13 +1,13 @@
 import express, { json, urlencoded } from "express";
-import multer from "multer";
-
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema} from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema} from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 const attendance = mongoose.model('attendance', attendanceSchema);
 const Task = mongoose.model('Task', taskSchema);
+const Leave = mongoose.model('Leave', leaveSchema);
+
 import cors from "cors";
 
 const app = express();
@@ -19,8 +19,6 @@ app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 }));
-
-
 
 app.get("/admins", async (req, res) => {
     try {
@@ -350,46 +348,6 @@ app.post('/attendance', async (req, res) => {
         res.status(500).send("Error deleting task:", error);
       }
     });
-
-    // Multer setup for file uploads
-
-
-const upload = multer({ storage });
-
-app.post('/reimbursement', upload.array('proofs'), async (req, res) => {
-  try {
-    console.log('Request Body:', req.body);
-    console.log('Uploaded Files:', req.files);
-
-    const { uid, expenseType, description, startDate, endDate, vehicleType, totalKms, totalExpense } = req.body;
-    const proofs = req.files.map(file => file.path);
-
-    // Validate required fields
-    if (!uid || !expenseType || !description || !startDate || !endDate || (expenseType === 'fuel' && (!vehicleType || !totalKms || !totalExpense))) {
-      console.error('Missing required fields');
-      return res.status(400).send('Missing required fields');
-    }
-
-    const newReimbursement = new Reimbursement({
-      uid,
-      expenseType,
-      description,
-      startDate,
-      endDate,
-      proofs,
-      vehicleType,
-      totalKms,
-      totalExpense
-    });
-
-    await newReimbursement.save();
-    res.status(201).send('Reimbursement data saved successfully');
-  } catch (error) {
-    console.error('Error saving reimbursement data:', error);
-    res.status(500).send('Error saving reimbursement data');
-  }
-});
-
     
 
     app.post('/submit-leave', async (req, res) => {
