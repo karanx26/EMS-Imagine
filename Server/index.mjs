@@ -66,8 +66,24 @@ const individualAttendanceSchema = new mongoose.Schema({
       required: true,
     },
   });
+
+  //define the leave schema
+
+  const leaveSchema = new mongoose.Schema({
+    uid: { type: String, required: true },
+    name: { type: String, required: true },
+    leaveType: { type: String, required: true },
+    startDate: { type: String, required: true },
+    endDate: { type: String, required: true },
+    reason: { type: String, required: true },
+
+  });
+
+
+  const Leave = mongoose.model('Leave', leaveSchema);
+
   
-  
+
   
 
 
@@ -107,5 +123,5 @@ const individualAttendanceSchema = new mongoose.Schema({
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,reimbursementSchema,storage};
+export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema};
 

@@ -3,12 +3,11 @@ import multer from "multer";
 
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,reimbursementSchema,storage} from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema} from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 const attendance = mongoose.model('attendance', attendanceSchema);
 const Task = mongoose.model('Task', taskSchema);
-const Reimbursement = mongoose.model('Reimbursement', reimbursementSchema);
 import cors from "cors";
 
 const app = express();
@@ -392,7 +391,16 @@ app.post('/reimbursement', upload.array('proofs'), async (req, res) => {
 });
 
     
-    
+
+    app.post('/submit-leave', async (req, res) => {
+      try {
+        const leaveData = new Leave(req.body);
+        await leaveData.save();
+        res.status(201).send(leaveData);
+      } catch (error) {
+        res.status(400).send({ message: 'Error saving leave data', error });
+      }
+    });   
 
 app.listen(8001, () => {
     console.log("Server is running on port 8001");

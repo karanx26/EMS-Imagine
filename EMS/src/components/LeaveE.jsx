@@ -23,16 +23,26 @@ const LeaveE = () => {
     });
   };
 
+  const resetForm = () => {
+    setFormData({
+      uid: '',
+      name: '',
+      leaveType: '',
+      startDate: '',
+      endDate: '',
+      reason: ''
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:8001/submit-leave', formData);
-      console.alert('Form submitted:', response.data);
-
-      // Redirect to LeaveStatus with leave status data
-      navigate('/leave-status', { state: response.data });
+      alert('Form submitted successfully');
+      resetForm(); // Reset the form after successful submission
     } catch (error) {
       console.error('Error submitting form:', error);
+      alert('Error submitting form: ' + error.message);
     }
   };
 
