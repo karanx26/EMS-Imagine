@@ -95,11 +95,23 @@ const individualAttendanceSchema = new mongoose.Schema({
     status: { type: String, default: "Pending" }
   });
 
+  const ReimbursementSchema = new mongoose.Schema({
+    uid: { type: String, required: true },
+    expenseType: { type: String, required: true },
+    description: { type: String },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+    proofs: { type: [String], required: true },
+    vehicleType: { type: String },
+    totalKms: { type: Number },
+    totalExpense: { type: Number }
+  });
+
 
 
 
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema};
+export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema};
 

@@ -1,12 +1,17 @@
 import express, { json, urlencoded } from "express";
+import multer from "multer";
+
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema} from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema} from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 const attendance = mongoose.model('attendance', attendanceSchema);
 const Task = mongoose.model('Task', taskSchema);
 const Leave = mongoose.model('Leave', leaveSchema);
+const Reimbursement = mongoose.model('Reimbursement', ReimbursementSchema);
+
+
 
 import cors from "cors";
 
@@ -359,6 +364,53 @@ app.post('/attendance', async (req, res) => {
         res.status(400).send({ message: 'Error saving leave data', error });
       }
     });   
+
+
+app.use('/uploads', express.static('uploads'));
+
+
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+
+const upload = multer({ storage });
+
+app.post('/reimbursement', upload.array('proofs'), async (req, res) => {
+  try {
+    console.log('Files:', req.files);
+    console.log('Body:', req.body);
+
+    const { uid, expenseType, description, startDate, endDate, vehicleType, totalKms, totalExpense } = req.body;
+    const proofs = req.files.map(file => file.path);
+
+    const newReimbursement = new Reimbursement({
+      uid,
+      expenseType,
+      description,
+      startDate,
+      endDate,
+      proofs,
+      vehicleType,
+      totalKms,
+      totalExpense
+    });
+
+    await newReimbursement.save();
+
+    res.status(200).json({ message: 'Reimbursement submitted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 
 app.listen(8001, () => {
     console.log("Server is running on port 8001");

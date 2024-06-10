@@ -15,9 +15,8 @@ const ReimbursementE = () => {
     totalExpense: 0,
   });
 
-  // Fetch the UID from localStorage when the component mounts
   useEffect(() => {
-    const uid = localStorage.getItem("uid"); // Adjust this if you use another storage or method
+    const uid = localStorage.getItem("uid");
     if (uid) {
       setFormData((prevFormData) => ({ ...prevFormData, uid }));
     }
@@ -84,11 +83,10 @@ const ReimbursementE = () => {
       data.append("description", formData.description);
       data.append("startDate", formData.startDate);
       data.append("endDate", formData.endDate);
-      formData.proofs.forEach((proof, index) => {
-        data.append(`proofs[${index}]`, proof);
+      formData.proofs.forEach((proof) => {
+        data.append("proofs", proof);
       });
 
-      // Add additional fields if expense type is fuel
       if (formData.expenseType === "fuel") {
         data.append("vehicleType", formData.vehicleType);
         data.append("totalKms", formData.totalKms);
@@ -153,7 +151,6 @@ const ReimbursementE = () => {
                   </select>
                 </div>
 
-                {/* Conditionally render additional fields if expense type is fuel */}
                 {formData.expenseType === "fuel" && (
                   <>
                     <div className="form-group mb-4">
@@ -169,8 +166,12 @@ const ReimbursementE = () => {
                         className="form-select"
                       >
                         <option value="">Select Vehicle Type</option>
-                        <option value="4cng">4 Wheeler (CNG) (6/- per Km)</option>
-                        <option value="4pd">4 Wheeler (Petrol/Diesel) (8/- per Km)</option>
+                        <option value="4cng">
+                          4 Wheeler (CNG) (6/- per Km)
+                        </option>
+                        <option value="4pd">
+                          4 Wheeler (Petrol/Diesel) (8/- per Km)
+                        </option>
                         <option value="2wheel">2 Wheeler (3/- per Km)</option>
                       </select>
                     </div>
@@ -259,7 +260,6 @@ const ReimbursementE = () => {
                     type="file"
                     id="proofs"
                     name="proofs"
-                    accept="application/pdf"
                     onChange={handleFileChange}
                     multiple
                     className="form-control"
