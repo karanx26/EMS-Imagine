@@ -145,7 +145,7 @@ const MonthAttendanceA = () => {
       padding: '20px',
       margin: '20px',
     }}>
-      <h2>Monthly Attendance</h2><br />
+      <h2>MONTHLY ATTENDANCE</h2><br />
       <div style={dateContainerStyles}>
         <label htmlFor="year">Year:</label>
         <select

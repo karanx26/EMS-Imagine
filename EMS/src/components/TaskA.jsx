@@ -169,7 +169,7 @@ const TaskA = () => {
   return (
     <>
       <div style={containerStyle}>
-        <h2 className="text-center">Task Assignment</h2>
+        <h2 className="text-center">TASK ASSIGNMENT</h2>
         <form onSubmit={handleSubmit}>
           <div>
             <label>Employee:</label>
@@ -225,7 +225,7 @@ const TaskA = () => {
       {showPending && (
         <div>
           <div style={headingCardStyle}>
-            <h3>Pending Tasks</h3>
+            <h3>PENDING TASKS</h3>
           </div>
           <table style={tableStyle}>
             <thead>
@@ -256,7 +256,7 @@ const TaskA = () => {
       {showCompleted && (
         <div>
           <div style={headingCardStyle}>
-            <h3>Completed Tasks</h3>
+            <h3>COMPLETED TASKS</h3>
           </div>
           <table style={tableStyle}>
             <thead>

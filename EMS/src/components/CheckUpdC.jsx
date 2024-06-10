@@ -9,7 +9,7 @@ function CheckUpdC()
   window.localStorage.removeItem("isLoggedIn");
   return(
     <>
-      <h1>Check Updates</h1>
+      <h2>CHECK UPDATES</h2>
     </>
   )
 }

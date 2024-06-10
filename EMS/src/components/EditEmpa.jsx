@@ -60,7 +60,7 @@ function EditEmpa() {
         <div className="col-md-8">
           <div className="card">
             <div className="card-header text-center">
-              <h2>Employee Details</h2>
+              <h2>EMPLOYEE DETAILS</h2>
             </div>
             <div className="card-body">
               <form>

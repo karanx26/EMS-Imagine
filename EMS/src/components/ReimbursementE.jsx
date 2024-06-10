@@ -64,7 +64,7 @@ const ReimbursementE = () => {
         <div className="col-md-8">
           <div className="card">
             <div className="card-header text-center bg-orange text-Black">
-              <h2>Reimbursement Form</h2>
+              <h2>REIMBURSEMENT FORM</h2>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>

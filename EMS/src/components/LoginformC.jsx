@@ -72,7 +72,7 @@ function LoginformC() {
               validate(lformData, loginData);
             }}
           >
-            <h2 className="center-align">Client</h2>
+            <h2 className="center-align">CLIENT</h2>
             <div className="mb-3">
               <label htmlFor="uid">
                 <strong>Unique Id</strong>

@@ -80,7 +80,7 @@ const TaskE = () => {
 
   return (
     <div style={containerStyle}>
-      <h2 style={headingStyle}>Tasks</h2>
+      <h2 style={headingStyle}>TASKS</h2>
       {loading ? (
         <p>Loading tasks...</p>
       ) : error ? (

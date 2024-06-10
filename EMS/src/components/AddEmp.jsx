@@ -58,7 +58,7 @@ const AddEmp = () => {
         <div className="col-md-8">
           <div className="card">
             <div className="card-header text-center">
-              <h2>Add New Employee</h2>
+              <h2>ADD NEW EMPLOYEE</h2>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>

@@ -57,7 +57,7 @@ function ManageEmpA() {
         <div className="px-5 mt-3">
           <div className="card mt-3">
             <div className="card-header text-center">
-              <h2>Employee List</h2>
+              <h2>EMPLOYEE LIST</h2>
             </div>
             <div className="card-body">
               <table className="table table-striped custom-table">

@@ -45,7 +45,7 @@ const TaskStatus = () => {
 
   return (
     <div style={containerStyle}>
-      <h2>Task Status</h2>
+      <h2>TASK STATUS</h2>
       <table style={tableStyle}>
         <thead>
           <tr>

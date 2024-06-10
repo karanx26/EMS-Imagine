@@ -72,7 +72,7 @@ function LoginformA() {
               validate(lformData, loginData);
             }}
           >
-            <h2 className="center-align">Admin</h2>
+            <h2 className="center-align">ADMIN</h2>
             <div className="mb-3">
               <label htmlFor="uid">
                 <strong>Unique Id</strong>

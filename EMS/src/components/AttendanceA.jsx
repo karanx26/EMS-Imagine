@@ -212,7 +212,7 @@ const AttendanceA = () => {
       padding: '20px',
       margin: '20px',
     }}>
-      <h2>Attendance</h2>
+      <h2>ATTENDANCE</h2>
       <div style={summaryContainerStyles}>
         <div style={summaryCardStyles}>
           <h6>Total Present</h6>
