@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+import multer from "multer";
+
 const someAsyncOperation = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -79,11 +81,31 @@ const individualAttendanceSchema = new mongoose.Schema({
     status: { type: String, default: "Pending" }
   });
 
+  const reimbursementSchema = new mongoose.Schema({
+    uid: String,
+    expenseType: String,
+    description: String,
+    startDate: Date,
+    endDate: Date,
+    proofs: [String],
+    vehicleType: String,
+    totalKms: Number,
+    totalExpense: Number
+  });
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/'); // Ensure this directory exists
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname);
+    }
+  });
+
 
 
 
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema};
+export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,reimbursementSchema,storage};
 

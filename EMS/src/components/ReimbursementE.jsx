@@ -1,30 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const ReimbursementE = () => {
   const [formData, setFormData] = useState({
-    employeeUID: '',
-    employeeName: '',
-    expenseType: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    proofs: []
+    uid: "",
+    expenseType: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    proofs: [],
+    vehicleType: "",
+    totalKms: "",
+    totalExpense: 0,
   });
+
+  // Fetch the UID from localStorage when the component mounts
+  useEffect(() => {
+    const uid = localStorage.getItem("uid"); // Adjust this if you use another storage or method
+    if (uid) {
+      setFormData((prevFormData) => ({ ...prevFormData, uid }));
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
+    setFormData((prevFormData) => {
+      const updatedFormData = { ...prevFormData, [name]: value };
+      if (name === "vehicleType" || name === "totalKms") {
+        return {
+          ...updatedFormData,
+          totalExpense: calculateTotalExpense(
+            updatedFormData.vehicleType,
+            updatedFormData.totalKms
+          ),
+        };
+      }
+      return updatedFormData;
     });
+  };
+
+  const calculateTotalExpense = (vehicleType, totalKms) => {
+    if (!vehicleType || !totalKms) return 0;
+    const km = parseFloat(totalKms);
+    let ratePerKm = 0;
+    switch (vehicleType) {
+      case "2wheel":
+        ratePerKm = 3;
+        break;
+      case "4cng":
+        ratePerKm = 6;
+        break;
+      case "4pd":
+        ratePerKm = 8;
+        break;
+      default:
+        ratePerKm = 0;
+    }
+    return km * ratePerKm;
   };
 
   const handleFileChange = (e) => {
     setFormData({
       ...formData,
-      proofs: [...formData.proofs, ...Array.from(e.target.files)]
+      proofs: [...formData.proofs, ...Array.from(e.target.files)],
     });
   };
 
@@ -32,30 +71,38 @@ const ReimbursementE = () => {
     const newProofs = formData.proofs.filter((_, i) => i !== index);
     setFormData({
       ...formData,
-      proofs: newProofs
+      proofs: newProofs,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append('employeeUID', formData.employeeUID);
-    data.append('employeeName', formData.employeeName);
-    data.append('expenseType', formData.expenseType);
-    data.append('description', formData.description);
-    data.append('startDate', formData.startDate);
-    data.append('endDate', formData.endDate);
-    formData.proofs.forEach((proof, index) => {
-      data.append(`proofs[${index}]`, proof);
-    });
-
-    axios.post('/api/reimbursement', data)
-      .then(response => {
-        console.log('Form data submitted:', response.data);
-      })
-      .catch(error => {
-        console.error('Error submitting form data:', error);
+    try {
+      const data = new FormData();
+      data.append("uid", formData.uid);
+      data.append("expenseType", formData.expenseType);
+      data.append("description", formData.description);
+      data.append("startDate", formData.startDate);
+      data.append("endDate", formData.endDate);
+      formData.proofs.forEach((proof, index) => {
+        data.append(`proofs[${index}]`, proof);
       });
+
+      // Add additional fields if expense type is fuel
+      if (formData.expenseType === "fuel") {
+        data.append("vehicleType", formData.vehicleType);
+        data.append("totalKms", formData.totalKms);
+        data.append("totalExpense", formData.totalExpense);
+      }
+
+      const response = await axios.post(
+        "http://localhost:8001/reimbursement",
+        data
+      );
+      console.log("Form data submitted:", response.data);
+    } catch (error) {
+      console.error("Error submitting form data:", error);
+    }
   };
 
   return (
@@ -69,31 +116,23 @@ const ReimbursementE = () => {
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="form-group mb-4">
-                  <label htmlFor="employeeUID" className="form-label">Employee UID:</label>
+                  <label htmlFor="uid" className="form-label">
+                    Employee UID:
+                  </label>
                   <input
                     type="text"
-                    id="employeeUID"
-                    name="employeeUID"
-                    value={formData.employeeUID}
-                    onChange={handleChange}
-                    required
+                    id="uid"
+                    name="uid"
+                    value={formData.uid}
+                    readOnly
                     className="form-control"
                   />
                 </div>
+
                 <div className="form-group mb-4">
-                  <label htmlFor="employeeName" className="form-label">Employee Name:</label>
-                  <input
-                    type="text"
-                    id="employeeName"
-                    name="employeeName"
-                    value={formData.employeeName}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                  />
-                </div>
-                <div className="form-group mb-4">
-                  <label htmlFor="expenseType" className="form-label">Expense Type:</label>
+                  <label htmlFor="expenseType" className="form-label">
+                    Expense Type:
+                  </label>
                   <select
                     id="expenseType"
                     name="expenseType"
@@ -103,22 +142,77 @@ const ReimbursementE = () => {
                     className="form-select"
                   >
                     <option value="">Select Expense Type</option>
+                    <option value="fuel">Fuel</option>
                     <option value="raw-material">Raw Material</option>
-                    <option value="food-accommodation">Food & Accommodation</option>
-                    <option value="travelling-fuel">Travelling & Fuel</option>
+                    <option value="food-accommodation">
+                      Food & Accommodation
+                    </option>
+                    <option value="travelling">Travelling</option>
                     <option value="advance-payment">Advance Payment</option>
-                    <option value="stamp-paper">Stamp Paper</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
+
+                {/* Conditionally render additional fields if expense type is fuel */}
+                {formData.expenseType === "fuel" && (
+                  <>
+                    <div className="form-group mb-4">
+                      <label htmlFor="vehicleType" className="form-label">
+                        Vehicle Type:
+                      </label>
+                      <select
+                        id="vehicleType"
+                        name="vehicleType"
+                        value={formData.vehicleType}
+                        onChange={handleChange}
+                        required
+                        className="form-select"
+                      >
+                        <option value="">Select Vehicle Type</option>
+                        <option value="4cng">4 Wheeler (CNG) (6/- per Km)</option>
+                        <option value="4pd">4 Wheeler (Petrol/Diesel) (8/- per Km)</option>
+                        <option value="2wheel">2 Wheeler (3/- per Km)</option>
+                      </select>
+                    </div>
+                    <div className="form-group mb-4">
+                      <label htmlFor="totalKms" className="form-label">
+                        Total Kilometers:
+                      </label>
+                      <input
+                        type="number"
+                        id="totalKms"
+                        name="totalKms"
+                        value={formData.totalKms}
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="form-group mb-4">
+                      <label htmlFor="totalExpense" className="form-label">
+                        Total Expense:
+                      </label>
+                      <input
+                        type="number"
+                        id="totalExpense"
+                        name="totalExpense"
+                        value={formData.totalExpense}
+                        readOnly
+                        className="form-control"
+                      />
+                    </div>
+                  </>
+                )}
+
                 <div className="form-group mb-4">
-                  <label htmlFor="description" className="form-label">Description:</label>
+                  <label htmlFor="description" className="form-label">
+                    Description:
+                  </label>
                   <textarea
                     id="description"
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    required
                     className="form-control"
                     rows="4"
                   />
@@ -126,7 +220,9 @@ const ReimbursementE = () => {
                 <div className="row mb-4">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="startDate" className="form-label">Expense Start Date:</label>
+                      <label htmlFor="startDate" className="form-label">
+                        Expense Start Date:
+                      </label>
                       <input
                         type="date"
                         id="startDate"
@@ -140,7 +236,9 @@ const ReimbursementE = () => {
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label htmlFor="endDate" className="form-label">Expense End Date:</label>
+                      <label htmlFor="endDate" className="form-label">
+                        Expense End Date:
+                      </label>
                       <input
                         type="date"
                         id="endDate"
@@ -154,7 +252,9 @@ const ReimbursementE = () => {
                   </div>
                 </div>
                 <div className="form-group mb-4">
-                  <label htmlFor="proofs" className="form-label">Proof of Expense (PDF):</label>
+                  <label htmlFor="proofs" className="form-label">
+                    Proof of Expense:
+                  </label>
                   <input
                     type="file"
                     id="proofs"
@@ -162,12 +262,13 @@ const ReimbursementE = () => {
                     accept="application/pdf"
                     onChange={handleFileChange}
                     multiple
-                    required
                     className="form-control"
                   />
                 </div>
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-primary">Submit</button>
+                  <button type="submit" className="btn btn-primary">
+                    Submit
+                  </button>
                 </div>
               </form>
               {formData.proofs.length > 0 && (
@@ -175,8 +276,15 @@ const ReimbursementE = () => {
                   <h4>Uploaded Files:</h4>
                   <ul>
                     {formData.proofs.map((file, index) => (
-                      <li key={index} className="d-flex justify-content-between align-items-center">
-                        <a href={URL.createObjectURL(file)} target="_blank" rel="noopener noreferrer">
+                      <li
+                        key={index}
+                        className="d-flex justify-content-between align-items-center"
+                      >
+                        <a
+                          href={URL.createObjectURL(file)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           {file.name}
                         </a>
                         <button
