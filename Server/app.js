@@ -432,6 +432,15 @@ app.delete('/reimbursement/:id', async (req, res) => {
   }
 });
 
+app.get('/reimbursements', async (req, res) => {
+  try {
+    const reimbursements = await Reimbursement.find().sort({ uid: 1 },{ startDate: 1 } );
+    res.json(reimbursements);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 app.get('/leaves', async (req, res) => {
   try {
       const leaves = await Leave.find();

@@ -41,7 +41,7 @@ function ManageEmpA() {
             <i className="bi bi-calendar-check-fill"></i>
             Attendance
           </Link>
-          <Link to="/reimbursement" className="manage-button">
+          <Link to="/homea/reimba" className="manage-button">
             <i className="bi bi-currency-dollar"></i>
             Reimbursement
           </Link>
