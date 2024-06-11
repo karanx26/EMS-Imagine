@@ -25,6 +25,7 @@ import ProfileE from "./components/ProfileE";
 import TaskE from "./components/TaskE";
 import AttendanceE from "./components/AttendanceE";
 import ReimbursementE from "./components/ReimbursementE";
+import ViewReimbE from "./components/ViewReimbE";
 import ManageClientE from "./components/ManageClientE";
 import LeaveE from "./components/LeaveE";
 import AddEmp from "./components/AddEmp";
@@ -83,6 +84,7 @@ function App() {
           <Route path="/homee/taske/:uid" element={<TaskE />} />
           <Route path="/homee/attendance/:uid" element={<AttendanceE />} />
           <Route path="/homee/reimbursemente" element={<ReimbursementE />} />
+          <Route path="/homee/viewreimbe" element={<ViewReimbE />} />
           <Route path="/homee/managecliente" element={<ManageClientE />} />
           <Route path="/homee/leavee" element={<LeaveE />} />
         </Route>

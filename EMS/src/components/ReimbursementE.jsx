@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const ReimbursementE = () => {
@@ -14,6 +15,8 @@ const ReimbursementE = () => {
     totalKms: "",
     totalExpense: 0,
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const uid = localStorage.getItem("uid");
@@ -97,10 +100,16 @@ const ReimbursementE = () => {
         "http://localhost:8001/reimbursement",
         data
       );
-      console.log("Form data submitted:", response.data);
+      console.log(response.data);
+      alert("Form submitted successfully!"); // Show success alert
     } catch (error) {
       console.error("Error submitting form data:", error);
+      alert("Error submitting form. Please try again."); // Show error alert
     }
+  };
+
+  const handleViewApplications = () => {
+    navigate("/homee/viewreimbe");
   };
 
   return (
@@ -269,6 +278,7 @@ const ReimbursementE = () => {
                   <button type="submit" className="btn btn-primary">
                     Submit
                   </button>
+                  
                 </div>
               </form>
               {formData.proofs.length > 0 && (
@@ -289,7 +299,7 @@ const ReimbursementE = () => {
                         </a>
                         <button
                           type="button"
-                          className="btn btn-danger btn-sm ml-2"
+                          className="btn btn-danger btn-sm ml-2 mt-1 mb-1"
                           onClick={() => handleFileDelete(index)}
                         >
                           Delete
@@ -299,6 +309,15 @@ const ReimbursementE = () => {
                   </ul>
                 </div>
               )}
+              <div className="form-group text-center">
+              <button
+                    type="button"
+                    className="btn btn-success mt-5"
+                    onClick={handleViewApplications}
+                  >
+                    View Applications
+                  </button>
+                  </div>
             </div>
           </div>
         </div>

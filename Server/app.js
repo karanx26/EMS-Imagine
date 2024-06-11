@@ -410,6 +410,16 @@ app.post('/reimbursement', upload.array('proofs'), async (req, res) => {
   }
 });
 
+app.get('/reimbursement/:uid', async (req, res) => {
+  try {
+    const { uid } = req.params;
+    const reimbursements = await Reimbursement.find({ uid });
+    res.json(reimbursements);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 
 app.listen(8001, () => {
