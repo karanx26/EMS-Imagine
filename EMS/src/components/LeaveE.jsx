@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -7,42 +7,51 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const LeaveE = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    uid: '',
-    name: '',
-    leaveType: '',
-    startDate: '',
-    endDate: '',
-    reason: ''
+    uid: "",
+    leaveType: "",
+    startDate: "",
+    endDate: "",
+    reason: "",
   });
+
+  useEffect(() => {
+    const uid = localStorage.getItem("uid");
+    if (uid) {
+      setFormData((prevFormData) => ({ ...prevFormData, uid }));
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const resetForm = () => {
     setFormData({
-      uid: '',
-      name: '',
-      leaveType: '',
-      startDate: '',
-      endDate: '',
-      reason: ''
+      uid: "",
+      leaveType: "",
+      startDate: "",
+      endDate: "",
+      reason: "",
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8001/submit-leave', formData);
-      alert('Form submitted successfully');
+      const response = await axios.post(
+        "http://localhost:8001/submit-leave",
+        formData
+      );
+      alert("Form submitted successfully");
       resetForm(); // Reset the form after successful submission
+      navigate("/leavestatus"); // Navigate to leave status page after submission
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('Error submitting form: ' + error.message);
+      console.error("Error submitting form:", error);
+      alert("Error submitting form: " + error.message);
     }
   };
 
@@ -63,18 +72,6 @@ const LeaveE = () => {
                     id="uid"
                     name="uid"
                     value={formData.uid}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                  />
-                </div>
-                <div className="form-group mb-3">
-                  <label htmlFor="name">Employee Name:</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
                     onChange={handleChange}
                     required
                     className="form-control"
@@ -132,9 +129,19 @@ const LeaveE = () => {
                   />
                 </div>
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-primary">Submit</button>
+                  <button type="submit" className="btn btn-primary">
+                    Submit
+                  </button>
                 </div>
               </form>
+              <div className="text-center mt-3">
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => navigate("/leaveapplication")}
+                >
+                  Leave Application
+                </button>
+              </div>
             </div>
           </div>
         </div>
