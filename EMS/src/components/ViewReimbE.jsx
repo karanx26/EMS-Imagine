@@ -20,6 +20,15 @@ function ViewReimbE() {
     }
   }, [uid]);
 
+  const deleteReimbursement = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8001/reimbursement/${id}`);
+      setReimbursements(reimbursements.filter((reimbursement) => reimbursement._id !== id));
+    } catch (error) {
+      console.error("Error deleting reimbursement:", error);
+    }
+  };
+
   return (
     <div className="container mt-5">
       <h1>View Reimbursement Applications</h1>
@@ -33,6 +42,7 @@ function ViewReimbE() {
             <th>Total Expense</th>
             <th>Uploaded Proofs</th>
             <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -57,6 +67,11 @@ function ViewReimbE() {
                 )}
               </td>
               <td>{reimbursement.status || "Pending"}</td>
+              <td>
+                <button className="btn btn-sm btn-danger" onClick={() => deleteReimbursement(reimbursement._id)}>
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

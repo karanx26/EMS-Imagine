@@ -420,6 +420,17 @@ app.get('/reimbursement/:uid', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+app.delete('/reimbursement/:id', async (req, res) => {
+  try {
+    const reimbursement = await Reimbursement.findByIdAndDelete(req.params.id);
+    if (!reimbursement) {
+      return res.status(404).send('Reimbursement not found');
+    }
+    res.status(200).send('Reimbursement deleted');
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 app.get('/leaves', async (req, res) => {
   try {
