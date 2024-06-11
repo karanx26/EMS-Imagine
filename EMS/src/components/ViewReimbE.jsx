@@ -28,36 +28,64 @@ function ViewReimbE() {
       console.error("Error deleting reimbursement:", error);
     }
   };
+  const tableContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '30px',
+  };
 
+  const tableStyle = {
+    fontSize: "0.875rem",
+    width: '80%',
+    borderCollapse: 'collapse',
+  };
+
+  const thStyles = {
+    border: '1px solid #ddd',
+    padding: '10px',
+    backgroundColor: '#f2f2f2',
+    textAlign: 'center'
+  };
+
+  const tdStyles = {
+    border: '1px solid #ddd',
+    padding: '8px',
+    textAlign: 'center'
+  };
   return (
-    <div className="container mt-5">
-      <h1>View Reimbursement Applications</h1>
-      <table className="table table-bordered">
+  <>
+  <br/>
+    <br/>
+    
+      <h2 className="text-center">REIMBURSEMENT APPLICATIONS</h2>
+      <div style={tableContainerStyle}>
+      <table className="table table-bordered" style={tableStyle}>
+      
         <thead>
           <tr>
-            <th>Expense Type</th>
-            <th>Vehicle Type</th>
-            <th>Total Kms</th>
-            <th>Description</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Total Expense</th>
-            <th>Uploaded Proofs</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th style={thStyles}>Expense Type</th>
+            <th style={thStyles}>Vehicle Type</th>
+            <th style={thStyles}>Total Kms</th>
+            <th style={thStyles}>Description</th>
+            <th style={thStyles}>Start Date</th>
+            <th style={thStyles}>End Date</th>
+            <th style={thStyles}>Total Expense</th>
+            <th style={thStyles}>Uploaded Proofs</th>
+            <th style={thStyles}>Status</th>
+            <th style={thStyles}>Actions</th>
           </tr>
         </thead>
         <tbody>
           {reimbursements.map((reimbursement) => (
             <tr key={reimbursement._id}>
-              <td>{reimbursement.expenseType}</td>
-              <td>{reimbursement.vehicleType || '-'}</td>
-              <td>{reimbursement.totalKms || '-'}</td>
-              <td>{reimbursement.description}</td>
-              <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
-              <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
-              <td>{reimbursement.totalExpense}</td>
-              <td>
+              <td style={tdStyles}>{reimbursement.expenseType}</td>
+              <td style={tdStyles}>{reimbursement.vehicleType || '-'}</td>
+              <td style={tdStyles}>{reimbursement.totalKms || '-'}</td>
+              <td style={tdStyles}>{reimbursement.description}</td>
+              <td style={tdStyles}>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
+              <td style={tdStyles}>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
+              <td style={tdStyles}>{reimbursement.totalExpense}</td>
+              <td style={tdStyles}>
                 {reimbursement.proofs && reimbursement.proofs.length > 0 ? (
                   reimbursement.proofs.map((proof, index) => (
                     <div key={index}>
@@ -70,8 +98,8 @@ function ViewReimbE() {
                   "No Proof Uploaded"
                 )}
               </td>
-              <td>{reimbursement.status}</td>
-              <td>
+              <td style={tdStyles}>{reimbursement.status}</td>
+              <td style={tdStyles}>
                 <button className="btn btn-sm btn-danger" onClick={() => deleteReimbursement(reimbursement._id)}>
                   Delete
                 </button>
@@ -81,6 +109,8 @@ function ViewReimbE() {
         </tbody>
       </table>
     </div>
+    
+  </>
   );
 }
 
