@@ -104,7 +104,8 @@ const individualAttendanceSchema = new mongoose.Schema({
     proofs: { type: [String], required: true },
     vehicleType: { type: String },
     totalKms: { type: Number },
-    totalExpense: { type: Number }
+    totalExpense: { type: Number },
+    status: { type: String, default: "Pending" }
   });
 
 

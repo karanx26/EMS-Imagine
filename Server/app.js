@@ -386,7 +386,7 @@ app.post('/reimbursement', upload.array('proofs'), async (req, res) => {
     console.log('Files:', req.files);
     console.log('Body:', req.body);
 
-    const { uid, expenseType, description, startDate, endDate, vehicleType, totalKms, totalExpense } = req.body;
+    const { uid, expenseType, description, startDate, endDate, vehicleType, totalKms, totalExpense, status } = req.body;
     const proofs = req.files.map(file => file.path);
 
     const newReimbursement = new Reimbursement({
@@ -398,7 +398,8 @@ app.post('/reimbursement', upload.array('proofs'), async (req, res) => {
       proofs,
       vehicleType,
       totalKms,
-      totalExpense
+      totalExpense,
+      status
     });
 
     await newReimbursement.save();
