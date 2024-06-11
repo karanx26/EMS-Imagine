@@ -33,7 +33,6 @@ function ViewReimbE() {
             <th>Total Expense</th>
             <th>Uploaded Proofs</th>
             <th>Status</th>
-            
           </tr>
         </thead>
         <tbody>
@@ -44,12 +43,15 @@ function ViewReimbE() {
               <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
               <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
               <td>{reimbursement.totalExpense}</td>
-              
               <td>
-                {reimbursement.proofs ? (
-                  <a href={`http://localhost:8001/${reimbursement.proofs}`} target="_blank" rel="noopener noreferrer">
-                    View Proof
-                  </a>
+                {reimbursement.proofs && reimbursement.proofs.length > 0 ? (
+                  reimbursement.proofs.map((proof, index) => (
+                    <div key={index}>
+                      <a href={`http://localhost:8001/${proof}`} target="_blank" rel="noopener noreferrer">
+                        View Proof {index + 1}
+                      </a>
+                    </div>
+                  ))
                 ) : (
                   "No Proof Uploaded"
                 )}
