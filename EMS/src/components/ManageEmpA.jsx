@@ -45,7 +45,7 @@ function ManageEmpA() {
             <i className="bi bi-currency-dollar"></i>
             Reimbursement
           </Link>
-          <Link to="/leave-application" className="manage-button">
+          <Link to="/homea/leavea" className="manage-button">
             <i className="bi bi-envelope-open-fill"></i>
             Leave Application
           </Link>
