@@ -434,8 +434,18 @@ app.delete('/reimbursement/:id', async (req, res) => {
 
 app.get('/reimbursements', async (req, res) => {
   try {
-    const reimbursements = await Reimbursement.find().sort({ uid: 1 },{ startDate: 1 } );
-    res.json(reimbursements);
+    const reimbursements = await Reimbursement.find().sort({uid:1},{ startDate: 1 });
+    const employeeData = await employees.find();
+
+    const reimbursementsWithEmployeeName = reimbursements.map((reimbursement) => {
+      const employee = employeeData.find(emp => emp.uid === reimbursement.uid);
+      return {
+        ...reimbursement._doc,
+        employeeName: employee ? employee.name : 'Unknown',
+      };
+    });
+
+    res.json(reimbursementsWithEmployeeName);
   } catch (error) {
     res.status(500).send(error);
   }

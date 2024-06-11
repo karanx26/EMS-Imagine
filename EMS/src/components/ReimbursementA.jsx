@@ -56,15 +56,15 @@ function ReimbursementA() {
 
   return (
     <>
-    <br/>
-    <br/>
-    
+      <br/>
+      <br/>
       <h2 className="text-center">REIMBURSEMENT APPLICATIONS</h2>
       <div style={tableContainerStyle}>
         <table className="table table-bordered" style={tableStyle}>
           <thead>
             <tr>
               <th style={thStyles}>UID</th>
+              <th style={thStyles}>Employee Name</th>
               <th style={thStyles}>Expense Type</th>
               <th style={thStyles}>Vehicle Type</th>
               <th style={thStyles}>Total Kms</th>
@@ -81,6 +81,7 @@ function ReimbursementA() {
             {reimbursements.map((reimbursement) => (
               <tr key={reimbursement._id}>
                 <td style={tdStyles}>{reimbursement.uid}</td>
+                <td style={tdStyles}>{reimbursement.employeeName}</td>
                 <td style={tdStyles}>{reimbursement.expenseType}</td>
                 <td style={tdStyles}>{reimbursement.vehicleType || '-'}</td>
                 <td style={tdStyles}>{reimbursement.totalKms || '-'}</td>
