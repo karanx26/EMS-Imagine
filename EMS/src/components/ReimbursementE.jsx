@@ -13,7 +13,7 @@ const ReimbursementE = () => {
     proofs: [],
     vehicleType: "",
     totalKms: "",
-    totalExpense: 0,
+    totalExpense: "",
   });
 
   const navigate = useNavigate();
@@ -86,6 +86,7 @@ const ReimbursementE = () => {
       data.append("description", formData.description);
       data.append("startDate", formData.startDate);
       data.append("endDate", formData.endDate);
+      data.append("totalExpense", formData.totalExpense);
       formData.proofs.forEach((proof) => {
         data.append("proofs", proof);
       });
@@ -93,7 +94,7 @@ const ReimbursementE = () => {
       if (formData.expenseType === "fuel") {
         data.append("vehicleType", formData.vehicleType);
         data.append("totalKms", formData.totalKms);
-        data.append("totalExpense", formData.totalExpense);
+        // data.append("totalExpense", formData.totalExpense);
       }
 
       const response = await axios.post(
@@ -198,7 +199,11 @@ const ReimbursementE = () => {
                         className="form-control"
                       />
                     </div>
-                    <div className="form-group mb-4">
+                    
+                  </>
+                )}
+
+                <div className="form-group mb-4">
                       <label htmlFor="totalExpense" className="form-label">
                         Total Expense:
                       </label>
@@ -207,12 +212,11 @@ const ReimbursementE = () => {
                         id="totalExpense"
                         name="totalExpense"
                         value={formData.totalExpense}
-                        readOnly
+                        onChange={handleChange}
+                        required
                         className="form-control"
                       />
                     </div>
-                  </>
-                )}
 
                 <div className="form-group mb-4">
                   <label htmlFor="description" className="form-label">

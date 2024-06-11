@@ -413,7 +413,7 @@ app.post('/reimbursement', upload.array('proofs'), async (req, res) => {
 app.get('/reimbursement/:uid', async (req, res) => {
   try {
     const { uid } = req.params;
-    const reimbursements = await Reimbursement.find({ uid });
+    const reimbursements = await Reimbursement.find({ uid }).sort({ startDate: 1 });
     res.json(reimbursements);
   } catch (error) {
     res.status(500).json({ message: error.message });

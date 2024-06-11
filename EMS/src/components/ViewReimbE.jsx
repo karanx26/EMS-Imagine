@@ -26,7 +26,7 @@ function ViewReimbE() {
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th>ID</th>
+            
             <th>Expense Type</th>
             <th>Description</th>
             <th>Start Date</th>
@@ -38,7 +38,6 @@ function ViewReimbE() {
         <tbody>
           {reimbursements.map((reimbursement) => (
             <tr key={reimbursement._id}>
-              <td>{reimbursement._id}</td>
               <td>{reimbursement.expenseType}</td>
               <td>{reimbursement.description}</td>
               <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
