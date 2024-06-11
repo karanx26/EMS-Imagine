@@ -14,6 +14,7 @@ import ManageEmpA from "./components/ManageEmpA";
 import AttendanceA from "./components/AttendanceA";
 import MonthAttendanceA from "./components/MonthAttendanceA";
 import TaskA from "./components/TaskA";
+import LeaveA from "./components/LeaveA";
 import ManageClientA from "./components/ManageClientA";
 import ManageInventoryA from "./components/ManageInventoryA";
 
@@ -58,6 +59,7 @@ function App() {
           <Route path="/homea/manageempa" element={<ManageEmpA />} />
           <Route path="/homea/attendancea" element={<AttendanceA />} />
           <Route path="/homea/taska" element={<TaskA />} />
+          <Route path="/homea/leavea" element={<LeaveA />} />
           <Route path="/homea/addempa" element={<AddEmp />} />
           <Route path="/homea/editempa/:uid" element={<EditEmpa />} />
           <Route path="/homea/monthlyattendancea" element={<MonthAttendanceA />} />
