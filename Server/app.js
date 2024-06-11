@@ -363,7 +363,51 @@ app.post('/attendance', async (req, res) => {
       } catch (error) {
         res.status(400).send({ message: 'Error saving leave data', error });
       }
-    });   
+    });  
+    
+    app.get('/leaves', async (req, res) => {
+      try {
+        const leaves = await Leave.find().sort({ startDate: 1 });
+        const leavesWithNames = await Promise.all(leaves.map(async leave => {
+          const employee = await employees.findOne({ uid: leave.uid });
+          return { ...leave.toObject(), name: employee ? employee.name : 'Unknown' };
+        }));
+        res.json(leavesWithNames);
+      } catch (error) {
+        res.status(500).send(error.message);
+      }
+    });
+
+    app.get('/leaves/:uid', async (req, res) => {
+      try {
+        const { uid } = req.params;
+        const leaves = await Leave.find({ uid });
+        res.json(leaves);
+      } catch (error) {
+        res.status(500).send(error.message);
+      }
+    });
+
+    app.delete('/leaves/:id', async (req, res) => {
+      try {
+        const { id } = req.params;
+        await Leave.findByIdAndDelete(id);
+        res.status(200).send({ message: 'Leave application deleted successfully' });
+      } catch (error) {
+        res.status(500).send(error.message);
+      }
+    });
+
+    app.patch('/leaves/:id/status', async (req, res) => {
+      try {
+        const { id } = req.params;
+        const { status } = req.body;
+        await Leave.findByIdAndUpdate(id, { status });
+        res.status(200).send({ message: 'Leave application status updated successfully' });
+      } catch (error) {
+        res.status(500).send(error.message);
+      }
+    });
 
 
 app.use('/uploads', express.static('uploads'));
@@ -466,14 +510,7 @@ app.patch('/reimbursements/:id', async (req, res) => {
   }
 });
 
-app.get('/leaves', async (req, res) => {
-  try {
-      const leaves = await Leave.find();
-      res.status(200).json(leaves);
-  } catch (error) {
-      res.status(500).json({ message: 'Error fetching leaves', error });
-  }
-});
+
 
 
 

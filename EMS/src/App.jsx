@@ -30,6 +30,7 @@ import ReimbursementE from "./components/ReimbursementE";
 import ViewReimbE from "./components/ViewReimbE";
 import ManageClientE from "./components/ManageClientE";
 import LeaveE from "./components/LeaveE";
+import LeaveApplicationE from "./components/LeaveApplicationE";
 import AddEmp from "./components/AddEmp";
 import EditEmpa from "./components/EditEmpa";
 
@@ -91,6 +92,7 @@ function App() {
           <Route path="/homee/viewreimbe" element={<ViewReimbE />} />
           <Route path="/homee/managecliente" element={<ManageClientE />} />
           <Route path="/homee/leavee" element={<LeaveE />} />
+          <Route path="/homee/leaveapplication" element={<LeaveApplicationE />} />
         </Route>
 
         <Route

@@ -48,7 +48,6 @@ const LeaveE = () => {
       );
       alert("Form submitted successfully");
       resetForm(); // Reset the form after successful submission
-      navigate("/leavestatus"); // Navigate to leave status page after submission
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Error submitting form: " + error.message);
@@ -136,10 +135,10 @@ const LeaveE = () => {
               </form>
               <div className="text-center mt-3">
                 <button
-                  className="btn btn-secondary"
-                  onClick={() => navigate("/leaveapplication")}
+                  className="btn btn-success"
+                  onClick={() => navigate("/homee/leaveapplication")}
                 >
-                  Leave Application
+                  Leave Applications
                 </button>
               </div>
             </div>

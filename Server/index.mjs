@@ -69,17 +69,15 @@ const individualAttendanceSchema = new mongoose.Schema({
 
   const leaveSchema = new mongoose.Schema({
     uid: { type: String, required: true },
-    name: { type: String, required: true },
     leaveType: { type: String, required: true },
     startDate: { type: String, required: true },
     endDate: { type: String, required: true },
-    reason: { type: String, required: true },
-
+    reason: { type: String, required: true },    
+    status: { type: String, default: "Pending" }
   });
 
 
-  const Leave = mongoose.model('Leave', leaveSchema);
-
+  
   
 
   

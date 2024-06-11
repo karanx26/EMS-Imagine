@@ -103,6 +103,18 @@ const ReimbursementE = () => {
       );
       console.log(response.data);
       alert("Form submitted successfully!"); // Show success alert
+      
+      setFormData({
+        uid: "",
+        expenseType: "",
+        description: "",
+        startDate: "",
+        endDate: "",
+        proofs: [],
+        vehicleType: "",
+        totalKms: "",
+        totalExpense: "",
+      }); // Reset form data
     } catch (error) {
       console.error("Error submitting form data:", error);
       alert("Error submitting form. Please try again."); // Show error alert
@@ -316,7 +328,7 @@ const ReimbursementE = () => {
               <div className="form-group text-center">
               <button
                     type="button"
-                    className="btn btn-success mt-5"
+                    className="btn btn-success mt-4"
                     onClick={handleViewApplications}
                   >
                     View Applications
