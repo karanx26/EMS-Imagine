@@ -36,6 +36,8 @@ function ViewReimbE() {
         <thead>
           <tr>
             <th>Expense Type</th>
+            <th>Vehicle Type</th>
+            <th>Total Kms</th>
             <th>Description</th>
             <th>Start Date</th>
             <th>End Date</th>
@@ -49,6 +51,8 @@ function ViewReimbE() {
           {reimbursements.map((reimbursement) => (
             <tr key={reimbursement._id}>
               <td>{reimbursement.expenseType}</td>
+              <td>{reimbursement.vehicleType || '-'}</td>
+              <td>{reimbursement.totalKms || '-'}</td>
               <td>{reimbursement.description}</td>
               <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
               <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>

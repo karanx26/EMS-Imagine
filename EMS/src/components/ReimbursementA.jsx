@@ -15,20 +15,37 @@ function ReimbursementA() {
       });
   }, []);
 
+  const handleUpdateStatus = (id, status) => {
+    axios.patch(`http://localhost:8001/reimbursements/${id}`, { status })
+      .then(response => {
+        setReimbursements(prevState =>
+          prevState.map(reimbursement =>
+            reimbursement._id === id ? response.data : reimbursement
+          )
+        );
+      })
+      .catch(error => {
+        console.error("There was an error updating the status!", error);
+      });
+  };
+
   return (
     <>
       <h1>Reimbursement Applications</h1>
-      <table className="table table-borderd">
+      <table className="table table-bordered">
         <thead>
           <tr>
             <th>UID</th>
             <th>Expense Type</th>
+            <th>Vehicle Type</th>
+            <th>Total Kms</th>
             <th>Description</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Total Expense</th>
-            <th>Uploaded Proofs</th>            
+            <th>Uploaded Proofs</th>
             <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -36,10 +53,11 @@ function ReimbursementA() {
             <tr key={reimbursement._id}>
               <td>{reimbursement.uid}</td>
               <td>{reimbursement.expenseType}</td>
+              <td>{reimbursement.vehicleType || '-'}</td>
+              <td>{reimbursement.totalKms || '-'}</td>
               <td>{reimbursement.description}</td>
               <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
               <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
-              
               <td>{reimbursement.totalExpense}</td>
               <td>
                 {reimbursement.proofs && reimbursement.proofs.length > 0 ? (
@@ -55,6 +73,24 @@ function ReimbursementA() {
                 )}
               </td>
               <td>{reimbursement.status}</td>
+              <td>
+                {reimbursement.status === "Pending" && (
+                  <>
+                    <button
+                      className="btn btn-success me-2"
+                      onClick={() => handleUpdateStatus(reimbursement._id, "Approved")}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleUpdateStatus(reimbursement._id, "Rejected")}
+                    >
+                      Reject
+                    </button>
+                  </>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>

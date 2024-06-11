@@ -441,6 +441,21 @@ app.get('/reimbursements', async (req, res) => {
   }
 });
 
+app.patch('/reimbursements/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const reimbursement = await Reimbursement.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+    res.json(reimbursement);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 app.get('/leaves', async (req, res) => {
   try {
       const leaves = await Leave.find();

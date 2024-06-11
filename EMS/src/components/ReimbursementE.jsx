@@ -47,13 +47,13 @@ const ReimbursementE = () => {
     const km = parseFloat(totalKms);
     let ratePerKm = 0;
     switch (vehicleType) {
-      case "2wheel":
+      case "2 Wheeler":
         ratePerKm = 3;
         break;
-      case "4cng":
+      case "4 CNG":
         ratePerKm = 6;
         break;
-      case "4pd":
+      case "4 Petrol/Diesel":
         ratePerKm = 8;
         break;
       default:
@@ -176,13 +176,13 @@ const ReimbursementE = () => {
                         className="form-select"
                       >
                         <option value="">Select Vehicle Type</option>
-                        <option value="4cng">
+                        <option value="4 CNG">
                           4 Wheeler (CNG) (6/- per Km)
                         </option>
-                        <option value="4pd">
+                        <option value="4 Petrol/Diesel">
                           4 Wheeler (Petrol/Diesel) (8/- per Km)
                         </option>
-                        <option value="2wheel">2 Wheeler (3/- per Km)</option>
+                        <option value="2 Wheeler">2 Wheeler (3/- per Km)</option>
                       </select>
                     </div>
                     <div className="form-group mb-4">
