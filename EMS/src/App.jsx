@@ -35,6 +35,7 @@ import AddEmp from "./components/AddEmp";
 import EditEmpa from "./components/EditEmpa";
 
 import AddClient from "./components/AddClient";
+import EditClient from "./components/EditClient";
 
 
 import PrivateRoute from "./components/PrivateRoute"; // Import the PrivateRoute component
@@ -68,6 +69,7 @@ function App() {
           <Route path="/homea/editempa/:uid" element={<EditEmpa />} />
           <Route path="/homea/monthlyattendancea" element={<MonthAttendanceA />} />
           <Route path="/homea/reimba" element={<ReimbursementA />} />
+          <Route path="/homea/editclient/:uid" element={<EditClient />} />
 
           <Route path="/homea/manageclienta" element={
             <ManageClientA />

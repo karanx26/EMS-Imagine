@@ -525,9 +525,41 @@ app.post('/addclient', (req, res) => {
 });
 
 app.get('/clients', (req, res) => {
-  Client.find()
+  Client.find().sort({ uid: 1 })
     .then(clients => res.json(clients))
     .catch(err => res.status(400).json('Error: ' + err));
+});
+
+app.get('/clients/:uid', async (req, res) => {
+  try {
+    const client = await Client.findOne({ uid: req.params.uid });
+    if (!client) return res.status(404).send('Client not found');
+    res.status(200).json(client);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+// Update a client by UID
+app.put('/clients/:uid', async (req, res) => {
+  try {
+    const client = await Client.findOneAndUpdate({ uid: req.params.uid }, req.body, { new: true });
+    if (!client) return res.status(404).send('Client not found');
+    res.status(200).json(client);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+// Delete a client by UID
+app.delete('/clients/:uid', async (req, res) => {
+  try {
+    const client = await Client.findOneAndDelete({ uid: req.params.uid });
+    if (!client) return res.status(404).send('Client not found');
+    res.status(200).json({ message: 'Client deleted successfully' });
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 

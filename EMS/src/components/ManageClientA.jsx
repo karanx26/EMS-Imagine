@@ -13,11 +13,12 @@ function ManageClientA() {
     window.localStorage.removeItem("isLoggedIn");
 
     // Fetch clients from the backend
-    axios.get("http://localhost:8001/clients")
-      .then(response => {
+    axios
+      .get("http://localhost:8001/clients")
+      .then((response) => {
         setClients(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching clients:", error);
       });
   }, []);
@@ -26,8 +27,8 @@ function ManageClientA() {
     setFilter(e.target.value);
   };
 
-  const filteredClients = clients.filter(client => 
-    filter === "" || client.clientType === filter
+  const filteredClients = clients.filter(
+    (client) => filter === "" || client.clientType === filter
   );
 
   return (
@@ -39,44 +40,61 @@ function ManageClientA() {
             Add Clients
           </Link>
         </div>
+        <br />
 
-        <div className="filter-container">
-          <label htmlFor="clientTypeFilter">Filter by Client Type:</label>
-          <select
-            id="clientTypeFilter"
-            value={filter}
-            onChange={handleFilterChange}
-            className="form-control"
-          >
-            <option value="">All</option>
-            <option value="Retail">Retail</option>
-            <option value="Commercial">Commercial</option>
-            <option value="Government">Government</option>
-          </select>
+        <h2 className="text-center">CLIENT LIST</h2>
+        <br />
+
+        <div className="card">
+          <div className="card-body">
+            <div className="form-group d-flex align-items-center">
+              <label htmlFor="clientTypeFilter" className="mr-2">
+                Client Type:
+              </label>
+              <select
+                id="clientTypeFilter"
+                value={filter}
+                onChange={handleFilterChange}
+                className="form-control w-auto"
+              >
+                <option value="">All</option>
+                <option value="Retail">Retail</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Government">Government</option>
+              </select>
+            </div>
+          </div>
         </div>
+        <br />
 
-        <table className="table table-striped table-bordered client-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Client Type</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Google Map Location</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredClients.map(client => (
-              <tr key={client.uid}>
-                <td>{client.name}</td>
-                <td>{client.clientType}</td>
-                <td>{client.phone}</td>
-                <td>{client.address}</td>
-                <td><a href={client.locationLink} target="_blank" rel="noopener noreferrer">View Location</a></td>
+        <div className="table-container">
+          <table className="table table-bordered client-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>UID</th>
+                <th>Name</th>
+                <th>Client Type</th>
+                <th>Phone</th>                
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredClients.map((client, index) => (
+                <tr key={client.uid}>
+                  <td>{index + 1}</td>
+                  <td>{client.uid}</td>
+                  <td>{client.name}</td>
+                  <td>{client.clientType}</td>
+                  <td>{client.phone}</td>
+                  <td>
+                        <Link to={`/homea/editclient/${client.uid}`} className="btn btn-primary btn-sm">View</Link>
+                      </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
