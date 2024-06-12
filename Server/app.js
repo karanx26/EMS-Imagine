@@ -3,13 +3,15 @@ import multer from "multer";
 
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema} from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema} from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 const attendance = mongoose.model('attendance', attendanceSchema);
 const Task = mongoose.model('Task', taskSchema);
 const Leave = mongoose.model('Leave', leaveSchema);
 const Reimbursement = mongoose.model('Reimbursement', ReimbursementSchema);
+
+const Client = mongoose.model('Client', clientSchema);
 
 
 
@@ -34,14 +36,7 @@ app.get("/admins", async (req, res) => {
     }
 });
 
-app.get("/clients", async (req, res) => {
-  try {
-      const data = await collectionc.find({}, 'uid password').lean();
-      res.json(data);
-  } catch (err) {
-      res.status(500).json(err);
-  }
-});
+
 
 app.get("/employees", async (req, res) => {
     try {
@@ -509,6 +504,35 @@ app.patch('/reimbursements/:id', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+
+app.post('/addclient', (req, res) => {
+  const { uid, password, clientType, name, phone, address, locationLink } = req.body;
+
+  const newClient = new Client({
+    uid,
+    password,
+    clientType,
+    name,
+    phone,
+    address,
+    locationLink
+  });
+
+  newClient.save()
+    .then(client => res.json(client))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+app.get("/clients", async (req, res) => {
+  try {
+      const data = await Client.find({}, 'uid password clientType name phone address locationLink').lean();
+      res.json(data);
+  } catch (err) {
+      res.status(500).json(err);
+  }
+});
+
 
 
 

@@ -6,6 +6,11 @@ function ProfileC() {
   const [clientData, setclientData] = useState({
     uid: "",
     password: "",
+    name: "",
+    phone: "",
+    address: "",
+    locationLink: "",
+    clientType: ""
   });
 
   useEffect(() => {
@@ -43,10 +48,42 @@ function ProfileC() {
               <div className="card-body">
                 <form>
                   <div className="form-group mb-3">
-                    <label><b>Unique Id : </b> {clientData.uid}</label>
+                    <label>
+                      <b>Unique Id : </b> {clientData.uid}
+                    </label>
                     <br />
                     <br />
-                    <label><b>Password : </b> {clientData.password}</label>
+                    <label>
+                      <b>Password : </b> {clientData.password}
+                    </label>
+                    <br />
+                    <br />
+                    <label>
+                      <b>Client Type : </b> {clientData.clientType}
+                    </label>
+                    <br />
+                    <br />
+                    <label>
+                      <b>Name : </b> {clientData.name}
+                    </label>
+                    <br />
+                    <br />
+                    <label>
+                      <b>Phone no : </b> {clientData.phone}
+                    </label>
+                    <br />
+                    <br />
+                    <label>
+                      <b>Address : </b> {clientData.address}
+                    </label>
+                    <br />
+                    <br />
+                    <label>
+                      <b>Location Link : </b> {clientData.locationLink}
+                    </label>
+                    <br />
+                    
+
                   </div>
                 </form>
               </div>
@@ -56,7 +93,6 @@ function ProfileC() {
       </div>
     </>
   );
-
-};
+}
 
 export default ProfileC;

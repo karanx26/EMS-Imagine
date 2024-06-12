@@ -30,8 +30,6 @@ const newSchema = new mongoose.Schema({
 
 const collectiona = mongoose.model("admins", newSchema);
 
-const collectionc = mongoose.model("clients", newSchema);
-
 const employeeSchema = new mongoose.Schema({
     uid: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -106,11 +104,25 @@ const individualAttendanceSchema = new mongoose.Schema({
     status: { type: String, default: "Pending" }
   });
 
+  const clientSchema = new mongoose.Schema({
+    uid: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    clientType: { type: String, required: true },
+    name: { type: String, required: true },
+    phone: { type: String, required: true },
+    address: { type: String, required: true },
+    locationLink: { type: String, required: true }    
+  });
+
+  
+
+const collectionc = mongoose.model("clients", clientSchema);
+
 
 
 
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema};
+export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema};
 
