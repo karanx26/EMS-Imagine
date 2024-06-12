@@ -46,46 +46,33 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
   
-  /* Reduce margin-top for the table */
-  .table {
-    margin-top: 0;
+
+  .filter-container {
+    margin-bottom: 20px;
   }
   
-  /* Media query for smaller screens */
-  @media (max-width: 600px) {
-    .button-container {
-        flex-direction: column; /* Stack buttons vertically */
-        align-items: center; /* Center align the buttons */
-        gap: 15px; /* Increase gap between buttons */
-    }
+  .client-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
   }
   
-  /* Custom CSS for the card container and table styling */
-  .card {
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  .client-table th,
+  .client-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
   }
   
-  .card-header {
-    background-color: #f8f9fa; /* Light gray background for header */
-    border-bottom: 1px solid #e0e0e0;
-    padding: 15px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+  .client-table th {
+    background-color: #f2f2f2;
   }
   
-  .card-header h3 {
-    margin: 0;
-    font-size: 1.25rem;
-    color: #333;
+  .client-table a {
+    color: #007bff;
+    text-decoration: none;
   }
   
-  .card-body {
-    padding: 20px;
+  .client-table a:hover {
+    text-decoration: underline;
   }
-  
-  .table.custom-table th, .table.custom-table td {
-    padding: 10px 15px; /* Adjust padding for more space between columns */
-  }
-  
-  

@@ -524,13 +524,10 @@ app.post('/addclient', (req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-app.get("/clients", async (req, res) => {
-  try {
-      const data = await Client.find({}, 'uid password clientType name phone address locationLink').lean();
-      res.json(data);
-  } catch (err) {
-      res.status(500).json(err);
-  }
+app.get('/clients', (req, res) => {
+  Client.find()
+    .then(clients => res.json(clients))
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 
