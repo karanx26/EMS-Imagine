@@ -16,7 +16,7 @@ import MonthAttendanceA from "./components/MonthAttendanceA";
 import TaskA from "./components/TaskA";
 import LeaveA from "./components/LeaveA";
 import ReimbursementA from "./components/ReimbursementA";
-import ManageClientA from "./components/ManageClientA";
+import ManageClient from "./components/ManageClient";
 import ManageInventoryA from "./components/ManageInventoryA";
 
 
@@ -28,7 +28,6 @@ import TaskE from "./components/TaskE";
 import AttendanceE from "./components/AttendanceE";
 import ReimbursementE from "./components/ReimbursementE";
 import ViewReimbE from "./components/ViewReimbE";
-import ManageClientE from "./components/ManageClientE";
 import LeaveE from "./components/LeaveE";
 import LeaveApplicationE from "./components/LeaveApplicationE";
 import AddEmp from "./components/AddEmp";
@@ -68,7 +67,7 @@ function App() {
           <Route path="/homea/reimba" element={<ReimbursementA />} />
 
           <Route path="/homea/manageclienta" element={
-            <ManageClientA />
+            <ManageClient />
             
             } />
           <Route
@@ -90,7 +89,7 @@ function App() {
           <Route path="/homee/attendance/:uid" element={<AttendanceE />} />
           <Route path="/homee/reimbursemente" element={<ReimbursementE />} />
           <Route path="/homee/viewreimbe" element={<ViewReimbE />} />
-          <Route path="/homee/managecliente" element={<ManageClientE />} />
+          <Route path="/homee/managecliente" element={<ManageClient />} />
           <Route path="/homee/leavee" element={<LeaveE />} />
           <Route path="/homee/leaveapplication" element={<LeaveApplicationE />} />
         </Route>

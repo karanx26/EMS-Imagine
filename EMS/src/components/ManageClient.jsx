@@ -3,7 +3,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
 
-function ManageClientE() 
+function ManageClient() 
 {
   localStorage.removeItem("isLoggedIn");
   window.localStorage.removeItem("isLoggedIn");
@@ -16,4 +16,4 @@ function ManageClientE()
   
 
 
-export default ManageClientE;
+export default ManageClient;
