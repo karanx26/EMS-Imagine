@@ -54,6 +54,10 @@ function EditClient() {
     }
   };
 
+  const handleShowDocuments = () => {
+    navigate(`/homea/clientdocs/${uid}`);
+  };
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -109,6 +113,7 @@ function EditClient() {
                 <div className="form-group row">
                   <div className="d-flex justify-content-center">
                     <button type="button" className="btn btn-primary mt-3" style={{ marginRight: '20px' }} onClick={handleUpdate}>Update</button>
+                    <button type="button" className="btn btn-success mt-3" style={{ marginLeft: '20px',marginRight: '20px' }} onClick={handleShowDocuments}>Show Documents</button>
                     <button type="button" className="btn btn-danger mt-3" style={{ marginLeft: '20px' }} onClick={handleDelete}>Delete</button>
                   </div>
                 </div>

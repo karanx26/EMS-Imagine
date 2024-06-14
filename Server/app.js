@@ -1,9 +1,16 @@
 import express, { json, urlencoded } from "express";
 import multer from "multer";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema} from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema,clientDocumentSchema} from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 const attendance = mongoose.model('attendance', attendanceSchema);
@@ -12,7 +19,7 @@ const Leave = mongoose.model('Leave', leaveSchema);
 const Reimbursement = mongoose.model('Reimbursement', ReimbursementSchema);
 
 const Client = mongoose.model('Client', clientSchema);
-
+const ClientDocument = mongoose.model('ClientDocument', clientDocumentSchema);
 
 
 import cors from "cors";
@@ -407,8 +414,6 @@ app.post('/attendance', async (req, res) => {
 
 app.use('/uploads', express.static('uploads'));
 
-
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
@@ -456,18 +461,48 @@ app.get('/reimbursement/:uid', async (req, res) => {
     const reimbursements = await Reimbursement.find({ uid }).sort({ startDate: 1 });
     res.json(reimbursements);
   } catch (error) {
+    console.error("Error fetching reimbursements:", error);
     res.status(500).json({ message: error.message });
   }
 });
+
 app.delete('/reimbursement/:id', async (req, res) => {
   try {
-    const reimbursement = await Reimbursement.findByIdAndDelete(req.params.id);
+    const reimbursement = await Reimbursement.findById(req.params.id);
     if (!reimbursement) {
+      console.error("Reimbursement not found:", req.params.id);
       return res.status(404).send('Reimbursement not found');
     }
+
+    console.log("Deleting reimbursement:", reimbursement);
+
+    // Delete the uploaded proofs
+    if (reimbursement.proofs && reimbursement.proofs.length > 0) {
+      for (const proof of reimbursement.proofs) {
+        // Ensure the proof is just the filename, not the full path
+        const proofFilename = path.basename(proof);
+        const filePath = path.join(__dirname, 'uploads', proofFilename);
+
+        console.log(`Attempting to delete file: ${filePath}`); // Log the file path for debugging
+
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error(`Error deleting file ${filePath}:`, err);
+            return res.status(500).send({ message: `Error deleting file ${filePath}: ${err.message}` });
+          } else {
+            console.log(`Successfully deleted file: ${filePath}`);
+          }
+        });
+      }
+    }
+
+    // Delete the reimbursement entry
+    await Reimbursement.findByIdAndDelete(req.params.id);
+    console.log("Successfully deleted reimbursement and associated files");
     res.status(200).send('Reimbursement deleted');
   } catch (error) {
-    res.status(500).send(error);
+    console.error("Error deleting reimbursement:", error);
+    res.status(500).send({ message: error.message });
   }
 });
 
@@ -562,10 +597,88 @@ app.delete('/clients/:uid', async (req, res) => {
   }
 });
 
+app.use('/clientdocs', express.static('clientdocs'));
 
+const clientDocsStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'clientdocs/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
 
+const clientDocsUpload = multer({ storage: clientDocsStorage });
 
+app.post('/clientDocuments/:uid/upload', clientDocsUpload.array('docs'), async (req, res) => {
+  try {
+    console.log('Files:', req.files);
+    console.log('Body:', req.body);
 
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: 'No files uploaded.' });
+    }
+
+    const { uid } = req.params;
+    const { documentName } = req.body;
+    const uploadDate = req.body.uploadDate || Date.now();
+    const docs = req.files.map(file => file.path);
+
+    const newClientDocument = new ClientDocument({
+      uid,
+      documentName,
+      uploadDate,
+      docs,
+    });
+
+    await newClientDocument.save();
+    res.status(200).json({ message: 'Document uploaded successfully', document: newClientDocument });
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+app.get('/clientDocuments/:uid', async (req, res) => {
+  try {
+    const { uid } = req.params;
+    const documents = await ClientDocument.find({ uid });
+    res.status(200).json(documents);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.delete('/clientDocuments/:uid/:docId', async (req, res) => {
+  try {
+    const { uid, docId } = req.params;
+    console.log(`Deleting document with ID: ${docId} for user: ${uid}`);
+
+    const document = await ClientDocument.findById(docId);
+
+    if (!document) {
+      console.error(`Document with ID: ${docId} not found.`);
+      return res.status(404).json({ message: 'Document not found' });
+    }
+
+    // Remove files from the file system
+    document.docs.forEach(docPath => {
+      fs.unlink(docPath, (err) => {
+        if (err) {
+          console.error(`Error deleting file: ${docPath}`, err);
+        } else {
+          console.log(`Successfully deleted file: ${docPath}`);
+        }
+      });
+    });
+
+    await ClientDocument.deleteOne({ _id: docId }); // Properly remove the document from the database
+    res.status(200).json({ message: 'Document deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting document:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 app.listen(8001, () => {

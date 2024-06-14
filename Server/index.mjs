@@ -114,6 +114,26 @@ const individualAttendanceSchema = new mongoose.Schema({
     locationLink: { type: String, required: true }    
   });
 
+  const clientDocumentSchema = new mongoose.Schema({
+    uid: {
+      type: String,
+      required: true
+    },
+    documentName: {
+      type: String,
+      required: true
+    },
+    uploadDate: {
+      type: Date,
+      default: Date.now,
+    },
+    docs:{
+      type: [String],
+      required: true
+    }
+  });
+  
+
   
 
 const collectionc = mongoose.model("clients", clientSchema);
@@ -124,5 +144,5 @@ const collectionc = mongoose.model("clients", clientSchema);
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema};
+export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema,clientDocumentSchema};
 
