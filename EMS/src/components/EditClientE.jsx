@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import "../styles/EditClient.css"; // Import custom CSS for additional styling if needed
 
-function EditClient() {
+function EditClientE() {
   const { uid } = useParams();
   const navigate = useNavigate();
   const [client, setClient] = useState(null);
@@ -29,7 +29,7 @@ function EditClient() {
       const res = await axios.put(`http://localhost:8001/clients/${uid}`, client);
       if (res.status === 200) {
         alert("Client details updated successfully!");
-        navigate("/homea/manageclienta");
+        navigate("/homee/managecliente");
       } else {
         alert("Failed to update client details.");
       }
@@ -44,7 +44,7 @@ function EditClient() {
       const res = await axios.delete(`http://localhost:8001/clients/${uid}`);
       if (res.status === 200) {
         alert("Client deleted successfully!");
-        navigate("/homea/manageclienta");
+        navigate("/homee/managecliente");
       } else {
         alert("Failed to delete client.");
       }
@@ -55,7 +55,7 @@ function EditClient() {
   };
 
   const handleShowDocuments = () => {
-    navigate(`/homea/clientdocs/${uid}`);
+    navigate(`/homee/clientdocs/${uid}`);
   };
 
   return (
@@ -126,4 +126,4 @@ function EditClient() {
   );
 }
 
-export default EditClient;
+export default EditClientE;

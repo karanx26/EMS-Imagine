@@ -34,8 +34,10 @@ import ManageClientE from "./components/ManageClientE";
 import AddEmp from "./components/AddEmp";
 import EditEmpa from "./components/EditEmpa";
 
-import AddClient from "./components/AddClient";
-import EditClient from "./components/EditClient";
+import AddClientA from "./components/AddClientA";
+import AddClientE from "./components/AddClientE";
+import EditClientA from "./components/EditClientA";
+import EditClientE from "./components/EditClientE";
 import ClientDocs from "./components/ClientDocs";
 
 
@@ -70,14 +72,14 @@ function App() {
           <Route path="/homea/editempa/:uid" element={<EditEmpa />} />
           <Route path="/homea/monthlyattendancea" element={<MonthAttendanceA />} />
           <Route path="/homea/reimba" element={<ReimbursementA />} />
-          <Route path="/homea/editclient/:uid" element={<EditClient />} />
+          <Route path="/homea/editclient/:uid" element={<EditClientA />} />
           <Route path="/homea/clientdocs/:uid" element={<ClientDocs />} />
 
           <Route path="/homea/manageclienta" element={
             <ManageClientA />
             
             } />
-          <Route path="/homea/addclienta" element={<AddClient />} />
+          <Route path="/homea/addclienta" element={<AddClientA />} />
           <Route
             path="/homea/manageinventorya"
             element={<ManageInventoryA />}
@@ -98,6 +100,9 @@ function App() {
           <Route path="/homee/reimbursemente" element={<ReimbursementE />} />
           <Route path="/homee/viewreimbe" element={<ViewReimbE />} />
           <Route path="/homee/managecliente" element={<ManageClientE />} />
+          <Route path="/homee/addcliente" element={<AddClientE />} />
+          <Route path="/homee/editcliente/:uid" element={<EditClientE />} />  
+          <Route path="/homee/clientdocs/:uid" element={<ClientDocs />} />        
           <Route path="/homee/leavee" element={<LeaveE />} />
           <Route path="/homee/leaveapplication" element={<LeaveApplicationE />} />
         </Route>

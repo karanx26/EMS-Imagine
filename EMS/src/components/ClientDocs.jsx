@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function ClientDocs() {
   const { uid } = useParams();
@@ -61,43 +61,53 @@ function ClientDocs() {
 
   return (
     <div className="container mt-5">
-      <h2>Client Documents</h2>
-      <form onSubmit={handleUpload}>
-        <div className="form-group mb-3">
-          <label>Document Name:</label>
-          <input
-            type="text"
-            className="form-control"
-            value={documentName}
-            onChange={(e) => setDocumentName(e.target.value)}
-            required
-          />
+      <div className="card" style={{ maxWidth: "500px", margin: "0 auto" }}>
+        <div className="card-body">
+          <h4 className="card-title text-center mb-3">Upload New Document</h4>
+          <form onSubmit={handleUpload}>
+            <div className="form-group mb-4">
+              <label htmlFor="documentName">Document Name:</label>
+              <input
+                id="documentName"
+                type="text"
+                className="form-control"
+                value={documentName}
+                onChange={(e) => setDocumentName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group mb-3">
+              <label htmlFor="fileUpload">Upload Document:</label>
+              <input
+                id="fileUpload"
+                type="file"
+                className="form-control"
+                onChange={handleFileChange}
+                required
+              />
+            </div>
+            <div className="d-flex justify-content-center">
+            <button type="submit" className="btn btn-sm btn-primary text-center w-20">Upload</button>
+            </div>
+          </form>
         </div>
-        <div className="form-group mb-3">
-          <label>Upload Document:</label>
-          <input
-            type="file"
-            className="form-control"
-            onChange={handleFileChange}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">Upload</button>
-      </form>
-      <h3 className="mt-5">Existing Documents</h3>
+      </div>
+      <h4 className="mt-5 text-center">Existing Documents</h4>
       {documents.length === 0 ? (
-        <p>No documents uploaded.</p>
+        <p className="text-center">No documents uploaded.</p>
       ) : (
-        <ul className="list-group">
-          {documents.map((doc) => (
-            <li key={doc._id} className="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <strong>{doc.documentName}</strong> - <a href={`http://localhost:8001/${doc.docs[0]}`} target="_blank" rel="noopener noreferrer">View</a>
-              </div>
-              <button className="btn btn-danger btn-sm" onClick={() => handleDelete(doc._id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
+        <div className="card mt-3" style={{ maxWidth: "600px", margin: "0 auto" }}>
+          <ul className="list-group list-group-flush">
+            {documents.map((doc) => (
+              <li key={doc._id} className="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>{doc.documentName}</strong> - <a href={`http://localhost:8001/${doc.docs[0]}`} target="_blank" rel="noopener noreferrer">View</a>
+                </div>
+                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(doc._id)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );

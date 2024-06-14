@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AddClient = () => {
+const AddClientE = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     uid: "",
@@ -37,7 +37,7 @@ const AddClient = () => {
           locationLink: "",
           clientType: ""
         });
-        navigate("/homea/manageclienta");
+        navigate("/homee/managecliente");
       })
       .catch(error => {
         console.error("Error adding client:", error);
@@ -153,4 +153,4 @@ const AddClient = () => {
   );
 };
 
-export default AddClient;
+export default AddClientE;
