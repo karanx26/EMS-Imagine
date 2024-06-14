@@ -14,6 +14,8 @@ const LeaveE = () => {
     reason: "",
   });
 
+  
+
   useEffect(() => {
     const uid = localStorage.getItem("uid");
     if (uid) {
