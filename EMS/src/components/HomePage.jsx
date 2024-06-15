@@ -11,12 +11,16 @@ function HomePage() {
           </div>
           <ul>
             <li>
-              <a href="/login">LOGIN</a>
+              {/* Empty list item */}
             </li>
           </ul>
         </nav>
       </div>
-      <div id="bgimg"></div>
+      <div id="bgimg">
+        <div id="login">
+          <a href="/login" className="login-button">LOGIN</a>
+        </div>
+      </div>
 
       <div id="section">
         <h1>ABOUT US</h1>
