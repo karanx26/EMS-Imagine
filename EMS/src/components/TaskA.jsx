@@ -79,7 +79,6 @@ const TaskA = () => {
       await axios.delete(`http://localhost:8001/tasks/${taskId}`);
       setPendingTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
       setCompletedTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
-      alert("Task deleted successfully!");
     } catch (error) {
       console.error("Error deleting task:", error);
       alert("Error deleting task.");
@@ -227,30 +226,34 @@ const TaskA = () => {
           <div style={headingCardStyle}>
             <h3>PENDING TASKS</h3>
           </div>
-          <table style={tableStyle}>
-            <thead>
-              <tr>
-                <th style={{ ...thTdStyle, ...thStyle }}>Task</th>
-                <th style={{ ...thTdStyle, ...thStyle }}>Employee Name</th>
-                <th style={{ ...thTdStyle, ...thStyle }}>Deadline</th>
-                <th style={{ ...thTdStyle, ...thStyle }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pendingTasks.map((task) => (
-                <tr key={task._id}>
-                  <td style={thTdStyle}>{task.task}</td>
-                  <td style={thTdStyle}>{employees.find(e => e.uid === task.uid)?.name}</td>
-                  <td style={thTdStyle}>{new Date(task.deadline).toLocaleDateString()}</td>
-                  <td style={thTdStyle}>
-                    <button style={buttonStyleDelete} onClick={() => handleDeleteTask(task._id)}>
-                      Delete
-                    </button>
-                  </td>
+          {pendingTasks.length === 0 ? (
+            <p style={{ textAlign: "center" }}>No pending tasks found.</p>
+          ) : (
+            <table style={tableStyle}>
+              <thead>
+                <tr>
+                  <th style={{ ...thTdStyle, ...thStyle }}>Task</th>
+                  <th style={{ ...thTdStyle, ...thStyle }}>Employee Name</th>
+                  <th style={{ ...thTdStyle, ...thStyle }}>Deadline</th>
+                  <th style={{ ...thTdStyle, ...thStyle }}>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {pendingTasks.map((task) => (
+                  <tr key={task._id}>
+                    <td style={thTdStyle}>{task.task}</td>
+                    <td style={thTdStyle}>{employees.find(e => e.uid === task.uid)?.name}</td>
+                    <td style={thTdStyle}>{new Date(task.deadline).toLocaleDateString()}</td>
+                    <td style={thTdStyle}>
+                      <button style={buttonStyleDelete} onClick={() => handleDeleteTask(task._id)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       )}
       {showCompleted && (
@@ -258,30 +261,34 @@ const TaskA = () => {
           <div style={headingCardStyle}>
             <h3>COMPLETED TASKS</h3>
           </div>
-          <table style={tableStyle}>
-            <thead>
-              <tr>
-                <th style={{ ...thTdStyle, ...thStyle }}>Task</th>
-                <th style={{ ...thTdStyle, ...thStyle }}>Employee Name</th>
-                <th style={{ ...thTdStyle, ...thStyle }}>Deadline</th>
-                <th style={{ ...thTdStyle, ...thStyle }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {completedTasks.map((task) => (
-                <tr key={task._id}>
-                  <td style={thTdStyle}>{task.task}</td>
-                  <td style={thTdStyle}>{employees.find(e => e.uid === task.uid)?.name}</td>
-                  <td style={thTdStyle}>{new Date(task.deadline).toLocaleDateString()}</td>
-                  <td style={thTdStyle}>
-                    <button style={buttonStyleDelete} onClick={() => handleDeleteTask(task._id)}>
-                      Delete
-                    </button>
-                  </td>
+          {completedTasks.length === 0 ? (
+            <p style={{ textAlign: "center" }}>No completed tasks found.</p>
+          ) : (
+            <table style={tableStyle}>
+              <thead>
+                <tr>
+                  <th style={{ ...thTdStyle, ...thStyle }}>Task</th>
+                  <th style={{ ...thTdStyle, ...thStyle }}>Employee Name</th>
+                  <th style={{ ...thTdStyle, ...thStyle }}>Deadline</th>
+                  <th style={{ ...thTdStyle, ...thStyle }}>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {completedTasks.map((task) => (
+                  <tr key={task._id}>
+                    <td style={thTdStyle}>{task.task}</td>
+                    <td style={thTdStyle}>{employees.find(e => e.uid === task.uid)?.name}</td>
+                    <td style={thTdStyle}>{new Date(task.deadline).toLocaleDateString()}</td>
+                    <td style={thTdStyle}>
+                      <button style={buttonStyleDelete} onClick={() => handleDeleteTask(task._id)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       )}
     </>

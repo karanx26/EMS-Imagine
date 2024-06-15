@@ -6,6 +6,7 @@ const LeaveA = () => {
   const [leaves, setLeaves] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filter, setFilter] = useState("Pending");
 
   useEffect(() => {
     const fetchLeaves = async () => {
@@ -25,12 +26,22 @@ const LeaveA = () => {
   const handleStatusChange = async (id, status) => {
     try {
       await axios.patch(`http://localhost:8001/leaves/${id}/status`, { status });
-      // Update the state to reflect the status change
       setLeaves(leaves.map(leave => leave._id === id ? { ...leave, status } : leave));
     } catch (error) {
       console.error("Error updating leave status:", error);
     }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8001/leaves/${id}`);
+      setLeaves(leaves.filter(leave => leave._id !== id));
+    } catch (error) {
+      console.error("Error deleting leave:", error);
+    }
+  };
+
+  const filteredLeaves = filter === "All" ? leaves : leaves.filter(leave => leave.status === filter);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -68,42 +79,54 @@ const LeaveA = () => {
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">LEAVE APPLICATIONS</h2>
+      <div className="mb-4 text-center">
+        <button className="btn btn-primary me-2" onClick={() => setFilter("Pending")}>Pending</button>
+        <button className="btn btn-success me-2" onClick={() => setFilter("Approved")}>Approved</button>
+        <button className="btn btn-danger" onClick={() => setFilter("Rejected")}>Rejected</button>
+      </div>
       <div style={tableContainerStyle}>
-      <table className="table table-bordered" style={tableStyle}>
-        <thead>
-          <tr>
-            <th style={thStyles}>UID</th>
-            <th style={thStyles}>Name</th>
-            <th style={thStyles}>Leave Type</th>
-            <th style={thStyles}>Start Date</th>
-            <th style={thStyles}>End Date</th>
-            <th style={thStyles}>Reason</th>
-            <th style={thStyles}>Status</th> 
-            <th style={thStyles}>Actions</th> 
-          </tr>
-        </thead>
-        <tbody>
-          {leaves.map((leave) => (
-            <tr key={leave._id}>
-              <td style={tdStyles}>{leave.uid}</td>
-              <td style={tdStyles}>{leave.name}</td>
-              <td style={tdStyles}>{leave.leaveType}</td>
-              <td style={tdStyles}>{leave.startDate}</td>
-              <td style={tdStyles}>{leave.endDate}</td>
-              <td style={tdStyles}>{leave.reason}</td>
-              <td style={tdStyles}>{leave.status}</td>
-              <td style={tdStyles}>
-                <button className="btn btn-sm btn-success me-2" onClick={() => handleStatusChange(leave._id, "Approved")}>
-                  Approve
-                </button>
-                <button className="btn btn-sm btn-danger" onClick={() => handleStatusChange(leave._id, "Rejected")}>
-                  Reject
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        {filteredLeaves.length > 0 ? (
+          <table className="table table-bordered" style={tableStyle}>
+            <thead>
+              <tr>
+                <th style={thStyles}>UID</th>
+                <th style={thStyles}>Name</th>
+                <th style={thStyles}>Leave Type</th>
+                <th style={thStyles}>Start Date</th>
+                <th style={thStyles}>End Date</th>
+                <th style={thStyles}>Reason</th>
+                <th style={thStyles}>Status</th> 
+                <th style={thStyles}>Actions</th> 
+              </tr>
+            </thead>
+            <tbody>
+              {filteredLeaves.map((leave) => (
+                <tr key={leave._id}>
+                  <td style={tdStyles}>{leave.uid}</td>
+                  <td style={tdStyles}>{leave.name}</td>
+                  <td style={tdStyles}>{leave.leaveType}</td>
+                  <td style={tdStyles}>{new Date(leave.startDate).toLocaleDateString()}</td>
+                  <td style={tdStyles}>{new Date(leave.endDate).toLocaleDateString()}</td>
+                  <td style={tdStyles}>{leave.reason}</td>
+                  <td style={tdStyles}>{leave.status}</td>
+                  <td style={tdStyles}>
+                    <button className="btn btn-sm btn-success me-2" onClick={() => handleStatusChange(leave._id, "Approved")}>
+                      Approve
+                    </button>
+                    <button className="btn btn-sm btn-danger me-2" onClick={() => handleStatusChange(leave._id, "Rejected")}>
+                      Reject
+                    </button>
+                    <button className="btn btn-sm btn-secondary" onClick={() => handleDelete(leave._id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div>No leave applications found.</div>
+        )}
       </div>
     </div>
   );
