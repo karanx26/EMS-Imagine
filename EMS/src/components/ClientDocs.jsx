@@ -48,15 +48,18 @@ function ClientDocs() {
   };
 
   const handleDelete = async (docId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this document?");
+    if (!confirmDelete) {
+    
     try {
       const res = await axios.delete(`http://localhost:8001/clientDocuments/${uid}/${docId}`);
       console.log('Delete response:', res.data);
       setDocuments(documents.filter(doc => doc._id !== docId));
-      alert("Document deleted successfully!");
     } catch (err) {
       console.error('Error deleting document:', err.response || err);
       alert("Failed to delete document.");
     }
+  }
   };
 
   return (

@@ -21,6 +21,8 @@ function ViewReimbE() {
   }, [uid]);
 
   const deleteReimbursement = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this reimbursement application?");
+    if (!confirmDelete){
     try {
       const response = await axios.delete(`http://localhost:8001/reimbursement/${id}`);
       setReimbursements(reimbursements.filter((reimbursement) => reimbursement._id !== id));
@@ -35,7 +37,7 @@ function ViewReimbE() {
       } else {
         // Something else happened in setting up the request
         console.error("Error message:", error.message);
-      }
+      }}
     }
   };
 

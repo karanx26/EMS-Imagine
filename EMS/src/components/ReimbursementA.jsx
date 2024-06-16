@@ -38,12 +38,14 @@ const ReimbursementA = () => {
   };
 
   const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this reimbursement application?");
+    if (!confirmDelete) {
     try {
       await axios.delete(`http://localhost:8001/reimbursement/${id}`);
       setReimbursements(reimbursements.filter(reimbursement => reimbursement._id !== id));
     } catch (error) {
       console.error("Error deleting reimbursement:", error);
-    }
+    }}
   };
 
   const filteredReimbursements = reimbursements.filter(reimbursement => {

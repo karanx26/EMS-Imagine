@@ -40,10 +40,11 @@ function EditClientA() {
   };
 
   const handleDelete = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this client?");
+    if (!confirmDelete) {
     try {
       const res = await axios.delete(`http://localhost:8001/clients/${uid}`);
       if (res.status === 200) {
-        alert("Client deleted successfully!");
         navigate("/homea/manageclienta");
       } else {
         alert("Failed to delete client.");
@@ -52,6 +53,7 @@ function EditClientA() {
       console.log(err);
       alert("An error occurred while deleting the client.");
     }
+  }
   };
 
   const handleShowDocuments = () => {

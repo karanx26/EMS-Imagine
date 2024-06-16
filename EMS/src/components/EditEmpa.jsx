@@ -40,17 +40,19 @@ function EditEmpa() {
   };
 
   const handleDelete = async () => {
-    try {
-      const res = await axios.delete(`http://localhost:8001/employees/${uid}`);
-      if (res.status === 200) {
-        alert("Employee deleted successfully!");
-        navigate("/homea/manageempa"); // Redirect to the employees list or home page after deletion
-      } else {
-        alert("Failed to delete employee.");
+    const confirmDelete = window.confirm("Are you sure you want to delete this employee?");
+    if (confirmDelete) {
+      try {
+        const res = await axios.delete(`http://localhost:8001/employees/${uid}`);
+        if (res.status === 200) {
+          navigate("/homea/manageempa"); // Redirect to the employees list or home page after deletion
+        } else {
+          alert("Failed to delete employee.");
+        }
+      } catch (err) {
+        console.log(err);
+        alert("An error occurred while deleting the employee.");
       }
-    } catch (err) {
-      console.log(err);
-      alert("An error occurred while deleting the employee.");
     }
   };
 
