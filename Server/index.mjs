@@ -101,7 +101,19 @@ const individualAttendanceSchema = new mongoose.Schema({
     vehicleType: { type: String },
     totalKms: { type: Number },
     totalExpense: { type: Number },
+    status: { type: String, default: "Pending" },
+  approvalLevel1: {
+    approverId: { type: String, default: null },
     status: { type: String, default: "Pending" }
+  },
+  approvalLevel2: {
+    approverId: { type: String, default: null },
+    status: { type: String, default: "Pending" }
+  },
+  approvalLevel3: {
+    approverId: { type: String, default: null },
+    status: { type: String, default: "Pending" }
+  }
   });
 
   const clientSchema = new mongoose.Schema({

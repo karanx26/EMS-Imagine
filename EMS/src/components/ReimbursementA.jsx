@@ -6,6 +6,8 @@ function ReimbursementA() {
   const [reimbursements, setReimbursements] = useState([]);
   const [filter, setFilter] = useState("Pending");
 
+  const currentUser = window.localStorage.getItem("uid");
+
   useEffect(() => {
     axios.get('http://localhost:8001/reimbursements')
       .then(response => {
@@ -16,8 +18,8 @@ function ReimbursementA() {
       });
   }, []);
 
-  const handleUpdateStatus = (id, status) => {
-    axios.patch(`http://localhost:8001/reimbursements/${id}`, { status })
+  const handleUpdateStatus = (id, level, status) => {
+    axios.patch(`http://localhost:8001/reimbursements/${id}/approve`, { level, approverId: currentUser, status })
       .then(response => {
         setReimbursements(prevState =>
           prevState.map(reimbursement =>
@@ -31,7 +33,7 @@ function ReimbursementA() {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8001/reimbursements/${id}`)
+    axios.delete(`http://localhost:8001/reimbursement/${id}`)
       .then(() => {
         setReimbursements(prevState => prevState.filter(reimbursement => reimbursement._id !== id));
       })
@@ -40,7 +42,26 @@ function ReimbursementA() {
       });
   };
 
-  const filteredReimbursements = reimbursements.filter(reimbursement => reimbursement.status === filter);
+  const filteredReimbursements = reimbursements.filter(reimbursement => {
+    if (filter !== reimbursement.status) {
+      return false;
+    }
+
+    if (reimbursement.status === "Pending") {
+      if (currentUser === 'A001' && reimbursement.approvalLevel1.status === 'Pending') {
+        return true;
+      }
+      if (currentUser === 'A002' && reimbursement.approvalLevel1.status === 'Approved' && reimbursement.approvalLevel2.status === 'Pending') {
+        return true;
+      }
+      if (currentUser === 'A003' && reimbursement.approvalLevel2.status === 'Approved' && reimbursement.approvalLevel3.status === 'Pending') {
+        return true;
+      }
+      return false;
+    }
+    
+    return true;
+  });
 
   const tableContainerStyle = {
     display: 'flex',
@@ -125,18 +146,54 @@ function ReimbursementA() {
                   <td style={tdStyles}>
                     {reimbursement.status === "Pending" && (
                       <>
-                        <button
-                          className="btn btn-sm btn-success mb-2"
-                          onClick={() => handleUpdateStatus(reimbursement._id, "Approved")}
-                        >
-                          Approve
-                        </button>
-                        <button
-                          className="btn btn-sm btn-danger mb-2"
-                          onClick={() => handleUpdateStatus(reimbursement._id, "Rejected")}
-                        >
-                          Reject
-                        </button>
+                        {(currentUser === 'A001' && reimbursement.approvalLevel1.status === 'Pending') && (
+                          <>
+                            <button
+                              className="btn btn-sm btn-success mb-2"
+                              onClick={() => handleUpdateStatus(reimbursement._id, 1, "Approved")}
+                            >
+                              Approve
+                            </button>
+                            <button
+                              className="btn btn-sm btn-danger mb-2"
+                              onClick={() => handleUpdateStatus(reimbursement._id, 1, "Rejected")}
+                            >
+                              Reject
+                            </button>
+                          </>
+                        )}
+                        {(currentUser === 'A002' && reimbursement.approvalLevel1.status === 'Approved' && reimbursement.approvalLevel2.status === 'Pending') && (
+                          <>
+                            <button
+                              className="btn btn-sm btn-success mb-2"
+                              onClick={() => handleUpdateStatus(reimbursement._id, 2, "Approved")}
+                            >
+                              Approve
+                            </button>
+                            <button
+                              className="btn btn-sm btn-danger mb-2"
+                              onClick={() => handleUpdateStatus(reimbursement._id, 2, "Rejected")}
+                            >
+                              Reject
+                            </button>
+                          </>
+                        )}
+                        {(currentUser === 'A003' && reimbursement.approvalLevel2.status === 'Approved' && reimbursement.approvalLevel3.status === 'Pending') && (
+                          <>
+                            <button
+                              className="btn btn-sm btn-success mb-2"
+                              onClick={() => handleUpdateStatus(reimbursement._id, 3, "Approved")}
+                            >
+                              Approve
+                            </button>
+                            <button
+                              className="btn btn-sm btn-danger mb-2"
+                              onClick={() => handleUpdateStatus(reimbursement._id, 3, "Rejected")}
+                            >
+                              Reject
+                            </button>
+                          </>
+                        )}
                       </>
                     )}
                     <button
