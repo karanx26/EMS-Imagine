@@ -525,46 +525,22 @@ app.get('/reimbursements', async (req, res) => {
   }
 });
 
-app.patch('/reimbursements/:id/approve', async (req, res) => {
-  const { level, approverId, status } = req.body;
+app.patch("/reimbursements/:id/status", async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
   try {
-    const reimbursement = await Reimbursement.findById(req.params.id);
+    const reimbursement = await Reimbursement.findById(id);
 
     if (!reimbursement) {
-      return res.status(404).json({ message: 'Reimbursement not found' });
+      return res.status(404).json({ message: "Reimbursement not found" });
     }
 
-    switch (level) {
-      case 1:
-        reimbursement.approvalLevel1 = { approverId, status };
-        break;
-      case 2:
-        reimbursement.approvalLevel2 = { approverId, status };
-        break;
-      case 3:
-        reimbursement.approvalLevel3 = { approverId, status };
-        break;
-      default:
-        return res.status(400).json({ message: 'Invalid approval level' });
-    }
-
-    // Check if all levels are approved
-    if (reimbursement.approvalLevel1.status === 'Approved' &&
-        reimbursement.approvalLevel2.status === 'Approved' &&
-        reimbursement.approvalLevel3.status === 'Approved') {
-      reimbursement.status = 'Approved';
-    }
-
-    if (reimbursement.approvalLevel1.status === 'Rejected' ||
-        reimbursement.approvalLevel2.status === 'Rejected' ||
-        reimbursement.approvalLevel3.status === 'Rejected') {
-      reimbursement.status = 'Rejected';
-    }
-
+    reimbursement.status = status;
     await reimbursement.save();
     res.json(reimbursement);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 

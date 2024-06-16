@@ -8,6 +8,8 @@ const LeaveA = () => {
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState("Pending");
 
+  const currentUser = window.localStorage.getItem("uid");
+
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
@@ -32,6 +34,15 @@ const LeaveA = () => {
     }
   };
 
+  const handleSendToSecondLevel = async (id) => {
+    try {
+      await axios.patch(`http://localhost:8001/leaves/${id}/status`, { status: "SecondLevelPending" });
+      setLeaves(leaves.map(leave => leave._id === id ? { ...leave, status: "SecondLevelPending" } : leave));
+    } catch (error) {
+      console.error("Error sending leave application to second level:", error);
+    }
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8001/leaves/${id}`);
@@ -41,7 +52,13 @@ const LeaveA = () => {
     }
   };
 
-  const filteredLeaves = filter === "All" ? leaves : leaves.filter(leave => leave.status === filter);
+  const filteredLeaves = leaves.filter(leave => {
+    if (filter === "All") return true;
+    if (filter === leave.status) return true;
+    if (filter === "Pending" && currentUser === "A001" && leave.status === "Pending") return true;
+    if (filter === "Pending" && currentUser === "A002" && leave.status === "SecondLevelPending") return true;
+    return false;
+  });
 
   if (loading) {
     return <div>Loading...</div>;
@@ -82,7 +99,9 @@ const LeaveA = () => {
       <div className="mb-4 text-center">
         <button className="btn btn-primary me-2" onClick={() => setFilter("Pending")}>Pending</button>
         <button className="btn btn-success me-2" onClick={() => setFilter("Approved")}>Approved</button>
-        <button className="btn btn-danger" onClick={() => setFilter("Rejected")}>Rejected</button>
+        <button className="btn btn-danger me-2" onClick={() => setFilter("Rejected")}>Rejected</button>
+        <button className="btn btn-secondary me-2" onClick={() => setFilter("SecondLevelPending")}>Second Level Pending</button>
+        <button className="btn btn-info" onClick={() => setFilter("All")}>All</button>
       </div>
       <div style={tableContainerStyle}>
         {filteredLeaves.length > 0 ? (
@@ -95,8 +114,8 @@ const LeaveA = () => {
                 <th style={thStyles}>Start Date</th>
                 <th style={thStyles}>End Date</th>
                 <th style={thStyles}>Reason</th>
-                <th style={thStyles}>Status</th> 
-                <th style={thStyles}>Actions</th> 
+                <th style={thStyles}>Status</th>
+                <th style={thStyles}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -110,12 +129,29 @@ const LeaveA = () => {
                   <td style={tdStyles}>{leave.reason}</td>
                   <td style={tdStyles}>{leave.status}</td>
                   <td style={tdStyles}>
-                    <button className="btn btn-sm btn-success me-2" onClick={() => handleStatusChange(leave._id, "Approved")}>
-                      Approve
-                    </button>
-                    <button className="btn btn-sm btn-danger me-2" onClick={() => handleStatusChange(leave._id, "Rejected")}>
-                      Reject
-                    </button>
+                    {leave.status === "Pending" && currentUser === "A001" && (
+                      <>
+                        <button className="btn btn-sm btn-success me-2" onClick={() => handleStatusChange(leave._id, "Approved")}>
+                          Approve
+                        </button>
+                        <button className="btn btn-sm btn-danger me-2" onClick={() => handleStatusChange(leave._id, "Rejected")}>
+                          Reject
+                        </button>
+                        <button className="btn btn-sm btn-primary me-2" onClick={() => handleSendToSecondLevel(leave._id)}>
+                          Send to Second Level
+                        </button>
+                      </>
+                    )}
+                    {leave.status === "SecondLevelPending" && currentUser === "A002" && (
+                      <>
+                        <button className="btn btn-sm btn-success me-2" onClick={() => handleStatusChange(leave._id, "Approved")}>
+                          Approve
+                        </button>
+                        <button className="btn btn-sm btn-danger me-2" onClick={() => handleStatusChange(leave._id, "Rejected")}>
+                          Reject
+                        </button>
+                      </>
+                    )}
                     <button className="btn btn-sm btn-secondary" onClick={() => handleDelete(leave._id)}>
                       Delete
                     </button>

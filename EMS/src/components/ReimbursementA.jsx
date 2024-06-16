@@ -1,67 +1,69 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-function ReimbursementA() {
+const ReimbursementA = () => {
   const [reimbursements, setReimbursements] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filter, setFilter] = useState("Pending");
 
-  const currentUser = window.localStorage.getItem("uid");
+  const adminId = window.localStorage.getItem("uid");
 
   useEffect(() => {
-    axios.get('http://localhost:8001/reimbursements')
-      .then(response => {
+    const fetchReimbursements = async () => {
+      try {
+        const response = await axios.get("http://localhost:8001/reimbursements");
         setReimbursements(response.data);
-      })
-      .catch(error => {
-        console.error("There was an error fetching the reimbursements!", error);
-      });
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchReimbursements();
   }, []);
 
-  const handleUpdateStatus = (id, level, status) => {
-    axios.patch(`http://localhost:8001/reimbursements/${id}/approve`, { level, approverId: currentUser, status })
-      .then(response => {
-        setReimbursements(prevState =>
-          prevState.map(reimbursement =>
-            reimbursement._id === id ? response.data : reimbursement
-          )
-        );
-      })
-      .catch(error => {
-        console.error("There was an error updating the status!", error);
-      });
+  const handleStatusChange = async (id, status) => {
+    try {
+      await axios.patch(`http://localhost:8001/reimbursements/${id}/status`, { status });
+      setReimbursements(reimbursements.map(reimbursement =>
+        reimbursement._id === id ? { ...reimbursement, status } : reimbursement
+      ));
+    } catch (error) {
+      console.error("Error updating reimbursement status:", error);
+    }
   };
 
-  const handleDelete = (id) => {
-    axios.delete(`http://localhost:8001/reimbursement/${id}`)
-      .then(() => {
-        setReimbursements(prevState => prevState.filter(reimbursement => reimbursement._id !== id));
-      })
-      .catch(error => {
-        console.error("There was an error deleting the reimbursement!", error);
-      });
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8001/reimbursement/${id}`);
+      setReimbursements(reimbursements.filter(reimbursement => reimbursement._id !== id));
+    } catch (error) {
+      console.error("Error deleting reimbursement:", error);
+    }
   };
 
   const filteredReimbursements = reimbursements.filter(reimbursement => {
-    if (filter !== reimbursement.status) {
-      return false;
-    }
-
-    if (reimbursement.status === "Pending") {
-      if (currentUser === 'A001' && reimbursement.approvalLevel1.status === 'Pending') {
-        return true;
-      }
-      if (currentUser === 'A002' && reimbursement.approvalLevel1.status === 'Approved' && reimbursement.approvalLevel2.status === 'Pending') {
-        return true;
-      }
-      if (currentUser === 'A003' && reimbursement.approvalLevel2.status === 'Approved' && reimbursement.approvalLevel3.status === 'Pending') {
-        return true;
-      }
-      return false;
-    }
+    if (filter === "All") return true;
+    if (filter === reimbursement.status) return true;
+    if (filter === "Pending" && adminId === "A001" && reimbursement.status === "Pending") return true;
+    if (filter === "Pending" && adminId === "A002" && reimbursement.status === "Second Level Pending") return true;
+    if (filter === "Pending" && adminId === "A003" && reimbursement.status === "Third Level Pending") return true;
     
-    return true;
+
+    return false;
   });
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const tableContainerStyle = {
     display: 'flex',
@@ -89,14 +91,15 @@ function ReimbursementA() {
   };
 
   return (
-    <>
-      <br />
-      <br />
-      <h2 className="text-center">REIMBURSEMENT APPLICATIONS</h2>
+    <div className="container mt-5">
+      <h2 className="text-center mb-4">REIMBURSEMENT APPLICATIONS</h2>
       <div className="mb-4 text-center">
         <button className="btn btn-primary me-2" onClick={() => setFilter("Pending")}>Pending</button>
+        <button className="btn btn-warning me-2" onClick={() => setFilter("Second Level Pending")}>Second Level Pending</button>
+        <button className="btn btn-info me-2" onClick={() => setFilter("Third Level Pending")}>Third Level Pending</button>
         <button className="btn btn-success me-2" onClick={() => setFilter("Approved")}>Approved</button>
-        <button className="btn btn-danger" onClick={() => setFilter("Rejected")}>Rejected</button>
+        <button className="btn btn-danger me-2" onClick={() => setFilter("Rejected")}>Rejected</button>
+        <button className="btn btn-secondary" onClick={() => setFilter("All")}>All</button>
       </div>
       <div style={tableContainerStyle}>
         {filteredReimbursements.length > 0 ? (
@@ -144,56 +147,52 @@ function ReimbursementA() {
                   </td>
                   <td style={tdStyles}>{reimbursement.status}</td>
                   <td style={tdStyles}>
-                    {reimbursement.status === "Pending" && (
+                    {reimbursement.status === "Pending" && adminId === "A001" && (
                       <>
-                        {(currentUser === 'A001' && reimbursement.approvalLevel1.status === 'Pending') && (
-                          <>
-                            <button
-                              className="btn btn-sm btn-success mb-2"
-                              onClick={() => handleUpdateStatus(reimbursement._id, 1, "Approved")}
-                            >
-                              Approve
-                            </button>
-                            <button
-                              className="btn btn-sm btn-danger mb-2"
-                              onClick={() => handleUpdateStatus(reimbursement._id, 1, "Rejected")}
-                            >
-                              Reject
-                            </button>
-                          </>
-                        )}
-                        {(currentUser === 'A002' && reimbursement.approvalLevel1.status === 'Approved' && reimbursement.approvalLevel2.status === 'Pending') && (
-                          <>
-                            <button
-                              className="btn btn-sm btn-success mb-2"
-                              onClick={() => handleUpdateStatus(reimbursement._id, 2, "Approved")}
-                            >
-                              Approve
-                            </button>
-                            <button
-                              className="btn btn-sm btn-danger mb-2"
-                              onClick={() => handleUpdateStatus(reimbursement._id, 2, "Rejected")}
-                            >
-                              Reject
-                            </button>
-                          </>
-                        )}
-                        {(currentUser === 'A003' && reimbursement.approvalLevel2.status === 'Approved' && reimbursement.approvalLevel3.status === 'Pending') && (
-                          <>
-                            <button
-                              className="btn btn-sm btn-success mb-2"
-                              onClick={() => handleUpdateStatus(reimbursement._id, 3, "Approved")}
-                            >
-                              Approve
-                            </button>
-                            <button
-                              className="btn btn-sm btn-danger mb-2"
-                              onClick={() => handleUpdateStatus(reimbursement._id, 3, "Rejected")}
-                            >
-                              Reject
-                            </button>
-                          </>
-                        )}
+                        <button
+                          className="btn btn-sm btn-warning mb-2"
+                          onClick={() => handleStatusChange(reimbursement._id, "Second Level Pending")}
+                        >
+                          Send to Second Level
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger mb-2"
+                          onClick={() => handleStatusChange(reimbursement._id, "Rejected")}
+                        >
+                          Reject
+                        </button>
+                      </>
+                    )}
+                    {reimbursement.status === "Second Level Pending" && adminId === "A002" && (
+                      <>
+                        <button
+                          className="btn btn-sm btn-warning mb-2"
+                          onClick={() => handleStatusChange(reimbursement._id, "Third Level Pending")}
+                        >
+                          Send to Third Level
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger mb-2"
+                          onClick={() => handleStatusChange(reimbursement._id, "Rejected")}
+                        >
+                          Reject
+                        </button>
+                      </>
+                    )}
+                    {reimbursement.status === "Third Level Pending" && adminId === "A003" && (
+                      <>
+                        <button
+                          className="btn btn-sm btn-success mb-2"
+                          onClick={() => handleStatusChange(reimbursement._id, "Approved")}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger mb-2"
+                          onClick={() => handleStatusChange(reimbursement._id, "Rejected")}
+                        >
+                          Reject
+                        </button>
                       </>
                     )}
                     <button
@@ -211,8 +210,8 @@ function ReimbursementA() {
           <div>No reimbursement applications found.</div>
         )}
       </div>
-    </>
+    </div>
   );
-}
+};
 
 export default ReimbursementA;
