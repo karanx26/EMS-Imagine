@@ -1,29 +1,33 @@
 * {
   font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 nav {
-  height: 10%;
+  height: 60px;
   background: #ffffff;
   width: 100%;
   position: fixed;
   font-size: 20px;
   display: flex;
-  justify-content: space-between;
-  box-sizing: border-box;
-  margin: 0;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
 }
 
 nav li {
-  padding: 0 30px;
+  padding: 0 20px;
 }
 
 nav li a {
   text-decoration: none;
   color: black;
+  transition: color 0.3s;
 }
 
-nav ul li a:hover {
+nav li a:hover {
   color: orange;
   text-decoration: underline;
 }
@@ -31,41 +35,29 @@ nav ul li a:hover {
 nav ul {
   display: flex;
   list-style: none;
-  justify-content: space-around;
-  align-items: center;
-  height: 100%;
   margin: 0;
 }
 
-#logo-img {
-  display: flex;
-  height: 100%;
-  background: #ffffff;
-  align-items: center;
-  color: white;
-}
-
 #logo-img img {
-  height: 100%;
-  padding: 8px 14px;
+  height: 50px;
 }
 
 .loginPage {
-  background: url(../Images/3.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: auto;
+  background: url(../Images/3.png) no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  padding-top: 60px; /* Account for fixed nav height */
 }
 
 .loginForm {
-  margin-top: 16%;
-  background-color: rgba(59, 59, 59, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  width: 90%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 70%;
   max-width: 400px;
 }
 
@@ -73,15 +65,74 @@ nav ul {
   text-align: center;
 }
 
-@media (max-width: 1030px) {
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.btn {
+  flex: 1 1 30%;
+  margin: 5px;
+  padding: 5px 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background-color: orange;
+}
+
+.btn-danger {
+  background-color: red;
+}
+
+.btn-success {
+  background-color: green;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.buttonlink {
+  color: white;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: orange;
+}
+
+@media (max-width: 768px) {
   .loginForm {
-    width: 100%;
-    padding: 15px;
+    width: 70%;
+    margin: 0 10px;
   }
 
-  .d-flex.justify-content-between {
+  .buttonGroup {
     flex-direction: column;
-    align-items: center;
   }
 
   .btn {
@@ -94,8 +145,27 @@ nav ul {
   }
 }
 
-.buttonlink {
-  color: inherit;
-  text-decoration: none;
-  display: inline-block;
+@media (max-width: 576px) {
+  nav {
+    font-size: 16px;
+    height: 50px;
+  }
+
+  #logo-img img {
+    height: 40px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .loginForm {
+    width: 70%;
+    padding: 10px;
+  }
+
+  .form-control {
+    padding: 6px;
+  }
 }

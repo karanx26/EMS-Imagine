@@ -57,15 +57,10 @@ function LoginformA() {
           <div id="logo-img">
             <img src="../Images/mainlogo.png" alt="logo" />
           </div>
-          <ul>
-            <li>
-              <a href="/login">BACK</a>
-            </li>
-          </ul>
         </nav>
       </div>
       <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
-        <div className="p-3 rounded w-25 border loginForm">
+        <div className="p-3 rounded border loginForm">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -115,6 +110,12 @@ function LoginformA() {
               Log In
             </button>
           </form>
+          <button
+            className="btn btn-secondary w-100 rounded-0 mt-2"
+            onClick={() => navigate('/login')}
+          >
+            Back
+          </button>
         </div>
       </div>
     </>
