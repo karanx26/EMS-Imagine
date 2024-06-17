@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 
 
 import mongoose from "mongoose";
-import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema,clientDocumentSchema} from "./index.mjs";
+import { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema,clientDocumentSchema, overtimeSchema} from "./index.mjs";
 
 const employees = mongoose.model("employees", employeeSchema);
 const attendance = mongoose.model('attendance', attendanceSchema);
@@ -20,6 +20,7 @@ const Reimbursement = mongoose.model('Reimbursement', ReimbursementSchema);
 
 const Client = mongoose.model('Client', clientSchema);
 const ClientDocument = mongoose.model('ClientDocument', clientDocumentSchema);
+const Overtime = mongoose.model('Overtime',overtimeSchema);
 
 
 import cors from "cors";
@@ -682,6 +683,35 @@ app.delete('/clientDocuments/:uid/:docId', async (req, res) => {
   } catch (err) {
     console.error('Error deleting document:', err);
     res.status(500).json({ error: err.message });
+  }
+});
+
+
+
+
+
+// Routes
+app.get('/overtime', async (req, res) => {
+  try {
+    const overtimeRecords = await Overtime.find();
+    res.json(overtimeRecords);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching overtime data' });
+  }
+});
+
+app.post('/overtime', async (req, res) => {
+  const { uid, date, hours, description } = req.body;
+  if (!uid || !date || !hours || !description) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  const newOvertime = new Overtime({ uid, date, hours, description });
+  try {
+    const savedOvertime = await newOvertime.save();
+    res.status(201).json(savedOvertime);
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding overtime record' });
   }
 });
 

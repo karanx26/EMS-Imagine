@@ -1,0 +1,32 @@
+/* Overtime.css */
+.overtime-container {
+    padding: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .add-overtime-form,
+  .monthly-overtime-form {
+    margin-bottom: 20px;
+  }
+  
+  .add-overtime-form input,
+  .monthly-overtime-form input {
+    margin-right: 10px;
+    padding: 5px;
+  }
+  
+  .add-overtime-form button,
+  .monthly-overtime-form button {
+    padding: 5px 10px;
+  }
+  
