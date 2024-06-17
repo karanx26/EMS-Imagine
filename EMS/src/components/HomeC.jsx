@@ -30,7 +30,7 @@ function HomeC() {
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
-        <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark sidebar">
+        <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark sidebar d-none d-md-block">
           <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
             <Link
               to="/homec"
@@ -55,10 +55,6 @@ function HomeC() {
                 </Link>
               </li>
 
-              
-
-              
-
               <li className="w-100">
                 <Link
                   to="/homec/checkupdc"
@@ -69,7 +65,6 @@ function HomeC() {
                 </Link>
               </li>
 
-              
               <li className="w-100" onClick={handleLogout}>
                 <Link
                   to="/login"
@@ -83,8 +78,27 @@ function HomeC() {
           </div>
         </div>
         <div className="col p-0 m-0">
-          <div className="p-2 d-flex justify-content-center shadow">
+          <div className="p-2 d-flex justify-content-center align-items-center shadow header">
             <img src="../Images/mainlogo.png" alt="Logo" className="logo" />
+          </div>
+          <div className="bg-dark d-md-none">
+            <ul className="nav nav-pills nav-fill text-white">
+              <li className="nav-item">
+                <Link to="/homec" className="nav-link text-white">
+                  <i className="bi bi-person"></i> Profile
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/homec/checkupdc" className="nav-link text-white">
+                  <i className="bi bi-bell"></i> Check Updates
+                </Link>
+              </li>
+              <li className="nav-item" onClick={handleLogout}>
+                <Link to="/login" className="nav-link text-white">
+                  <i className="bi bi-power"></i> Logout
+                </Link>
+              </li>
+            </ul>
           </div>
           <Outlet />
         </div>
@@ -94,4 +108,3 @@ function HomeC() {
 }
 
 export default HomeC;
-
