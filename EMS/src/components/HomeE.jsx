@@ -117,8 +117,6 @@ function HomeE() {
                 </Link>
               </li>
 
-              
-
               <li className="w-100" onClick={handleLogout}>
                 <Link
                   to="/login"
@@ -137,81 +135,49 @@ function HomeE() {
           </div>
 
           <div className="bg-dark d-md-none">
-              <ul className="nav nav-pills nav-fill text-white">
-                <li className="nav-item">
-                  <Link to="/homee" className="nav-link text-white">
-                    <i className="bi bi-person"></i> Profile
-                  </Link>
-                </li>
-
-                <li className="nav-item">
-                <Link
-                  to={`/homee/taske/${userId}`}
-                  className="nav-link text-white"
-                >
-                  <i className="bi bi-check2-square"></i>
-                  Task
-                </Link>
-              </li>
-
+            <ul className="nav nav-pills nav-fill text-white">
               <li className="nav-item">
-                <Link
-                  to={`/homee/attendance/${userId}`}
-                  className="nav-link text-white"
-                >
-                  <i className="bi bi-clipboard"></i>Attendance
+                <Link to="/homee" className="nav-link text-white">
+                  <i className="bi bi-person"></i> Profile
                 </Link>
               </li>
-
               <li className="nav-item">
-                <Link
-                  to="/homee/overtime"
-                  className="nav-link text-white"
-                >
-                  <i className="bi bi-clock"></i>Overtime
+                <Link to={`/homee/taske/${userId}`} className="nav-link text-white">
+                  <i className="bi bi-check2-square"></i> Task
                 </Link>
               </li>
-
               <li className="nav-item">
-                <Link
-                  to="/homee/reimbursemente"
-                  className="nav-link text-white"
-                >
-                  <i className="bi bi-cash-stack"></i>Reimbursement
+                <Link to={`/homee/attendance/${userId}`} className="nav-link text-white">
+                  <i className="bi bi-clipboard"></i> Attendance
                 </Link>
               </li>
-
               <li className="nav-item">
-                <Link
-                  to="/homee/leavee"
-                  className="nav-link text-white"
-                >
-                  <i className="bi bi-calendar-check"></i>Leave
+                <Link to="/homee/overtime" className="nav-link text-white">
+                  <i className="bi bi-clock"></i> Overtime
                 </Link>
               </li>
-
-                
-
-                <li className="nav-item">
-                  <Link
-                    to="/homee/managecliente"
-                    className="nav-link text-white"
-                  >
-                    <i className="bi bi-people"></i>
-                    
-                      Manage Clients
-                    
-                  </Link>
-                </li>
-                
-                
-                <li className="nav-item" onClick={handleLogout}>
-                  <Link to="/login" className="nav-link text-white">
-                    <i className="bi bi-power"></i> Logout
-                  </Link>
-                </li>
-              </ul>
-            </div>
+              <li className="nav-item">
+                <Link to="/homee/reimbursemente" className="nav-link text-white">
+                  <i className="bi bi-cash-stack"></i> Reimbursement
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/homee/leavee" className="nav-link text-white">
+                  <i className="bi bi-calendar-check"></i> Leave
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/homee/managecliente" className="nav-link text-white">
+                  <i className="bi bi-people"></i> Manage Clients
+                </Link>
+              </li>
+              <li className="nav-item" onClick={handleLogout}>
+                <Link to="/login" className="nav-link text-white">
+                  <i className="bi bi-power"></i> Logout
+                </Link>
+              </li>
+            </ul>
+          </div>
           <Outlet />
         </div>
       </div>
