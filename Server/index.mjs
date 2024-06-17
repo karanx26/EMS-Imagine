@@ -135,6 +135,14 @@ const individualAttendanceSchema = new mongoose.Schema({
   });
   
 
+  const overtimeSchema = new mongoose.Schema({
+    uid: { type: String, required: true },
+    date: { type: Date, required: true },
+    hours: { type: Number, required: true },
+    description: { type: String, required: true }
+  });
+  
+
   
 
 const collectionc = mongoose.model("clients", clientSchema);
@@ -145,5 +153,5 @@ const collectionc = mongoose.model("clients", clientSchema);
 
 const collectione = mongoose.model("employees", employeeSchema);
 
-export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema,clientDocumentSchema};
+export { collectiona, collectionc, collectione, employeeSchema, attendanceSchema,taskSchema,leaveSchema,ReimbursementSchema,clientSchema,clientDocumentSchema,overtimeSchema};
 
