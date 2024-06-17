@@ -76,7 +76,7 @@ const TaskA = () => {
 
   const handleDeleteTask = async (taskId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this task?");
-    if (!confirmDelete) {
+    if (confirmDelete) {
     try {
       await axios.delete(`http://localhost:8001/tasks/${taskId}`);
       setPendingTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));

@@ -20,7 +20,7 @@ function LeaveApplicationE() {
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this leave application?");
-    if (!confirmDelete) {
+    if (confirmDelete) {
     try {
       await axios.delete(`http://localhost:8001/leaves/${id}`);
       // Update the state to remove the deleted leave application

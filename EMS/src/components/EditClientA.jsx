@@ -41,7 +41,7 @@ function EditClientA() {
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this client?");
-    if (!confirmDelete) {
+    if (confirmDelete) {
     try {
       const res = await axios.delete(`http://localhost:8001/clients/${uid}`);
       if (res.status === 200) {

@@ -22,7 +22,7 @@ function ViewReimbE() {
 
   const deleteReimbursement = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this reimbursement application?");
-    if (!confirmDelete){
+    if (confirmDelete){
     try {
       const response = await axios.delete(`http://localhost:8001/reimbursement/${id}`);
       setReimbursements(reimbursements.filter((reimbursement) => reimbursement._id !== id));

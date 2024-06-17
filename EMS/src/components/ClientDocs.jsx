@@ -49,7 +49,7 @@ function ClientDocs() {
 
   const handleDelete = async (docId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this document?");
-    if (!confirmDelete) {
+    if (confirmDelete) {
     
     try {
       const res = await axios.delete(`http://localhost:8001/clientDocuments/${uid}/${docId}`);
