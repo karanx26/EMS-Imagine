@@ -1,0 +1,103 @@
+/* Overtime.css */
+
+.overtime-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .table th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .table td {
+    background-color: #f2f2f2;
+  }
+  
+  .add-overtime-form,
+  .employee-search-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .add-overtime-form h2 {
+    flex-basis: 100%;
+    text-align: center;
+  }
+  
+  .add-overtime-form input,
+  .employee-search-form input {
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .add-overtime-form button,
+  .employee-search-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-overtime-form button:hover,
+  .employee-search-form button:hover {
+    background-color: #45a049;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  @media (max-width: 600px) {
+    .add-overtime-form,
+    .employee-search-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .add-overtime-form input,
+    .employee-search-form input,
+    .add-overtime-form button,
+    .employee-search-form button {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+  

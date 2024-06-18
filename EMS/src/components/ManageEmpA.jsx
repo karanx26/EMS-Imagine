@@ -49,6 +49,13 @@ function ManageEmpA() {
             <i className="bi bi-envelope-open-fill"></i>
             Leave Application
           </Link>
+
+          <Link to="/homea/overtimea" className="manage-button">
+            <i className="bi bi-envelope-open-fill"></i>
+            Overtime
+          </Link>
+
+
           <Link to="/homea/addempa" className="manage-button">
             <i className="bi bi-person-plus-fill"></i>
             Add Employees
