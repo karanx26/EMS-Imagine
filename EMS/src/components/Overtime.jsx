@@ -1,6 +1,6 @@
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
-// import "../styles/Overtime.css"; // Create and import your custom CSS
+// import "../styles/Overtime.css";
 
 // function Overtime() {
 //   const [overtimeData, setOvertimeData] = useState([]);
@@ -9,7 +9,7 @@
 //   const [date, setDate] = useState("");
 //   const [hours, setHours] = useState("");
 //   const [description, setDescription] = useState("");
-//   const [uid, setUid] = useState(window.localStorage.getItem("uid")); // Set your user ID here or get it dynamically
+//   const [uid, setUid] = useState(window.localStorage.getItem("uid"));
 
 //   useEffect(() => {
 //     fetchOvertimeData();
@@ -37,7 +37,6 @@
 //     axios.post("http://localhost:8001/overtime", newOvertime)
 //       .then(response => {
 //         fetchOvertimeData();
-//         setUid("defaultUserId"); // Reset to your default user ID or logic to get the user ID dynamically
 //         setDate("");
 //         setHours("");
 //         setDescription("");
@@ -46,6 +45,33 @@
 //       .catch(error => {
 //         setError("There was an error adding the overtime record!");
 //         window.alert("There was an error adding the overtime record!");
+//       });
+//   };
+
+//   const handleDeleteOvertime = (id) => {
+//     axios.delete(`http://localhost:8001/overtime/${id}`)
+//       .then(response => {
+//         fetchOvertimeData();
+//       })
+//       .catch(error => {
+//         setError("There was an error deleting the overtime record!");
+//         window.alert("There was an error deleting the overtime record!");
+//       });
+//   };
+
+//   const handleUpdateOvertime = (id) => {
+//     const updatedOvertime = { date, hours, description };
+//     axios.put(`http://localhost:8001/overtime/${id}`, updatedOvertime)
+//       .then(response => {
+//         fetchOvertimeData();
+//         setDate("");
+//         setHours("");
+//         setDescription("");
+//         setError(null);
+//       })
+//       .catch(error => {
+//         setError("There was an error updating the overtime record!");
+//         window.alert("There was an error updating the overtime record!");
 //       });
 //   };
 
@@ -79,12 +105,13 @@
 //       {loading ? (
 //         <p>Loading...</p>
 //       ) : (
-//         <table className="table table-striped">
+//         <table className="table">
 //           <thead>
 //             <tr>
 //               <th>Date</th>
 //               <th>Hours</th>
 //               <th>Description</th>
+//               <th>Actions</th>
 //             </tr>
 //           </thead>
 //           <tbody>
@@ -93,6 +120,9 @@
 //                 <td>{new Date(record.date).toLocaleDateString()}</td>
 //                 <td>{record.hours}</td>
 //                 <td>{record.description}</td>
+//                 <td>
+//                   <button className="delete-button" onClick={() => handleDeleteOvertime(record._id)}>Delete</button>
+//                 </td>
 //               </tr>
 //             ))}
 //           </tbody>
@@ -121,10 +151,10 @@ function Overtime() {
 
   useEffect(() => {
     fetchOvertimeData();
-  }, []);
+  }, [uid]);
 
   const fetchOvertimeData = () => {
-    axios.get("http://localhost:8001/overtime")
+    axios.get(`http://localhost:8001/overtime/employee/${uid}`)
       .then(response => {
         setOvertimeData(response.data);
         setLoading(false);
@@ -157,14 +187,18 @@ function Overtime() {
   };
 
   const handleDeleteOvertime = (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this overtime record?");
+    if (confirmDelete) {
     axios.delete(`http://localhost:8001/overtime/${id}`)
       .then(response => {
-        fetchOvertimeData();
+        setOvertimeData(overtimeData.filter(record => record._id !== id));
+        window.alert("Overtime record deleted successfully!");
       })
       .catch(error => {
         setError("There was an error deleting the overtime record!");
         window.alert("There was an error deleting the overtime record!");
       });
+    }
   };
 
   const handleUpdateOvertime = (id) => {
