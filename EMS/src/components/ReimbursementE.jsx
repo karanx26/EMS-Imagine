@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "../styles/ReimbursementE.css"; // Make sure to import the CSS file
 
 const ReimbursementE = () => {
   const [formData, setFormData] = useState({
@@ -94,7 +95,6 @@ const ReimbursementE = () => {
       if (formData.expenseType === "fuel") {
         data.append("vehicleType", formData.vehicleType);
         data.append("totalKms", formData.totalKms);
-        // data.append("totalExpense", formData.totalExpense);
       }
 
       const response = await axios.post(
@@ -102,8 +102,7 @@ const ReimbursementE = () => {
         data
       );
       console.log(response.data);
-      alert("Form submitted successfully!"); // Show success alert
-      
+      alert("Form submitted successfully!");
       setFormData({
         uid: "",
         expenseType: "",
@@ -114,10 +113,10 @@ const ReimbursementE = () => {
         vehicleType: "",
         totalKms: "",
         totalExpense: "",
-      }); // Reset form data
+      });
     } catch (error) {
       console.error("Error submitting form data:", error);
-      alert("Error submitting form. Please try again."); // Show error alert
+      alert("Error submitting form. Please try again.");
     }
   };
 
@@ -130,7 +129,7 @@ const ReimbursementE = () => {
       <div className="row justify-content-center">
         <div className="col-md-8">
           <div className="card">
-            <div className="card-header text-center bg-orange text-Black">
+            <div className="card-header text-center bg-orange text-white">
               <h2>REIMBURSEMENT FORM</h2>
             </div>
             <div className="card-body">
@@ -211,24 +210,23 @@ const ReimbursementE = () => {
                         className="form-control"
                       />
                     </div>
-                    
                   </>
                 )}
 
                 <div className="form-group mb-4">
-                      <label htmlFor="totalExpense" className="form-label">
-                        Total Expense:
-                      </label>
-                      <input
-                        type="number"
-                        id="totalExpense"
-                        name="totalExpense"
-                        value={formData.totalExpense}
-                        onChange={handleChange}
-                        required
-                        className="form-control"
-                      />
-                    </div>
+                  <label htmlFor="totalExpense" className="form-label">
+                    Total Expense:
+                  </label>
+                  <input
+                    type="number"
+                    id="totalExpense"
+                    name="totalExpense"
+                    value={formData.totalExpense}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                  />
+                </div>
 
                 <div className="form-group mb-4">
                   <label htmlFor="description" className="form-label">
@@ -291,10 +289,9 @@ const ReimbursementE = () => {
                   />
                 </div>
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btnr btnr-primary">
                     Submit
                   </button>
-                  
                 </div>
               </form>
               {formData.proofs.length > 0 && (
@@ -315,7 +312,7 @@ const ReimbursementE = () => {
                         </a>
                         <button
                           type="button"
-                          className="btn btn-danger btn-sm ml-2 mt-1 mb-1"
+                          className="btnr btnr-danger btnr-sm ml-2 mt-1 mb-1"
                           onClick={() => handleFileDelete(index)}
                         >
                           Delete
@@ -326,14 +323,14 @@ const ReimbursementE = () => {
                 </div>
               )}
               <div className="form-group text-center">
-              <button
-                    type="button"
-                    className="btn btn-success mt-4"
-                    onClick={handleViewApplications}
-                  >
-                    View Applications
-                  </button>
-                  </div>
+                <button
+                  type="button"
+                  className="btnr btnr-success mt-4"
+                  onClick={handleViewApplications}
+                >
+                  View Applications
+                </button>
+              </div>
             </div>
           </div>
         </div>

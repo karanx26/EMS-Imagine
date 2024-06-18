@@ -1,0 +1,96 @@
+/* ViewReimbE.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+    
+  .table-container {
+    overflow-x: auto; /* Add horizontal scrolling */
+    width: 90%;
+  border-collapse: collapse;
+  border: 2px solid #ddd;
+  margin-left: auto;
+  margin-right: auto;
+  }
+  
+  .table {
+    font-size: 0.875rem;
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; 
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .table th {
+    background-color: #ff7f00;
+    color: white;
+    padding: 10px;
+  }
+  
+  .table td {
+    padding: 8px;
+  }
+  
+  .btnrap {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btnrap-danger {
+    background-color: black;
+    color: white;
+  }
+  
+  .btnrap-danger:hover {
+    background-color: #ff7f00;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  
+    .card-body {
+      padding: 15px;
+    }
+  
+    .table th, .table td {
+      padding: 10px;
+    }
+  
+    .btnrap-danger {
+      padding: 3px 8px;
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .card-header h2 {
+      font-size: 1.5em;
+    }
+  
+    .table th, .table td {
+      padding: 8px;
+    }
+  
+    .btnrap-danger {
+      padding: 2px 6px;
+      font-size: 0.8rem;
+    }
+  }
+  

@@ -1,0 +1,70 @@
+/* leaveE.css */
+.container {
+    padding: 20px;
+  }
+  
+  .heading {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: black;
+  }
+  
+  .leave-table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    border: 2px solid #ddd;
+    margin-left: auto;
+    margin-right: auto;
+  }  
+  
+  .leave-table th,
+  .leave-table td {
+    padding: 5px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .leave-table th {
+    background-color: #ff7f00;
+    color: white;
+  }  
+  
+  .delete-button {
+    padding: 4px 8px;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #ff7f00;
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+  
+    .leave-table th, 
+    .leave-table td {
+        padding: 5px;
+    }
+  
+    .delete-button {
+        padding: 4px 8px;
+        font-size: 0.9em;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .delete-button {
+        padding: 3px 6px;
+        font-size: 0.8em;
+    }
+  }
+  

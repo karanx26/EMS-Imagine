@@ -1,0 +1,182 @@
+/* LeaveE.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;/* TaskE.css */
+    .container {
+      padding: 20px;
+    }
+    
+    .heading {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      color: black;
+    }
+    
+    .task-table {
+      width: 90%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+      border: 2px solid #ddd;
+      margin-left: auto;
+      margin-right: auto;
+    }  
+    
+    .task-table th,
+    .task-table td {
+      padding: 5px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    
+    .task-table th {
+      background-color: #ff7f00;
+      color: white;
+    }  
+    
+    .status-button {
+      padding: 4px 8px;
+      background-color: black;
+      color: white;
+      border: 1px solid black;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .status-button:hover {
+      background-color: #ff7f00;
+      color: white;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+          padding: 10px;
+      }
+    
+      .task-table th, 
+      .task-table td {
+          padding: 5px;
+      }
+    
+      .status-button {
+          padding: 4px 8px;
+          font-size: 0.9em;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .status-button {
+          padding: 3px 6px;
+          font-size: 0.8em;
+      }
+    }
+    
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .card-header {
+    background: linear-gradient(90deg, #000000, #ff7f00);
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .card-header h2 {
+    margin: 0;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .btnlee {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btnlee-primary {
+    background-color: #ff7f00;
+    color: white;
+  }
+  
+  .btnlee-primary:hover {
+    background-color: black;
+  }
+  
+  .btnlee-success {
+    background-color: black;
+    color: white;
+  }
+  
+  .btnlee-success:hover {
+    background-color: #ff7f00;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  
+    .card-body {
+      padding: 15px;
+    }
+  
+    .form-control {
+      padding: 8px;
+    }
+  
+    .btnlee {
+      padding: 8px 16px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .card-header h2 {
+      font-size: 1.5em;
+    }
+  
+    .form-control {
+      padding: 6px;
+    }
+  
+    .btnlee {
+      padding: 6px 12px;
+    }
+  }
+  

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/LeaveE.css"; // Import the CSS file
 
 const LeaveE = () => {
   const navigate = useNavigate();
@@ -13,8 +14,6 @@ const LeaveE = () => {
     endDate: "",
     reason: "",
   });
-
-  
 
   useEffect(() => {
     const uid = localStorage.getItem("uid");
@@ -61,7 +60,7 @@ const LeaveE = () => {
       <div className="row justify-content-center">
         <div className="col-md-8">
           <div className="card">
-            <div className="card-header text-center">
+            <div className="card-header">
               <h2>LEAVE APPLICATION FORM</h2>
             </div>
             <div className="card-body">
@@ -75,6 +74,7 @@ const LeaveE = () => {
                     value={formData.uid}
                     onChange={handleChange}
                     required
+                    readOnly
                     className="form-control"
                   />
                 </div>
@@ -130,14 +130,14 @@ const LeaveE = () => {
                   />
                 </div>
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btnlee btnlee-primary">
                     Submit
                   </button>
                 </div>
               </form>
               <div className="text-center mt-3">
                 <button
-                  className="btn btn-success"
+                  className="btnlee btnlee-success"
                   onClick={() => navigate("/homee/leaveapplication")}
                 >
                   Leave Applications

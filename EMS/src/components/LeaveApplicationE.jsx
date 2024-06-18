@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import '../styles/LeaveApp.css';
 
 function LeaveApplicationE() {
   const [leaves, setLeaves] = useState([]);
@@ -30,68 +31,40 @@ function LeaveApplicationE() {
     }}
   };
 
-  const tableContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '30px',
-  };
-
-  const tableStyle = {
-    fontSize: "0.875rem",
-    width: '80%',
-    borderCollapse: 'collapse',
-  };
-
-  const thStyles = {
-    border: '1px solid #ddd',
-    padding: '10px',
-    backgroundColor: '#f2f2f2',
-    textAlign: 'center'
-  };
-
-  const tdStyles = {
-    border: '1px solid #ddd',
-    padding: '8px',
-    textAlign: 'center'
-  };
-
   return (
-    <div>
-    <br/>
-    <br/>
-      <h2 className="text-center">LEAVE APPLICATIONS</h2>
-      <div style={tableContainerStyle}>
+    <div className="container">
+      <h2 className="heading">LEAVE APPLICATIONS</h2>
+      
       {leaves.length > 0 ? (
-        <table className="table table-bordered" style={tableStyle}>
+        <table className="leave-table">
           <thead>
             <tr>
-              <th style={thStyles}>Leave Type</th>
-              <th style={thStyles}>Start Date</th>
-              <th style={thStyles}>End Date</th>
-              <th style={thStyles}>Reason</th>
-              <th style={thStyles}>Status</th>
-              <th style={thStyles}>Actions</th> {/* New column for actions */}
+              <th>Leave Type</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th>Actions</th> 
             </tr>
           </thead>
           <tbody>
             {leaves.map((leave) => (
               <tr key={leave._id}>
-                <td style={tdStyles}>{leave.leaveType}</td>
-                <td style={tdStyles}>{leave.startDate}</td>
-                <td style={tdStyles}>{leave.endDate}</td>
-                <td style={tdStyles}>{leave.reason}</td>
-                <td style={tdStyles}>{leave.status}</td>
-                <td style={tdStyles}>
-                  <button className="btn btn-sm btn-danger" onClick={() => handleDelete(leave._id)}>Delete</button>
+                <td>{leave.leaveType}</td>
+                <td>{leave.startDate}</td>
+                <td>{leave.endDate}</td>
+                <td>{leave.reason}</td>
+                <td>{leave.status}</td>
+                <td>
+                  <button className="delete-button" onClick={() => handleDelete(leave._id)}>Delete</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <p>No leave applications found.</p>
+        <p className="text-center"><br />No leave applications found.</p>
       )}
-    </div>
     </div>
   );
 }

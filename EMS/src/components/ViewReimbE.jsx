@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../styles/ViewReimbE.css"; // Import the CSS file
 
 function ViewReimbE() {
   const [reimbursements, setReimbursements] = useState([]);
@@ -22,48 +23,24 @@ function ViewReimbE() {
 
   const deleteReimbursement = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this reimbursement application?");
-    if (confirmDelete){
-    try {
-      const response = await axios.delete(`http://localhost:8001/reimbursement/${id}`);
-      setReimbursements(reimbursements.filter((reimbursement) => reimbursement._id !== id));
-    } catch (error) {
-      console.error("Error deleting reimbursement:", error);
-      if (error.response) {
-        // Server responded with a status other than 200 range
-        console.error("Error response data:", error.response.data);
-      } else if (error.request) {
-        // Request was made but no response received
-        console.error("Error request data:", error.request);
-      } else {
-        // Something else happened in setting up the request
-        console.error("Error message:", error.message);
-      }}
+    if (confirmDelete) {
+      try {
+        const response = await axios.delete(`http://localhost:8001/reimbursement/${id}`);
+        setReimbursements(reimbursements.filter((reimbursement) => reimbursement._id !== id));
+      } catch (error) {
+        console.error("Error deleting reimbursement:", error);
+        if (error.response) {
+          // Server responded with a status other than 200 range
+          console.error("Error response data:", error.response.data);
+        } else if (error.request) {
+          // Request was made but no response received
+          console.error("Error request data:", error.request);
+        } else {
+          // Something else happened in setting up the request
+          console.error("Error message:", error.message);
+        }
+      }
     }
-  };
-
-  const tableContainerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "30px",
-  };
-
-  const tableStyle = {
-    fontSize: "0.875rem",
-    width: "80%",
-    borderCollapse: "collapse",
-  };
-
-  const thStyles = {
-    border: "1px solid #ddd",
-    padding: "10px",
-    backgroundColor: "#f2f2f2",
-    textAlign: "center",
-  };
-
-  const tdStyles = {
-    border: "1px solid #ddd",
-    padding: "8px",
-    textAlign: "center",
   };
 
   return (
@@ -71,40 +48,36 @@ function ViewReimbE() {
       <br />
       <br />
       <h2 className="text-center">REIMBURSEMENT APPLICATIONS</h2>
-      <div style={tableContainerStyle}>
+      <div className="table-container">
         {reimbursements.length === 0 ? (
           <p style={{ textAlign: "center" }}>No applications found.</p>
         ) : (
-          <table className="table table-bordered" style={tableStyle}>
+          <table className="table table-bordered">
             <thead>
               <tr>
-                <th style={thStyles}>Expense Type</th>
-                <th style={thStyles}>Vehicle Type</th>
-                <th style={thStyles}>Total Kms</th>
-                <th style={thStyles}>Description</th>
-                <th style={thStyles}>Start Date</th>
-                <th style={thStyles}>End Date</th>
-                <th style={thStyles}>Total Expense</th>
-                <th style={thStyles}>Uploaded Proofs</th>
-                <th style={thStyles}>Status</th>
-                <th style={thStyles}>Actions</th>
+                <th>Expense Type</th>
+                <th>Vehicle Type</th>
+                <th>Total Kms</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Total Expense</th>
+                <th>Uploaded Proofs</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {reimbursements.map((reimbursement) => (
                 <tr key={reimbursement._id}>
-                  <td style={tdStyles}>{reimbursement.expenseType}</td>
-                  <td style={tdStyles}>{reimbursement.vehicleType || "-"}</td>
-                  <td style={tdStyles}>{reimbursement.totalKms || "-"}</td>
-                  <td style={tdStyles}>{reimbursement.description}</td>
-                  <td style={tdStyles}>
-                    {new Date(reimbursement.startDate).toLocaleDateString()}
-                  </td>
-                  <td style={tdStyles}>
-                    {new Date(reimbursement.endDate).toLocaleDateString()}
-                  </td>
-                  <td style={tdStyles}>{reimbursement.totalExpense}</td>
-                  <td style={tdStyles}>
+                  <td>{reimbursement.expenseType}</td>
+                  <td>{reimbursement.vehicleType || "-"}</td>
+                  <td>{reimbursement.totalKms || "-"}</td>
+                  <td>{reimbursement.description}</td>
+                  <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
+                  <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
+                  <td>{reimbursement.totalExpense}</td>
+                  <td>
                     {reimbursement.proofs && reimbursement.proofs.length > 0 ? (
                       reimbursement.proofs.map((proof, index) => (
                         <div key={index}>
@@ -121,10 +94,10 @@ function ViewReimbE() {
                       "No Proof Uploaded"
                     )}
                   </td>
-                  <td style={tdStyles}>{reimbursement.status}</td>
-                  <td style={tdStyles}>
+                  <td>{reimbursement.status}</td>
+                  <td>
                     <button
-                      className="btn btn-sm btn-danger"
+                      className="btnrap btnrap-danger"
                       onClick={() => deleteReimbursement(reimbursement._id)}
                     >
                       Delete

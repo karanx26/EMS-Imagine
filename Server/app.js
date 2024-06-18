@@ -729,7 +729,7 @@ app.get('/overtime/employee/:uid', async (req, res) => {
 // Fetch all employees
 app.get('/employees', async (req, res) => {
   try {
-    const employees = await Employee.find({}, { uid: 1, name: 1 }).lean();
+    const employees = await employees.find({}, { uid: 1, name: 1 }).lean();
     res.json(employees);
   } catch (error) {
     console.error('Error fetching employees:', error);
