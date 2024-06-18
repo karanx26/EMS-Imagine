@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/CheckUpdC.css"; // Reuse the same CSS file
 
 function CheckUpdC() {
   const [documents, setDocuments] = useState([]);
-
   const [userId, setUserId] = useState("");
 
   axios.defaults.withCredentials = true;
@@ -29,30 +27,30 @@ function CheckUpdC() {
     fetchDocuments();
   }, [userId]);
 
-  
-
-  
-
   return (
     <div className="container mt-5">
-      
-      <h4 className="mt-5 text-center">Documents</h4>
-      {documents.length === 0 ? (
-        <p className="text-center">No documents uploaded.</p>
-      ) : (
-        <div className="card mt-3" style={{ maxWidth: "600px", margin: "0 auto" }}>
-          <ul className="list-group list-group-flush">
-            {documents.map((doc) => (
-              <li key={doc._id} className="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <strong>{doc.documentName}</strong> - <a href={`http://localhost:8001/${doc.docs[0]}`} target="_blank" rel="noopener noreferrer">View</a>
-                </div>
-                
-              </li>
-            ))}
-          </ul>
+      <div className="row justify-content-center">
+        <div className="col-md-7">
+          <div className="card">
+            <div className="card-header text-center">
+              <h2 className="text-white">DOCUMENTS</h2>
+            </div>
+            <div className="card-body">
+              {documents.length === 0 ? (
+                <p className="text-center">No documents uploaded.</p>
+              ) : (
+                <ul className="list-group list-group-flush">
+                  {documents.map((doc) => (
+                    <li key={doc._id} className="list-group-item">
+                      <strong>{doc.documentName}</strong> - <a href={`http://localhost:8001/${doc.docs[0]}`} target="_blank" rel="noopener noreferrer">View</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

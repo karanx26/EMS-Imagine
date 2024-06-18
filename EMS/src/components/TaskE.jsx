@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from "react-router-dom";
+import '../styles/TaskE.css'; // Import the new CSS file
 
 const TaskE = () => {
   const { uid } = useParams();
@@ -39,75 +40,36 @@ const TaskE = () => {
     }
   };
 
-  const containerStyle = {
-    maxWidth: "800px",
-    margin: "40px auto",
-    padding: "20px",
-    border: "1px solid #ccc",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#fff",
-  };
-
-  const tableStyle = {
-    width: "100%",
-    borderCollapse: "collapse",
-    marginBottom: "10px",
-    border: "2px solid #ddd",
-  };
-
-  const thTdStyle = {
-    padding: "10px",
-    border: "1px solid #ddd",
-    textAlign: "left",
-  };
-
-  const buttonStyle = {
-    padding: "5px 10px",
-    backgroundColor: "#4CAF50",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  };
-
-  const headingStyle = {
-    textAlign: "center",
-    marginTop: "5px",
-    marginBottom: "15px",
-    color: "black",
-  };
-
   return (
-    <div style={containerStyle}>
-      <h2 style={headingStyle}>TASKS</h2>
+    <div className="container">
+      <h2 className="heading">TASKS</h2>
       {loading ? (
         <p>Loading tasks...</p>
       ) : error ? (
         <p>{error}</p>
       ) : tasks.length ? (
-        <table style={tableStyle}>
+        <table className="task-table">
           <thead>
             <tr>
-              <th style={thTdStyle}>Task</th>
-              <th style={thTdStyle}>Deadline</th>
-              <th style={thTdStyle}>Status</th>
-              <th style={thTdStyle}>Action</th>
+              <th>Task</th>
+              <th>Deadline</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {tasks.map((task) => (
               <tr key={task._id}>
-                <td style={thTdStyle}>{task.task}</td>
-                <td style={thTdStyle}>{new Date(task.deadline).toLocaleDateString()}</td>
-                <td style={thTdStyle}>{task.status}</td>
-                <td style={thTdStyle}>
+                <td>{task.task}</td>
+                <td>{new Date(task.deadline).toLocaleDateString()}</td>
+                <td>{task.status}</td>
+                <td>
                   {task.status !== "Done" && (
                     <button
-                      style={buttonStyle}
+                      className="status-button"
                       onClick={() => handleStatusChange(task._id)}
                     >
-                      Mark as Done
+                      Done
                     </button>
                   )}
                 </td>
@@ -116,7 +78,8 @@ const TaskE = () => {
           </tbody>
         </table>
       ) : (
-        <p>No tasks assigned.</p>
+        
+        <p className="text-center"><br />No tasks assigned.</p>
       )}
     </div>
   );
