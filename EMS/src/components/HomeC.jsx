@@ -60,8 +60,8 @@ function HomeC() {
                   to="/homec/checkupdc"
                   className="nav-link px-0 align-middle text-white"
                 >
-                  <i className="fs-4 bi-bell ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Check Updates</span>
+                  <i className="fs-4 bi-files ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Check Documents</span>
                 </Link>
               </li>
 
@@ -81,7 +81,7 @@ function HomeC() {
           <div className="p-2 d-flex justify-content-center align-items-center shadow header">
             <img src="../Images/mainlogo.png" alt="Logo" className="logo" />
           </div>
-          <div className="bg-dark d-md-none">
+          <div className="bg-dark navv-bar d-md-none">
             <ul className="nav nav-pills nav-fill text-white">
               <li className="nav-item">
                 <Link to="/homec" className="nav-link text-white">
@@ -90,7 +90,7 @@ function HomeC() {
               </li>
               <li className="nav-item">
                 <Link to="/homec/checkupdc" className="nav-link text-white">
-                  <i className="bi bi-bell"></i> Check Updates
+                  <i className="bi bi-files"></i> Check Documents
                 </Link>
               </li>
               <li className="nav-item" onClick={handleLogout}>

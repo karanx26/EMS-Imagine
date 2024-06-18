@@ -109,7 +109,7 @@ function HomeA() {
               <img src="../Images/mainlogo.png" alt="Logo" className="logo" />
             </div>
 
-            <div className="bg-dark d-md-none">
+            <div className="bg-dark navv-bar d-md-none">
               <ul className="nav nav-pills nav-fill text-white">
                 <li className="nav-item">
                   <Link to="/homea" className="nav-link text-white">

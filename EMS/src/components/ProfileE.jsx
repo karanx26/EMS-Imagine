@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../styles/ProfileE.css";
 
 function ProfileE() {
   const [loginData, setLoginData] = useState([]);
@@ -50,28 +51,21 @@ function ProfileE() {
               <div className="card-body">
                 <form>
                   <div className="form-group mb-3">
-                    <label><b>Unique Id : </b> {employeeData.uid}</label>
+                    <label><b>Unique Id: </b> {employeeData.uid}</label>
                     <br />
+                    <label><b>Name: </b> {employeeData.name}</label>
                     <br />
-                    <label><b>Name : </b> {employeeData.name}</label>
+                    <label><b>Phone no: </b> {employeeData.phone}</label>
                     <br />
+                    <label><b>Email: </b> {employeeData.email}</label>
                     <br />
-                    <label><b>Phone no : </b> {employeeData.phone}</label>
+                    <label><b>Department: </b> {employeeData.department}</label>
                     <br />
+                    <label><b>Date of Birth: </b> {employeeData.dob}</label>
                     <br />
-                    <label><b>Email : </b> {employeeData.email}</label>
+                    <label><b>Joining Date: </b> {employeeData.joiningDate}</label>
                     <br />
-                    <br />
-                    <label><b>Department : </b> {employeeData.department}</label>
-                    <br />
-                    <br />
-                    <label><b>Date of Birth : </b> {employeeData.dob}</label>
-                    <br />
-                    <br />
-                    <label><b>Joining Date : </b> {employeeData.joiningDate}</label>
-                    <br />
-                    <br />
-                    <label><b>Address : </b> {employeeData.address}</label>
+                    <label><b>Address: </b> {employeeData.address}</label>
                     <br />
                   </div>
                 </form>
@@ -82,7 +76,6 @@ function ProfileE() {
       </div>
     </>
   );
-
-};
+}
 
 export default ProfileE;

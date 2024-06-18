@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../styles/ProfileA.css";
 
 function ProfileA() {
   const [loginData, setLoginData] = useState([]);
@@ -43,10 +44,9 @@ function ProfileA() {
               <div className="card-body">
                 <form>
                   <div className="form-group mb-3">
-                    <label><b>Unique Id : </b> {adminData.uid}</label>
+                    <label><b>Unique Id: </b> {adminData.uid}</label>
                     <br />
-                    <br />
-                    <label><b>Password : </b> {adminData.password}</label>
+                    <label><b>Password: </b> {adminData.password}</label>
                   </div>
                 </form>
               </div>
@@ -56,7 +56,6 @@ function ProfileA() {
       </div>
     </>
   );
-
-};
+}
 
 export default ProfileA;

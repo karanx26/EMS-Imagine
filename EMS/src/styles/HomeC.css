@@ -14,14 +14,23 @@ body {
 
 /* Sidebar Styling */
 .sidebar {
-  background-color: #343a40;
+  /* background-color: #343a40; */
+  background: linear-gradient(180deg, #000000, #343a40);
+
   color: white;
   width: 250px;
 }
 
+.navv-bar {
+  /* background-color: #343a40; */
+  background: linear-gradient(180deg, #000000, #343a40);
+
+  color: white;
+}
+
 .sidebar .nav-link {
   color: white;
-  padding: 15px 20px;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
 }
