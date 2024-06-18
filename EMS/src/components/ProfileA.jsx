@@ -39,7 +39,7 @@ function ProfileA() {
           <div className="col-md-7">
             <div className="card">
               <div className="card-header text-center">
-                <h2>PROFILE</h2>
+                <h2 className="text-white">PROFILE</h2>
               </div>
               <div className="card-body">
                 <form>
