@@ -51,7 +51,7 @@ function ManageEmpA() {
           </Link>
 
           <Link to="/homea/overtimea" className="manage-button">
-            <i className="bi bi-envelope-open-fill"></i>
+            <i className="bi bi-clock-fill"></i>
             Overtime
           </Link>
 

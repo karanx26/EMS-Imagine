@@ -687,36 +687,31 @@ app.delete('/clientDocuments/:uid/:docId', async (req, res) => {
 });
 
 
+app.get('/overtime', async (req, res) => {
+  try {
+    const overtimeRecords = await Overtime.find();
+    res.json(overtimeRecords);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching overtime data' });
+  }
+});
 
+app.post('/overtime', async (req, res) => {
+  const { uid, date, hours, description } = req.body;
+  if (!uid || !date || !hours || !description) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
 
+  const newOvertime = new Overtime({ uid, date, hours, description });
+  try {
+    const savedOvertime = await newOvertime.save();
+    res.status(201).json(savedOvertime);
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding overtime record' });
+  }
+});
 
-// Routes
-// app.get('/overtime', async (req, res) => {
-//   try {
-//     const overtimeRecords = await Overtime.find();
-//     res.json(overtimeRecords);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error fetching overtime data' });
-//   }
-// });
-
-// app.post('/overtime', async (req, res) => {
-//   const { uid, date, hours, description } = req.body;
-//   if (!uid || !date || !hours || !description) {
-//     return res.status(400).json({ message: 'All fields are required' });
-//   }
-
-//   const newOvertime = new Overtime({ uid, date, hours, description });
-//   try {
-//     const savedOvertime = await newOvertime.save();
-//     res.status(201).json(savedOvertime);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error adding overtime record' });
-//   }
-// });
-
-
-// Get all overtime records
+// Get overtime records for a specific employee
 app.get('/overtime/employee/:uid', async (req, res) => {
   const { uid } = req.params;
   try {
@@ -731,6 +726,7 @@ app.get('/overtime/employee/:uid', async (req, res) => {
   }
 });
 
+// Fetch all employees
 app.get('/employees', async (req, res) => {
   try {
     const employees = await Employee.find({}, { uid: 1, name: 1 }).lean();
@@ -743,18 +739,19 @@ app.get('/employees', async (req, res) => {
 
 // Add a new overtime record
 app.post('/overtime', async (req, res) => {
+  const { uid, date, hours, description } = req.body;
+  if (!uid || !date || !hours || !description) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  const newOvertime = new Overtime({ uid, date, hours, description });
   try {
-    const { uid, date, hours, description } = req.body;
-    const newOvertime = new Overtime({ uid, date, hours, description });
     await newOvertime.save();
     res.status(201).json({ message: 'Overtime record added successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error adding overtime record', error });
   }
 });
-
-// Update an overtime record by ID
-
 
 // Delete an overtime record by ID
 app.delete('/overtime/:id', async (req, res) => {
@@ -770,7 +767,44 @@ app.delete('/overtime/:id', async (req, res) => {
   }
 });
 
+// Update an overtime record by ID
+app.put('/overtime/:id', async (req, res) => {
+  const { id } = req.params;
+  const { date, hours, description } = req.body;
 
+  try {
+    const updatedOvertime = await Overtime.findByIdAndUpdate(id, { date, hours, description }, { new: true });
+    if (!updatedOvertime) {
+      return res.status(404).json({ message: 'Overtime record not found' });
+    }
+    res.json({ message: 'Overtime record updated successfully', updatedOvertime });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating overtime record', error });
+  }
+});
+
+app.get('/overtime/employee/:uid/month/:year/:month', async (req, res) => {
+  const { uid, year, month } = req.params;
+  const startDate = new Date(year, month - 1, 1);
+  const endDate = new Date(year, month, 0);
+
+  try {
+    const overtimeRecords = await Overtime.find({
+      uid,
+      date: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    });
+
+    const totalHours = overtimeRecords.reduce((acc, record) => acc + record.hours, 0);
+
+    res.json({ totalHours });
+  } catch (error) {
+    console.error('Error calculating total overtime hours:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 
 
