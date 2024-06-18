@@ -13,7 +13,7 @@ const Login = () => {
       </div>
       <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
         <div className="p-3 rounded border loginForm">
-          <h2 className="center-align">LogIn As</h2>
+          <h2 className="center-align text-white">LogIn As</h2>
           <div className="d-flex justify-content-between mt-5 mb-2 buttonGroup">
             <button type="button" className="btn btn-primary">
               <a className="buttonlink" href="loginforma">
