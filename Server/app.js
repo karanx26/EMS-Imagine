@@ -565,24 +565,49 @@ app.patch('/reimbursements/:id/status', async (req, res) => {
   }
 });
 
-app.put('/reimbursements/:id', async (req, res) => {
+app.put('/reimbursements/:id', upload.array('proofs', 10), async (req, res) => {
   try {
-    const { id } = req.params;
-    const updatedData = req.body;
-    const reimbursement = await Reimbursement.findByIdAndUpdate(id, updatedData, { new: true });
+    const {
+      uid,
+      expenseType,
+      description,
+      startDate,
+      endDate,
+      totalExpense,
+      gstType,
+      vehicleType,
+      totalKms,
+    } = req.body;
 
-    if (!reimbursement) {
-      return res.status(404).json({ message: 'Reimbursement application not found' });
-    }
+    const existingProofs = req.body.existingProofs ? [].concat(req.body.existingProofs) : [];
+    const newProofs = req.files.map(file => file.path);
 
-    res.status(200).json(reimbursement);
+    const updatedProofs = [...existingProofs, ...newProofs];
+
+    const updateData = {
+      uid,
+      expenseType,
+      description,
+      startDate,
+      endDate,
+      totalExpense,
+      gstType,
+      vehicleType: expenseType === 'fuel' ? vehicleType : '',
+      totalKms: expenseType === 'fuel' ? totalKms : '',
+      proofs: updatedProofs,
+    };
+
+    const updatedReimbursement = await Reimbursement.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    res.json(updatedReimbursement);
   } catch (error) {
-    res.status(500).json({ message: 'Error updating reimbursement application', error });
+    res.status(500).json({ message: error.message });
   }
 });
-
-
-
 
 app.post('/addclient', (req, res) => {
   const { uid, password, clientType, name, phone, address, locationLink } = req.body;

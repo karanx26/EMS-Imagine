@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../styles/ReimbursementE.css"; // Make sure to import the CSS file
 
-const UpdateReimbursementE = () => {
+const EditReimb = () => {
   const [formData, setFormData] = useState({
     uid: "",
     expenseType: "",
@@ -15,8 +15,10 @@ const UpdateReimbursementE = () => {
     vehicleType: "",
     totalKms: "",
     totalExpense: "",
-    gstType: "", // Added field for GST type
+    gstType: "",
   });
+
+  const [newFiles, setNewFiles] = useState([]); // State to hold new files
 
   const navigate = useNavigate();
   const { id } = useParams(); // Get the reimbursement ID from the URL params
@@ -84,10 +86,8 @@ const UpdateReimbursementE = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      proofs: [...formData.proofs, ...Array.from(e.target.files)],
-    });
+    const files = Array.from(e.target.files);
+    setNewFiles((prevFiles) => [...prevFiles, ...files]);
   };
 
   const handleFileDelete = (index) => {
@@ -96,6 +96,10 @@ const UpdateReimbursementE = () => {
       ...formData,
       proofs: newProofs,
     });
+  };
+
+  const handleNewFileDelete = (index) => {
+    setNewFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
@@ -109,8 +113,15 @@ const UpdateReimbursementE = () => {
       data.append("endDate", formData.endDate);
       data.append("totalExpense", formData.totalExpense);
       data.append("gstType", formData.gstType); // Append GST type
+
+      // Append new files
+      newFiles.forEach((file) => {
+        data.append("proofs", file);
+      });
+
+      // Append existing proofs (if they are URLs, not actual files, they might be handled differently on the backend)
       formData.proofs.forEach((proof) => {
-        data.append("proofs", proof);
+        data.append("existingProofs", proof);
       });
 
       if (formData.expenseType === "fuel") {
@@ -252,8 +263,8 @@ const UpdateReimbursementE = () => {
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
+                    required
                     className="form-control"
-                    rows="4"
                   />
                 </div>
 
@@ -352,17 +363,10 @@ const UpdateReimbursementE = () => {
                 <div className="mt-4">
                   <h4>Uploaded Files:</h4>
                   <ul>
-                    {formData.proofs.map((file, index) => (
-                      <li
-                        key={index}
-                        className="d-flex justify-content-between align-items-center"
-                      >
-                        <a
-                          href={getObjectURL(file)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {file.name}
+                    {formData.proofs.map((proof, index) => (
+                      <li key={index} className="d-flex justify-content-between align-items-center">
+                        <a href={`http://localhost:8001/${proof}`} target="_blank" rel="noopener noreferrer">
+                          View Proof {index + 1}
                         </a>
                         <button
                           type="button"
@@ -376,7 +380,27 @@ const UpdateReimbursementE = () => {
                   </ul>
                 </div>
               )}
-              
+              {newFiles.length > 0 && (
+                <div className="mt-4">
+                  <h4>Newly Added Files:</h4>
+                  <ul>
+                    {newFiles.map((file, index) => (
+                      <li key={index} className="d-flex justify-content-between align-items-center">
+                        <a href={getObjectURL(file)} target="_blank" rel="noopener noreferrer">
+                          View File {index + 1}
+                        </a>
+                        <button
+                          type="button"
+                          className="btnr btnr-danger btnr-sm ml-2 mt-1 mb-1"
+                          onClick={() => handleNewFileDelete(index)}
+                        >
+                          Delete
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -385,4 +409,4 @@ const UpdateReimbursementE = () => {
   );
 };
 
-export default UpdateReimbursementE;
+export default EditReimb;

@@ -18,6 +18,7 @@ import LeaveA from "./components/LeaveA";
 import OvertimeA from "./components/OvertimeA";
 import ReimbursementA from "./components/ReimbursementA";
 import CheckReimb from "./components/CheckReimb";
+import GstApplications from "./components/GstApplications";
 import ManageClientA from "./components/ManageClientA";
 import ManageInventoryA from "./components/ManageInventoryA";
 
@@ -78,6 +79,7 @@ function App() {
           <Route path="/homea/monthlyattendancea" element={<MonthAttendanceA />} />
           <Route path="/homea/reimba" element={<ReimbursementA />} />
           <Route path="/homea/checkreimb/:id" element={<CheckReimb />} />
+          <Route path="/homea//gst-applications" element={<GstApplications />} />
           <Route path="/homea/editclient/:uid" element={<EditClientA />} />
           <Route path="/homea/clientdocs/:uid" element={<ClientDocs />} />
 
