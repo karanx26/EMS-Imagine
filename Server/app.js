@@ -426,13 +426,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.post('/reimbursement', upload.array('proofs'), async (req, res) => {
+app.post("/reimbursement", upload.array("proofs", 12), async (req, res) => {
   try {
-    console.log('Files:', req.files);
-    console.log('Body:', req.body);
+    const {
+      uid,
+      expenseType,
+      description,
+      startDate,
+      endDate,
+      vehicleType,
+      totalKms,
+      totalExpense,
+      gstType,
+    } = req.body;
 
-    const { uid, expenseType, description, startDate, endDate, vehicleType, totalKms, totalExpense, status } = req.body;
-    const proofs = req.files.map(file => file.path);
+    const proofs = req.files.map((file) => file.path);
 
     const newReimbursement = new Reimbursement({
       uid,
@@ -444,17 +452,18 @@ app.post('/reimbursement', upload.array('proofs'), async (req, res) => {
       vehicleType,
       totalKms,
       totalExpense,
-      status
+      gstType, // Save GST type
     });
 
     await newReimbursement.save();
-
-    res.status(200).json({ message: 'Reimbursement submitted successfully' });
+    res.status(200).send("Reimbursement request submitted successfully");
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Error submitting reimbursement request:", error);
+    res.status(500).send("Error submitting reimbursement request");
   }
 });
+
+
 
 app.get('/reimbursement/:uid', async (req, res) => {
   try {
@@ -467,7 +476,19 @@ app.get('/reimbursement/:uid', async (req, res) => {
   }
 });
 
-app.delete('/reimbursement/:id', async (req, res) => {
+app.get('/reimbursements/:id', async (req, res) => {
+  try {
+    const reimbursement = await Reimbursement.findById(req.params.id);
+    if (!reimbursement) {
+      return res.status(404).json({ message: 'Reimbursement application not found' });
+    }
+    res.status(200).json(reimbursement);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching reimbursement application', error });
+  }
+});
+
+app.delete('/reimbursements/:id', async (req, res) => {
   try {
     const reimbursement = await Reimbursement.findById(req.params.id);
     if (!reimbursement) {
@@ -526,24 +547,40 @@ app.get('/reimbursements', async (req, res) => {
   }
 });
 
-app.patch("/reimbursements/:id/status", async (req, res) => {
-  const { id } = req.params;
-  const { status } = req.body;
-
+app.patch('/reimbursements/:id/status', async (req, res) => {
   try {
-    const reimbursement = await Reimbursement.findById(id);
-
+    const { status, review } = req.body; // Get status and review from request body
+    const reimbursement = await Reimbursement.findByIdAndUpdate(
+      req.params.id,
+      { status, review }, // Update status and review
+      { new: true }
+    );
     if (!reimbursement) {
-      return res.status(404).json({ message: "Reimbursement not found" });
+      return res.status(404).send('Reimbursement not found');
     }
-
-    reimbursement.status = status;
-    await reimbursement.save();
-    res.json(reimbursement);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(200).send(reimbursement);
+  } catch (error) {
+    console.error("Error updating reimbursement status:", error);
+    res.status(500).send({ message: error.message });
   }
 });
+
+app.put('/reimbursements/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+    const reimbursement = await Reimbursement.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (!reimbursement) {
+      return res.status(404).json({ message: 'Reimbursement application not found' });
+    }
+
+    res.status(200).json(reimbursement);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating reimbursement application', error });
+  }
+});
+
 
 
 

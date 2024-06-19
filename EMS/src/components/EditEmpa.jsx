@@ -69,13 +69,13 @@ function EditEmpa() {
                 <div className="form-group row mb-3">
                   <label className="col-sm-3 col-form-label">Unique Id:</label>
                   <div className="col-sm-9">
-                    <input type="text" className="form-control" value={employee.uid} readOnly />
+                    <input type="text" className="form-control" value={employee.uid} onChange={(e) => setEmployee({ ...employee, uid: e.target.value })}  />
                   </div>
                 </div>
                 <div className="form-group row mb-3">
                   <label className="col-sm-3 col-form-label">Password:</label>
                   <div className="col-sm-9">
-                    <input type="text" className="form-control" value={employee.password} readOnly />
+                    <input type="text" className="form-control" value={employee.password} onChange={(e) => setEmployee({ ...employee, password: e.target.value })}  />
                   </div>
                 </div>
                 <div className="form-group row mb-3">

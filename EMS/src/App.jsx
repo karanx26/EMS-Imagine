@@ -17,6 +17,7 @@ import TaskA from "./components/TaskA";
 import LeaveA from "./components/LeaveA";
 import OvertimeA from "./components/OvertimeA";
 import ReimbursementA from "./components/ReimbursementA";
+import CheckReimb from "./components/CheckReimb";
 import ManageClientA from "./components/ManageClientA";
 import ManageInventoryA from "./components/ManageInventoryA";
 
@@ -30,6 +31,7 @@ import AttendanceE from "./components/AttendanceE";
 import Overtime from "./components/Overtime";
 import ReimbursementE from "./components/ReimbursementE";
 import ViewReimbE from "./components/ViewReimbE";
+import EditReimb from "./components/EditReimb";
 import LeaveE from "./components/LeaveE";
 import LeaveApplicationE from "./components/LeaveApplicationE";
 import ManageClientE from "./components/ManageClientE";
@@ -75,6 +77,7 @@ function App() {
           <Route path="/homea/editempa/:uid" element={<EditEmpa />} />
           <Route path="/homea/monthlyattendancea" element={<MonthAttendanceA />} />
           <Route path="/homea/reimba" element={<ReimbursementA />} />
+          <Route path="/homea/checkreimb/:id" element={<CheckReimb />} />
           <Route path="/homea/editclient/:uid" element={<EditClientA />} />
           <Route path="/homea/clientdocs/:uid" element={<ClientDocs />} />
 
@@ -103,6 +106,7 @@ function App() {
           <Route path="/homee/overtime" element={<Overtime />} />
           <Route path="/homee/reimbursemente" element={<ReimbursementE />} />
           <Route path="/homee/viewreimbe" element={<ViewReimbE />} />
+          <Route path="/homee/editreimb/:id" element={<EditReimb />} />
           <Route path="/homee/managecliente" element={<ManageClientE />} />
           <Route path="/homee/addcliente" element={<AddClientE />} />
           <Route path="/homee/editcliente/:uid" element={<EditClientE />} />  

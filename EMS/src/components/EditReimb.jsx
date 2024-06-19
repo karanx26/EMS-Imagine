@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../styles/ReimbursementE.css"; // Make sure to import the CSS file
 
-const ReimbursementE = () => {
+const UpdateReimbursementE = () => {
   const [formData, setFormData] = useState({
     uid: "",
     expenseType: "",
@@ -19,13 +19,32 @@ const ReimbursementE = () => {
   });
 
   const navigate = useNavigate();
+  const { id } = useParams(); // Get the reimbursement ID from the URL params
 
   useEffect(() => {
-    const uid = localStorage.getItem("uid");
-    if (uid) {
-      setFormData((prevFormData) => ({ ...prevFormData, uid }));
-    }
-  }, []);
+    const fetchReimbursement = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8001/reimbursements/${id}`);
+        const data = response.data;
+        setFormData({
+          uid: data.uid,
+          expenseType: data.expenseType,
+          description: data.description,
+          startDate: new Date(data.startDate).toISOString().split("T")[0],
+          endDate: new Date(data.endDate).toISOString().split("T")[0],
+          proofs: data.proofs || [],
+          vehicleType: data.vehicleType || "",
+          totalKms: data.totalKms || "",
+          totalExpense: data.totalExpense || "",
+          gstType: data.gstType || "",
+        });
+      } catch (error) {
+        console.error("Error fetching reimbursement data:", error);
+      }
+    };
+
+    fetchReimbursement();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,32 +118,24 @@ const ReimbursementE = () => {
         data.append("totalKms", formData.totalKms);
       }
 
-      const response = await axios.post(
-        "http://localhost:8001/reimbursement",
+      const response = await axios.put(
+        `http://localhost:8001/reimbursements/${id}`,
         data
       );
       console.log(response.data);
-      alert("Form submitted successfully!");
-      setFormData({
-        uid: "",
-        expenseType: "",
-        description: "",
-        startDate: "",
-        endDate: "",
-        proofs: [],
-        vehicleType: "",
-        totalKms: "",
-        totalExpense: "",
-        gstType: "", // Reset GST type
-      });
+      alert("Form updated successfully!");
+      navigate("/homee/viewreimbe");
     } catch (error) {
-      console.error("Error submitting form data:", error);
-      alert("Error submitting form. Please try again.");
+      console.error("Error updating form data:", error);
+      alert("Error updating form. Please try again.");
     }
   };
 
-  const handleViewApplications = () => {
-    navigate("/homee/viewreimbe");
+  const getObjectURL = (file) => {
+    if (file instanceof Blob) {
+      return URL.createObjectURL(file);
+    }
+    return null;
   };
 
   return (
@@ -133,7 +144,7 @@ const ReimbursementE = () => {
         <div className="col-md-8">
           <div className="card">
             <div className="card-header text-center bg-orange text-white">
-              <h2>REIMBURSEMENT FORM</h2>
+              <h2>UPDATE REIMBURSEMENT FORM</h2>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>
@@ -256,13 +267,13 @@ const ReimbursementE = () => {
                         className="form-check-input"
                         type="radio"
                         name="gstType"
-                        id="gst"
-                        value="GST"
-                        checked={formData.gstType === "GST"}
+                        id="with-gst"
+                        value="With GST"
+                        checked={formData.gstType === "With GST"}
                         onChange={handleChange}
                       />
-                      <label className="form-check-label" htmlFor="gst">
-                        GST &nbsp; &nbsp;
+                      <label className="form-check-label" htmlFor="with-gst">
+                        With GST
                       </label>
                     </div>
                     <div className="form-check">
@@ -333,7 +344,7 @@ const ReimbursementE = () => {
 
                 <div className="form-group text-center">
                   <button type="submit" className="btnr btnr-primary">
-                    Submit
+                    Update
                   </button>
                 </div>
               </form>
@@ -347,7 +358,7 @@ const ReimbursementE = () => {
                         className="d-flex justify-content-between align-items-center"
                       >
                         <a
-                          href={URL.createObjectURL(file)}
+                          href={getObjectURL(file)}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -365,15 +376,7 @@ const ReimbursementE = () => {
                   </ul>
                 </div>
               )}
-              <div className="form-group text-center">
-                <button
-                  type="button"
-                  className="btnr btnr-success mt-4"
-                  onClick={handleViewApplications}
-                >
-                  View Applications
-                </button>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -382,4 +385,4 @@ const ReimbursementE = () => {
   );
 };
 
-export default ReimbursementE;
+export default UpdateReimbursementE;

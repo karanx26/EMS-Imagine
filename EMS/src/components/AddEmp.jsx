@@ -118,7 +118,6 @@ const AddEmp = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
                     className="form-control"
                   />
                 </div>
@@ -130,7 +129,6 @@ const AddEmp = () => {
                     name="department"
                     value={formData.department}
                     onChange={handleChange}
-                    required
                     className="form-control"
                   />
                 </div>
@@ -142,7 +140,6 @@ const AddEmp = () => {
                     name="dob"
                     value={formData.dob}
                     onChange={handleChange}
-                    required
                     className="form-control"
                   />
                 </div>
@@ -154,7 +151,6 @@ const AddEmp = () => {
                     name="joiningDate"
                     value={formData.joiningDate}
                     onChange={handleChange}
-                    required
                     className="form-control"
                   />
                 </div>
@@ -166,7 +162,6 @@ const AddEmp = () => {
                     name="salary"
                     value={formData.salary}
                     onChange={handleChange}
-                    required
                     className="form-control"
                   />
                 </div>
@@ -177,7 +172,6 @@ const AddEmp = () => {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    required
                     className="form-control"
                   />
                 </div>

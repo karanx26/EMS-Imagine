@@ -101,8 +101,9 @@ const individualAttendanceSchema = new mongoose.Schema({
     vehicleType: { type: String },
     totalKms: { type: Number },
     totalExpense: { type: Number },
+    gstType: { type: String, required: true },
     status: { type: String, default: "Pending" },
-  
+    review: { type: String } 
   });
 
   const clientSchema = new mongoose.Schema({

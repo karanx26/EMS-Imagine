@@ -8,10 +8,10 @@ body {
   }
     
   .table-container {
-    overflow-x: auto; /* Add horizontal scrolling */
+    /* overflow-x: auto; Add horizontal scrolling */
     width: 90%;
   border-collapse: collapse;
-  border: 2px solid #ddd;
+  /* border: 2px solid #ddd; */
   margin-left: auto;
   margin-right: auto;
   }
@@ -20,7 +20,7 @@ body {
     font-size: 0.875rem;
     width: 100%;
     border-collapse: collapse;
-    min-width: 600px; 
+    /* min-width: 600px;  */
   }
   
   .table th, .table td {

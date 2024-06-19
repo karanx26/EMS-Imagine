@@ -114,7 +114,6 @@ const AddClientE = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    required
                     className="form-control"
                   />
                 </div>
@@ -125,7 +124,6 @@ const AddClientE = () => {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    required
                     className="form-control"
                   />
                 </div>

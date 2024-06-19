@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { Link } from "react-router-dom";
 
 const ReimbursementA = () => {
   const [reimbursements, setReimbursements] = useState([]);
@@ -26,37 +27,30 @@ const ReimbursementA = () => {
     fetchReimbursements();
   }, []);
 
-  const handleStatusChange = async (id, status) => {
-    try {
-      await axios.patch(`http://localhost:8001/reimbursements/${id}/status`, { status });
-      setReimbursements(reimbursements.map(reimbursement =>
-        reimbursement._id === id ? { ...reimbursement, status } : reimbursement
-      ));
-    } catch (error) {
-      console.error("Error updating reimbursement status:", error);
+  useEffect(() => {
+    if (adminId === "A001") {
+      setFilter("Pending");
+    } else if (adminId === "A002") {
+      setFilter("Second Level Pending");
+    } else if (adminId === "A003") {
+      setFilter("Third Level Pending");
     }
-  };
+  }, [adminId]);
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this reimbursement application?");
-    if (confirmDelete) {
-    try {
-      await axios.delete(`http://localhost:8001/reimbursement/${id}`);
-      setReimbursements(reimbursements.filter(reimbursement => reimbursement._id !== id));
-    } catch (error) {
-      console.error("Error deleting reimbursement:", error);
-    }}
-  };
-
-  const filteredReimbursements = reimbursements.filter(reimbursement => {
+  const filteredReimbursements = reimbursements.filter((reimbursement) => {
     if (filter === "All") return true;
-    if (filter === reimbursement.status) return true;
-    if (filter === "Pending" && adminId === "A001" && reimbursement.status === "Pending") return true;
-    if (filter === "Pending" && adminId === "A002" && reimbursement.status === "Second Level Pending") return true;
-    if (filter === "Pending" && adminId === "A003" && reimbursement.status === "Third Level Pending") return true;
-    
 
-    return false;
+    if (adminId === "A001" && (filter === "Pending" || filter === "On Hold by Admin 1")) {
+      return reimbursement.status === "Pending" || reimbursement.status === "On Hold by Admin 1";
+    }
+    if (adminId === "A002" && (filter === "Second Level Pending" || filter === "On Hold by Admin 2")) {
+      return reimbursement.status === "Second Level Pending" || reimbursement.status === "On Hold by Admin 2";
+    }
+    if (adminId === "A003" && (filter === "Third Level Pending" || filter === "On Hold by Admin 3")) {
+      return reimbursement.status === "Third Level Pending" || reimbursement.status === "On Hold by Admin 3";
+    }
+
+    return reimbursement.status === filter;
   });
 
   if (loading) {
@@ -68,40 +62,86 @@ const ReimbursementA = () => {
   }
 
   const tableContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '30px',
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "30px",
   };
 
   const tableStyle = {
     fontSize: "0.875rem",
-    width: '80%',
-    borderCollapse: 'collapse',
+    width: "80%",
+    borderCollapse: "collapse",
   };
 
   const thStyles = {
-    border: '1px solid #ddd',
-    padding: '10px',
-    backgroundColor: '#f2f2f2',
-    textAlign: 'center'
+    border: "1px solid #ddd",
+    padding: "10px",
+    backgroundColor: "#f2f2f2",
+    textAlign: "center",
   };
 
   const tdStyles = {
-    border: '1px solid #ddd',
-    padding: '8px',
-    textAlign: 'center'
+    border: "1px solid #ddd",
+    padding: "8px",
+    textAlign: "center",
   };
 
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">REIMBURSEMENT APPLICATIONS</h2>
       <div className="mb-4 text-center">
-        <button className="btn btn-primary me-2" onClick={() => setFilter("Pending")}>Pending</button>
-        <button className="btn btn-warning me-2" onClick={() => setFilter("Second Level Pending")}>Second Level Pending</button>
-        <button className="btn btn-info me-2" onClick={() => setFilter("Third Level Pending")}>Third Level Pending</button>
-        <button className="btn btn-success me-2" onClick={() => setFilter("Approved")}>Approved</button>
-        <button className="btn btn-danger me-2" onClick={() => setFilter("Rejected")}>Rejected</button>
-        <button className="btn btn-secondary" onClick={() => setFilter("All")}>All</button>
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Filter by Status
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li>
+              <button className="dropdown-item" onClick={() => setFilter("Approved")}>Approved</button>
+            </li>
+            <li>
+              <button className="dropdown-item" onClick={() => setFilter("Rejected")}>Rejected</button>
+            </li>
+            {adminId === "A001" && (
+              <>
+                <li>
+                  <button className="dropdown-item" onClick={() => setFilter("Pending")}>Pending</button>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => setFilter("On Hold by Admin 1")}>On Hold by Admin 1</button>
+                </li>
+              </>
+            )}
+            {adminId === "A002" && (
+              <>
+                <li>
+                  <button className="dropdown-item" onClick={() => setFilter("Second Level Pending")}>Second Level Pending</button>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => setFilter("On Hold by Admin 2")}>On Hold by Admin 2</button>
+                </li>
+              </>
+            )}
+            {adminId === "A003" && (
+              <>
+                <li>
+                  <button className="dropdown-item" onClick={() => setFilter("Third Level Pending")}>Third Level Pending</button>
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={() => setFilter("On Hold by Admin 3")}>On Hold by Admin 3</button>
+                </li>
+              </>
+            )}
+            <li>
+              <button className="dropdown-item" onClick={() => setFilter("All")}>All</button>
+            </li>
+          </ul>
+        </div>
       </div>
       <div style={tableContainerStyle}>
         {filteredReimbursements.length > 0 ? (
@@ -111,15 +151,11 @@ const ReimbursementA = () => {
                 <th style={thStyles}>UID</th>
                 <th style={thStyles}>Employee Name</th>
                 <th style={thStyles}>Expense Type</th>
-                <th style={thStyles}>Vehicle Type</th>
-                <th style={thStyles}>Total Kms</th>
-                <th style={thStyles}>Description</th>
                 <th style={thStyles}>Start Date</th>
                 <th style={thStyles}>End Date</th>
                 <th style={thStyles}>Total Expense</th>
-                <th style={thStyles}>Uploaded Proofs</th>
                 <th style={thStyles}>Status</th>
-                <th style={thStyles}>Actions</th>
+                <th style={thStyles}>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -128,81 +164,12 @@ const ReimbursementA = () => {
                   <td style={tdStyles}>{reimbursement.uid}</td>
                   <td style={tdStyles}>{reimbursement.employeeName}</td>
                   <td style={tdStyles}>{reimbursement.expenseType}</td>
-                  <td style={tdStyles}>{reimbursement.vehicleType || '-'}</td>
-                  <td style={tdStyles}>{reimbursement.totalKms || '-'}</td>
-                  <td style={tdStyles}>{reimbursement.description}</td>
                   <td style={tdStyles}>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
                   <td style={tdStyles}>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
                   <td style={tdStyles}>{reimbursement.totalExpense}</td>
-                  <td style={tdStyles}>
-                    {reimbursement.proofs && reimbursement.proofs.length > 0 ? (
-                      reimbursement.proofs.map((proof, index) => (
-                        <div key={index}>
-                          <a href={`http://localhost:8001/${proof}`} target="_blank" rel="noopener noreferrer">
-                            View Proof {index + 1}
-                          </a>
-                        </div>
-                      ))
-                    ) : (
-                      "No Proof Uploaded"
-                    )}
-                  </td>
                   <td style={tdStyles}>{reimbursement.status}</td>
                   <td style={tdStyles}>
-                    {reimbursement.status === "Pending" && adminId === "A001" && (
-                      <>
-                        <button
-                          className="btn btn-sm btn-warning mb-2"
-                          onClick={() => handleStatusChange(reimbursement._id, "Second Level Pending")}
-                        >
-                          Send to Second Level
-                        </button>
-                        <button
-                          className="btn btn-sm btn-danger mb-2"
-                          onClick={() => handleStatusChange(reimbursement._id, "Rejected")}
-                        >
-                          Reject
-                        </button>
-                      </>
-                    )}
-                    {reimbursement.status === "Second Level Pending" && adminId === "A002" && (
-                      <>
-                        <button
-                          className="btn btn-sm btn-warning mb-2"
-                          onClick={() => handleStatusChange(reimbursement._id, "Third Level Pending")}
-                        >
-                          Send to Third Level
-                        </button>
-                        <button
-                          className="btn btn-sm btn-danger mb-2"
-                          onClick={() => handleStatusChange(reimbursement._id, "Rejected")}
-                        >
-                          Reject
-                        </button>
-                      </>
-                    )}
-                    {reimbursement.status === "Third Level Pending" && adminId === "A003" && (
-                      <>
-                        <button
-                          className="btn btn-sm btn-success mb-2"
-                          onClick={() => handleStatusChange(reimbursement._id, "Approved")}
-                        >
-                          Approve
-                        </button>
-                        <button
-                          className="btn btn-sm btn-danger mb-2"
-                          onClick={() => handleStatusChange(reimbursement._id, "Rejected")}
-                        >
-                          Reject
-                        </button>
-                      </>
-                    )}
-                    <button
-                      className="btn btn-sm btn-secondary"
-                      onClick={() => handleDelete(reimbursement._id)}
-                    >
-                      Delete
-                    </button>
+                    <Link to={`/homea/checkreimb/${reimbursement._id}`} className="btn btn-primary btn-sm">View</Link>
                   </td>
                 </tr>
               ))}

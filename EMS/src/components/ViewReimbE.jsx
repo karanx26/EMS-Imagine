@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/ViewReimbE.css"; // Import the CSS file
+import { Link } from "react-router-dom";
 
 function ViewReimbE() {
   const [reimbursements, setReimbursements] = useState([]);
@@ -21,28 +22,6 @@ function ViewReimbE() {
     }
   }, [uid]);
 
-  const deleteReimbursement = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this reimbursement application?");
-    if (confirmDelete) {
-      try {
-        const response = await axios.delete(`http://localhost:8001/reimbursement/${id}`);
-        setReimbursements(reimbursements.filter((reimbursement) => reimbursement._id !== id));
-      } catch (error) {
-        console.error("Error deleting reimbursement:", error);
-        if (error.response) {
-          // Server responded with a status other than 200 range
-          console.error("Error response data:", error.response.data);
-        } else if (error.request) {
-          // Request was made but no response received
-          console.error("Error request data:", error.request);
-        } else {
-          // Something else happened in setting up the request
-          console.error("Error message:", error.message);
-        }
-      }
-    }
-  };
-
   return (
     <>
       <br />
@@ -56,14 +35,16 @@ function ViewReimbE() {
             <thead>
               <tr>
                 <th>Expense Type</th>
-                <th>Vehicle Type</th>
-                <th>Total Kms</th>
-                <th>Description</th>
+                {/* <th>Vehicle Type</th> */}
+                {/* <th>Total Kms</th> */}
+                {/* <th>Description</th> */}
+                {/* <th>GST Type</th> */}
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Total Expense</th>
-                <th>Uploaded Proofs</th>
+                {/* <th>Uploaded Proofs</th> */}
                 <th>Status</th>
+                <th>Reviews</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -71,13 +52,14 @@ function ViewReimbE() {
               {reimbursements.map((reimbursement) => (
                 <tr key={reimbursement._id}>
                   <td>{reimbursement.expenseType}</td>
-                  <td>{reimbursement.vehicleType || "-"}</td>
-                  <td>{reimbursement.totalKms || "-"}</td>
-                  <td>{reimbursement.description}</td>
+                  {/* <td>{reimbursement.vehicleType || "-"}</td> */}
+                  {/* <td>{reimbursement.totalKms || "-"}</td> */}
+                  {/* <td>{reimbursement.description}</td> */}
+                  {/* <td>{reimbursement.gstType}</td> */}
                   <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
                   <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
                   <td>{reimbursement.totalExpense}</td>
-                  <td>
+                  {/* <td>
                     {reimbursement.proofs && reimbursement.proofs.length > 0 ? (
                       reimbursement.proofs.map((proof, index) => (
                         <div key={index}>
@@ -93,15 +75,11 @@ function ViewReimbE() {
                     ) : (
                       "No Proof Uploaded"
                     )}
-                  </td>
+                  </td> */}
                   <td>{reimbursement.status}</td>
+                  <td>{reimbursement.review}</td>
                   <td>
-                    <button
-                      className="btnrap btnrap-danger"
-                      onClick={() => deleteReimbursement(reimbursement._id)}
-                    >
-                      Delete
-                    </button>
+                  <Link to={`/homee/editreimb/${reimbursement._id}`} className="btn btn-primary btn-sm">View</Link>
                   </td>
                 </tr>
               ))}
