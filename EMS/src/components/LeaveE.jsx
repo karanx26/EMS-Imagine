@@ -13,6 +13,7 @@ const LeaveE = () => {
     startDate: "",
     endDate: "",
     reason: "",
+    totalDays: 0, // Add totalDays field
   });
 
   useEffect(() => {
@@ -24,10 +25,28 @@ const LeaveE = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
+    setFormData((prevFormData) => {
+      const updatedFormData = {
+        ...prevFormData,
+        [name]: value,
+      };
+      if (name === "startDate" || name === "endDate") {
+        const { startDate, endDate } = updatedFormData;
+        if (startDate && endDate) {
+          const totalDays = calculateTotalDays(startDate, endDate);
+          updatedFormData.totalDays = totalDays;
+        }
+      }
+      return updatedFormData;
     });
+  };
+
+  const calculateTotalDays = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end date
+    return diffDays;
   };
 
   const resetForm = () => {
@@ -37,12 +56,14 @@ const LeaveE = () => {
       startDate: "",
       endDate: "",
       reason: "",
+      totalDays: 0, // Reset totalDays
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("Form Data:", formData); // Log formData to check its content
       const response = await axios.post(
         "http://localhost:8001/submit-leave",
         formData
@@ -115,6 +136,17 @@ const LeaveE = () => {
                     value={formData.endDate}
                     onChange={handleChange}
                     required
+                    className="form-control"
+                  />
+                </div>
+                <div className="form-group mb-3">
+                  <label htmlFor="totalDays">Total Days:</label>
+                  <input
+                    type="number"
+                    id="totalDays"
+                    name="totalDays"
+                    value={formData.totalDays}
+                    readOnly
                     className="form-control"
                   />
                 </div>

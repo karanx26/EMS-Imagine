@@ -98,8 +98,9 @@ const CheckReimb = () => {
               )}
             </ul>
           </div>
+          <p><strong>Review:</strong> {reimbursement.review}</p>
           <div>
-            <strong>Review:</strong>
+            
             <textarea
               value={review}
               onChange={(e) => setReview(e.target.value)}

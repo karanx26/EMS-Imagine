@@ -15,6 +15,7 @@ import AttendanceA from "./components/AttendanceA";
 import MonthAttendanceA from "./components/MonthAttendanceA";
 import TaskA from "./components/TaskA";
 import LeaveA from "./components/LeaveA";
+import CheckLeave from "./components/CheckLeave";
 import OvertimeA from "./components/OvertimeA";
 import ReimbursementA from "./components/ReimbursementA";
 import CheckReimb from "./components/CheckReimb";
@@ -74,6 +75,7 @@ function App() {
           <Route path="/homea/overtimea" element={<OvertimeA />} />
           <Route path="/homea/taska" element={<TaskA />} />
           <Route path="/homea/leavea" element={<LeaveA />} />
+          <Route path="/homea/checkleave/:id" element={<CheckLeave />} /> 
           <Route path="/homea/addempa" element={<AddEmp />} />
           <Route path="/homea/editempa/:uid" element={<EditEmpa />} />
           <Route path="/homea/monthlyattendancea" element={<MonthAttendanceA />} />

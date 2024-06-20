@@ -116,11 +116,11 @@ function ViewReimbE() {
                 Approved
               </button>
             </li>
-            <li>
+            {/* <li>
               <button className={`dropdown-item ${statusFilter === "Pending" && "active"}`} onClick={() => setStatusFilter("Pending")}>
                 Pending
               </button>
-            </li>
+            </li> */}
             <li>
               <button className={`dropdown-item ${statusFilter === "Rejected" && "active"}`} onClick={() => setStatusFilter("Rejected")}>
                 Rejected

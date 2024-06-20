@@ -357,20 +357,21 @@ app.post('/attendance', async (req, res) => {
       }
     });
     
-
     app.post('/submit-leave', async (req, res) => {
       try {
+        console.log("Received Data:", req.body);  // Log received data
         const leaveData = new Leave(req.body);
         await leaveData.save();
         res.status(201).send(leaveData);
       } catch (error) {
+        console.error("Error saving leave data:", error);
         res.status(400).send({ message: 'Error saving leave data', error });
       }
     });  
     
     app.get('/leaves', async (req, res) => {
       try {
-        const leaves = await Leave.find().sort({ startDate: 1 });
+        const leaves = await Leave.find().sort({ endDate: -1 });
         const leavesWithNames = await Promise.all(leaves.map(async leave => {
           const employee = await employees.findOne({ uid: leave.uid });
           return { ...leave.toObject(), name: employee ? employee.name : 'Unknown' };
@@ -384,33 +385,76 @@ app.post('/attendance', async (req, res) => {
     app.get('/leaves/:uid', async (req, res) => {
       try {
         const { uid } = req.params;
-        const leaves = await Leave.find({ uid });
+        const leaves = await Leave.find({ uid }).sort({ endDate: -1 });
         res.json(leaves);
       } catch (error) {
         res.status(500).send(error.message);
       }
     });
 
-    app.delete('/leaves/:id', async (req, res) => {
+    // app.delete('/leaves/:id', async (req, res) => {
+    //   try {
+    //     const { id } = req.params;
+    //     await Leave.findByIdAndDelete(id);
+    //     res.status(200).send({ message: 'Leave application deleted successfully' });
+    //   } catch (error) {
+    //     res.status(500).send(error.message);
+    //   }
+    // });
+
+    // app.patch('/leaves/:id/status', async (req, res) => {
+    //   try {
+    //     const { id } = req.params;
+    //     const { status } = req.body;
+    //     await Leave.findByIdAndUpdate(id, { status });
+    //     res.status(200).send({ message: 'Leave application status updated successfully' });
+    //   } catch (error) {
+    //     res.status(500).send(error.message);
+    //   }
+    // });
+
+    app.get('/leave/:id', async (req, res) => {
       try {
-        const { id } = req.params;
-        await Leave.findByIdAndDelete(id);
-        res.status(200).send({ message: 'Leave application deleted successfully' });
+        const leave = await Leave.findById(req.params.id);
+        if (!leave) {
+          return res.status(404).send({ message: 'Leave application not found' });
+        }
+        res.send(leave);
       } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).send({ message: 'Server error' });
       }
     });
-
+    
+    
+    
     app.patch('/leaves/:id/status', async (req, res) => {
       try {
-        const { id } = req.params;
-        const { status } = req.body;
-        await Leave.findByIdAndUpdate(id, { status });
-        res.status(200).send({ message: 'Leave application status updated successfully' });
+        const { status, review, leavePaymentType } = req.body;
+        const leave = await Leave.findById(req.params.id);
+        if (!leave) {
+          return res.status(404).json({ message: "Leave application not found" });
+        }
+        leave.status = status;
+        leave.review = review;
+        leave.leavePaymentType = leavePaymentType || leave.leavePaymentType; // Update leavePaymentType if provided
+        await leave.save();
+        res.status(200).json(leave);
       } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json({ message: "Error updating leave status" });
       }
     });
+    
+    
+    // Delete leave application
+    app.delete('/leaves/:id', async (req, res) => {
+      try {
+        const leave = await Leave.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "Leave application deleted successfully" });
+      } catch (error) {
+        res.status(500).json({ message: "Error deleting leave application" });
+      }
+    });
+    
 
 
 app.use('/uploads', express.static('uploads'));
@@ -468,7 +512,7 @@ app.post("/reimbursement", upload.array("proofs", 12), async (req, res) => {
 app.get('/reimbursement/:uid', async (req, res) => {
   try {
     const { uid } = req.params;
-    const reimbursements = await Reimbursement.find({ uid }).sort({ startDate: 1 });
+    const reimbursements = await Reimbursement.find({ uid }).sort({ endDate: -1 });
     res.json(reimbursements);
   } catch (error) {
     console.error("Error fetching reimbursements:", error);
@@ -478,7 +522,7 @@ app.get('/reimbursement/:uid', async (req, res) => {
 
 app.get('/reimbursements/:id', async (req, res) => {
   try {
-    const reimbursement = await Reimbursement.findById(req.params.id);
+    const reimbursement = await Reimbursement.findById(req.params.id).sort({ endDate: -1 });
     if (!reimbursement) {
       return res.status(404).json({ message: 'Reimbursement application not found' });
     }
@@ -530,7 +574,7 @@ app.delete('/reimbursements/:id', async (req, res) => {
 
 app.get('/reimbursements', async (req, res) => {
   try {
-    const reimbursements = await Reimbursement.find().sort({uid:1},{ startDate: 1 });
+    const reimbursements = await Reimbursement.find().sort({ endDate: -1 });
     const employeeData = await employees.find();
 
     const reimbursementsWithEmployeeName = reimbursements.map((reimbursement) => {

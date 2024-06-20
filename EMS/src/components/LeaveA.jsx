@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
 const LeaveA = () => {
   const [leaves, setLeaves] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filter, setFilter] = useState("Pending");
-
   const currentUser = window.localStorage.getItem("uid");
+
+  // Set initial filter based on the user role
+  const initialFilter = currentUser === "A002" ? "Second Level Pending" : currentUser === "A001" ? "Pending" : "All";
+  const [statusFilter, setStatusFilter] = useState(initialFilter);
+  const [timePeriodFilter, setTimePeriodFilter] = useState("All");
+  const [paymentTypeFilter, setPaymentTypeFilter] = useState("All");
+  const [employeeFilter, setEmployeeFilter] = useState("All");
 
   useEffect(() => {
     const fetchLeaves = async () => {
@@ -25,42 +31,50 @@ const LeaveA = () => {
     fetchLeaves();
   }, []);
 
-  const handleStatusChange = async (id, status) => {
-    try {
-      await axios.patch(`http://localhost:8001/leaves/${id}/status`, { status });
-      setLeaves(leaves.map(leave => leave._id === id ? { ...leave, status } : leave));
-    } catch (error) {
-      console.error("Error updating leave status:", error);
-    }
+  const handleStatusFilterChange = (event) => {
+    setStatusFilter(event.target.value);
   };
 
-  const handleSendToSecondLevel = async (id) => {
-    try {
-      await axios.patch(`http://localhost:8001/leaves/${id}/status`, { status: "SecondLevelPending" });
-      setLeaves(leaves.map(leave => leave._id === id ? { ...leave, status: "SecondLevelPending" } : leave));
-    } catch (error) {
-      console.error("Error sending leave application to second level:", error);
-    }
+  const handleTimePeriodFilterChange = (event) => {
+    setTimePeriodFilter(event.target.value);
   };
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this leave application?");
-    if (confirmDelete){
-    try {
-      await axios.delete(`http://localhost:8001/leaves/${id}`);
-      setLeaves(leaves.filter(leave => leave._id !== id));
-    } catch (error) {
-      console.error("Error deleting leave:", error);
+  const handlePaymentTypeFilterChange = (event) => {
+    setPaymentTypeFilter(event.target.value);
+  };
+
+  const handleEmployeeFilterChange = (event) => {
+    setEmployeeFilter(event.target.value);
+  };
+
+  const handleClearFilters = () => {
+    setStatusFilter("All");
+    setTimePeriodFilter("All");
+    setPaymentTypeFilter("All");
+    setEmployeeFilter("All");
+  };
+
+  const filterByTimePeriod = (leave) => {
+    const currentDate = new Date();
+    const leaveDate = new Date(leave.startDate);
+    if (timePeriodFilter === "Last Month") {
+      const lastMonth = new Date();
+      lastMonth.setMonth(currentDate.getMonth() - 1);
+      return leaveDate >= lastMonth;
+    } else if (timePeriodFilter === "Last Year") {
+      const lastYear = new Date();
+      lastYear.setFullYear(currentDate.getFullYear() - 1);
+      return leaveDate >= lastYear;
     }
-  }
+    return true;
   };
 
   const filteredLeaves = leaves.filter(leave => {
-    if (filter === "All") return true;
-    if (filter === leave.status) return true;
-    if (filter === "Pending" && currentUser === "A001" && leave.status === "Pending") return true;
-    if (filter === "Pending" && currentUser === "A002" && leave.status === "SecondLevelPending") return true;
-    return false;
+    if (!filterByTimePeriod(leave)) return false;
+    if (statusFilter !== "All" && statusFilter !== leave.status) return false;
+    if (paymentTypeFilter !== "All" && paymentTypeFilter !== leave.leavePaymentType) return false;
+    if (employeeFilter !== "All" && employeeFilter !== leave.name) return false;
+    return true;
   });
 
   if (loading) {
@@ -96,68 +110,78 @@ const LeaveA = () => {
     textAlign: 'center'
   };
 
+  const uniqueEmployees = [...new Set(leaves.map(leave => leave.name))];
+
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">LEAVE APPLICATIONS</h2>
       <div className="mb-4 text-center">
-        <button className="btn btn-primary me-2" onClick={() => setFilter("Pending")}>Pending</button>
-        <button className="btn btn-success me-2" onClick={() => setFilter("Approved")}>Approved</button>
-        <button className="btn btn-danger me-2" onClick={() => setFilter("Rejected")}>Rejected</button>
-        <button className="btn btn-secondary me-2" onClick={() => setFilter("SecondLevelPending")}>Second Level Pending</button>
-        <button className="btn btn-info" onClick={() => setFilter("All")}>All</button>
+        <div className="mb-2">
+          <label className="me-2">Time Period:</label>
+          <select className="form-select w-auto d-inline-block" value={timePeriodFilter} onChange={handleTimePeriodFilterChange}>
+            <option value="All">All Time</option>
+            <option value="Last Month">Last Month</option>
+            <option value="Last Year">Last Year</option>
+          </select>
+        </div>
+        <div className="mb-2">
+          <label className="me-2">Status:</label>
+          <select className="form-select w-auto d-inline-block" value={statusFilter} onChange={handleStatusFilterChange}>
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Second Level Pending">Second Level Pending</option>
+            <option value="All">All</option>
+          </select>
+        </div>
+        <div className="mb-2">
+          <label className="me-2">Leave Payment Type:</label>
+          <select className="form-select w-auto d-inline-block" value={paymentTypeFilter} onChange={handlePaymentTypeFilterChange}>
+            <option value="All">All Payment Types</option>
+            <option value="Paid">Paid</option>
+            <option value="Unpaid">Unpaid</option>
+          </select>
+        </div>
+        <div className="mb-2">
+          <label className="me-2">Employee:</label>
+          <select className="form-select w-auto d-inline-block" value={employeeFilter} onChange={handleEmployeeFilterChange}>
+            <option value="All">All Employees</option>
+            {uniqueEmployees.map((employee, index) => (
+              <option key={index} value={employee}>{employee}</option>
+            ))}
+          </select>
+        </div>
+        <div className="mt-3">
+          <button className="btn btn-secondary" onClick={handleClearFilters}>Clear All Filters</button>
+        </div>
       </div>
       <div style={tableContainerStyle}>
         {filteredLeaves.length > 0 ? (
           <table className="table table-bordered" style={tableStyle}>
             <thead>
               <tr>
-                <th style={thStyles}>UID</th>
                 <th style={thStyles}>Name</th>
                 <th style={thStyles}>Leave Type</th>
                 <th style={thStyles}>Start Date</th>
                 <th style={thStyles}>End Date</th>
-                <th style={thStyles}>Reason</th>
+                <th style={thStyles}>Total Days</th>
                 <th style={thStyles}>Status</th>
+                <th style={thStyles}>Leave Payment Type</th>
                 <th style={thStyles}>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredLeaves.map((leave) => (
                 <tr key={leave._id}>
-                  <td style={tdStyles}>{leave.uid}</td>
                   <td style={tdStyles}>{leave.name}</td>
                   <td style={tdStyles}>{leave.leaveType}</td>
                   <td style={tdStyles}>{new Date(leave.startDate).toLocaleDateString()}</td>
                   <td style={tdStyles}>{new Date(leave.endDate).toLocaleDateString()}</td>
-                  <td style={tdStyles}>{leave.reason}</td>
+                  <td style={tdStyles}>{leave.totalDays}</td>
                   <td style={tdStyles}>{leave.status}</td>
+                  <td style={tdStyles}>{leave.leavePaymentType}</td>
                   <td style={tdStyles}>
-                    {leave.status === "Pending" && currentUser === "A001" && (
-                      <>
-                        <button className="btn btn-sm btn-success me-2" onClick={() => handleStatusChange(leave._id, "Approved")}>
-                          Approve
-                        </button>
-                        <button className="btn btn-sm btn-danger me-2" onClick={() => handleStatusChange(leave._id, "Rejected")}>
-                          Reject
-                        </button>
-                        <button className="btn btn-sm btn-primary me-2" onClick={() => handleSendToSecondLevel(leave._id)}>
-                          Send to Second Level
-                        </button>
-                      </>
-                    )}
-                    {leave.status === "SecondLevelPending" && currentUser === "A002" && (
-                      <>
-                        <button className="btn btn-sm btn-success me-2" onClick={() => handleStatusChange(leave._id, "Approved")}>
-                          Approve
-                        </button>
-                        <button className="btn btn-sm btn-danger me-2" onClick={() => handleStatusChange(leave._id, "Rejected")}>
-                          Reject
-                        </button>
-                      </>
-                    )}
-                    <button className="btn btn-sm btn-secondary" onClick={() => handleDelete(leave._id)}>
-                      Delete
-                    </button>
+                    <Link to={`/homea/checkleave/${leave._id}`} className="btn btn-primary btn-sm">View</Link>
                   </td>
                 </tr>
               ))}

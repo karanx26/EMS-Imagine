@@ -35,12 +35,12 @@ const employeeSchema = new mongoose.Schema({
     password: { type: String, required: true },
     name: { type: String, required: true },
     phone: { type: String, required: true },
-    email: { type: String, required: true },
-    department: { type: String, required: true },
-    dob: { type: String, required: true },
-    joiningDate: { type: String, required: true },
-    salary: { type: Number, required: true },
-    address: { type: String, required: true }
+    email: { type: String},
+    department: { type: String},
+    dob: { type: String},
+    joiningDate: { type: String },
+    salary: { type: Number},
+    address: { type: String}
 });
 
 const individualAttendanceSchema = new mongoose.Schema({
@@ -64,25 +64,18 @@ const individualAttendanceSchema = new mongoose.Schema({
   });
 
   //define the leave schema
-
   const leaveSchema = new mongoose.Schema({
     uid: { type: String, required: true },
     leaveType: { type: String, required: true },
-    startDate: { type: String, required: true },
-    endDate: { type: String, required: true },
-    reason: { type: String, required: true },    
-    status: { type: String, default: "Pending" }
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+    reason: { type: String, required: true },
+    totalDays: { type: Number, required: true }, 
+    status: { type: String, required: true, default: "Pending" },
+    review: { type: String},
+    leavePaymentType: { type: String}, // Add this field
   });
-
-
   
-  
-
-  
-
-
-
-
   const taskSchema = new mongoose.Schema({
     uid: String,
     task: String,
@@ -103,7 +96,7 @@ const individualAttendanceSchema = new mongoose.Schema({
     totalExpense: { type: Number },
     gstType: { type: String, required: true },
     status: { type: String, default: "Pending" },
-    review: { type: String } 
+    review: { type: String} 
   });
 
   const clientSchema = new mongoose.Schema({
@@ -112,8 +105,8 @@ const individualAttendanceSchema = new mongoose.Schema({
     clientType: { type: String, required: true },
     name: { type: String, required: true },
     phone: { type: String, required: true },
-    address: { type: String, required: true },
-    locationLink: { type: String, required: true }    
+    address: { type: String},
+    locationLink: { type: String }    
   });
 
   const clientDocumentSchema = new mongoose.Schema({
