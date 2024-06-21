@@ -192,12 +192,12 @@ function ViewReimbE() {
           </ul>
         </div>
       </div>
-      <div className="table-container">
+      <div className="tablevre-container">
         {filteredReimbursements.length === 0 ? (
           <p style={{ textAlign: "center" }}>No applications found.</p>
         ) : (
           <>
-            <table className="table table-bordered">
+            <table className="tablevre tablevre-bordered">
               <thead>
                 <tr>
                   <th>Expense Type</th>

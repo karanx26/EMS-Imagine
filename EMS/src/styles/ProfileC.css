@@ -6,11 +6,11 @@ body {
     padding: 0;
   }
   
-  .container {
+  .containerpc {
     padding: 20px;
   }
   
-  .card {
+  .cardpc {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -18,30 +18,31 @@ body {
     overflow: hidden;
   }
   
-  .card-header {
+  .cardpc-header {
     background: linear-gradient(90deg, #000000, #ff7f00);
     color: #fff;
     padding: 15px;
   }
   
-  .card-header h2 {
+  .cardpc-header h2 {
     margin: 0;
   }
   
-  .card-body {
+  .cardpc-body {
     padding: 20px;
   }
   
-  .form-group label {
+  .form-group-pc label {
     color: #333;
     font-size: 1.1em;
+    margin-bottom: 5px;
   }
   
   b {
     color: #ff7f00; /* Orange color for labels */
   }
   
-  .form-group label b {
+  .form-group-pc label b {
     font-weight: bold;
     color: #ff7f00; /* Orange color for labels */
   }
@@ -51,25 +52,25 @@ body {
   }
   
   @media (max-width: 768px) {
-    .container {
+    .containerpc {
       padding: 10px;
     }
   
-    .card-body {
+    .cardpc-body {
       padding: 15px;
     }
   
-    .form-group label {
+    .form-group-pc label {
       font-size: 1em;
     }
   }
   
   @media (max-width: 576px) {
-    .card-header h2 {
+    .cardpc-header h2 {
       font-size: 1.5em;
     }
   
-    .form-group label {
+    .form-group-pc label {
       font-size: 0.9em;
     }
   }

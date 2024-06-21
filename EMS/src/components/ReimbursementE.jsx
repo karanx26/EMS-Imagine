@@ -128,14 +128,14 @@ const ReimbursementE = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="containerre mt-5">
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <div className="card">
-            <div className="card-header text-center bg-orange text-white">
+          <div className="cardre">
+            <div className="cardre-header text-center bg-orange text-white">
               <h2>REIMBURSEMENT FORM</h2>
             </div>
-            <div className="card-body">
+            <div className="cardre-body">
               <form onSubmit={handleSubmit}>
                 <div className="form-group mb-4">
                   <label htmlFor="uid" className="form-label">
@@ -332,7 +332,7 @@ const ReimbursementE = () => {
                 </div>
 
                 <div className="form-group text-center">
-                  <button type="submit" className="btnr btnr-primary">
+                  <button type="submit" className="btnre btnre-primary">
                     Submit
                   </button>
                 </div>
@@ -355,7 +355,7 @@ const ReimbursementE = () => {
                         </a>
                         <button
                           type="button"
-                          className="btnr btnr-danger btnr-sm ml-2 mt-1 mb-1"
+                          className="btnre btnre-danger btnre-sm ml-2 mt-1 mb-1"
                           onClick={() => handleFileDelete(index)}
                         >
                           Delete
@@ -368,7 +368,7 @@ const ReimbursementE = () => {
               <div className="form-group text-center">
                 <button
                   type="button"
-                  className="btnr btnr-success mt-4"
+                  className="btnre btnre-success mt-4"
                   onClick={handleViewApplications}
                 >
                   View Applications

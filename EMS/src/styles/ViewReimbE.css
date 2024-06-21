@@ -7,7 +7,7 @@ body {
     padding: 0;
   }
     
-  .table-container {
+  .tablevre-container {
     /* overflow-x: auto; Add horizontal scrolling */
     width: 90%;
   border-collapse: collapse;
@@ -16,42 +16,42 @@ body {
   margin-right: auto;
   }
   
-  .table {
+  .tablevre {
     font-size: 0.875rem;
     width: 100%;
     border-collapse: collapse;
     /* min-width: 600px;  */
   }
   
-  .table th, .table td {
+  .tablevre th, .tablevre td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
   }
   
-  .table th {
+  .tablevre th {
     background-color: #ff7f00;
     color: white;
     padding: 10px;
   }
   
-  .table td {
+  .tablevre td {
     padding: 8px;
   }
   
-  .btnrap {
+  .btnvre {
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
   
-  .btnrap-danger {
+  .btnvre-danger {
     background-color: black;
     color: white;
   }
   
-  .btnrap-danger:hover {
+  .btnvre-danger:hover {
     background-color: #ff7f00;
   }
   
@@ -69,11 +69,11 @@ body {
       padding: 15px;
     }
   
-    .table th, .table td {
+    .tablevre th, .tablevre td {
       padding: 10px;
     }
   
-    .btnrap-danger {
+    .btnvre-danger {
       padding: 3px 8px;
       font-size: 0.9rem;
     }
@@ -84,11 +84,11 @@ body {
       font-size: 1.5em;
     }
   
-    .table th, .table td {
+    .tablevre th, .tablevre td {
       padding: 8px;
     }
   
-    .btnrap-danger {
+    .btnvre-danger {
       padding: 2px 6px;
       font-size: 0.8rem;
     }

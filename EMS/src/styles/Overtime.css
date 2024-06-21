@@ -8,11 +8,11 @@ body {
   padding: 0;
 }
 
-.container {
+.containerote {
   padding: 20px;
 }
 
-.card {
+.cardote {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -20,17 +20,17 @@ body {
   overflow: hidden;
 }
 
-.card-header {
+.cardote-header {
   background: linear-gradient(90deg, #000000, #ff7f00);
   color: #fff;
   padding: 15px;
 }
 
-.card-header h2 {
+.cardote-header h2 {
   margin: 0;
 }
 
-.card-body {
+.cardote-body {
   padding: 20px;
 }
 
@@ -64,35 +64,35 @@ body {
   background-color: #ff7f00;
 }
 
-.table {
+.tableote {
   width: 100%;
   border-collapse: collapse;
   text-align: center;
 }
 
-.table th, .table td {
+.tableote th, .tableote td {
   border: 1px solid #ddd;
   padding: 5px;
 }
 
-.table th {
+.tableote th {
   background-color: #ff9800;
   color: white;
 }
 
-.btno {
+.btnote {
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.btno-dangero {
+.btnote-dangero {
   background-color: black;
   color: white;
 }
 
-.btno-dangero:hover {
+.btnote-dangero:hover {
   background-color: #ff7f00;
 }
 
@@ -102,11 +102,11 @@ body {
 }
 
 @media (max-width: 768px) {
-  .container {
+  .containerote {
     padding: 10px;
   }
 
-  .card-body {
+  .cardote-body {
     padding: 15px;
   }
 
@@ -114,14 +114,14 @@ body {
     padding: 8px;
   }
 
-  .btno-dangero {
+  .btnote-dangero {
     padding: 3px 8px;
     font-size: 0.9rem;
   }
 }
 
 @media (max-width: 576px) {
-  .card-header h2 {
+  .cardote-header h2 {
     font-size: 1.5em;
   }
 
@@ -129,7 +129,7 @@ body {
     padding: 7px;
   }
 
-  .btno-dangero {
+  .btnote-dangero {
     padding: 2px 6px;
     font-size: 0.8rem;
   }

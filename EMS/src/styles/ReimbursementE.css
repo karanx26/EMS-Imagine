@@ -7,11 +7,11 @@ body {
     padding: 0;
   }
   
-  .container {
+  .containerre {
     padding: 20px;
   }
   
-  .card {
+  .cardre {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -19,17 +19,17 @@ body {
     overflow: hidden;
   }
   
-  .card-header {
+  .cardre-header {
     background: linear-gradient(90deg, #000000, #ff7f00);
     color: #fff;
     padding: 15px;
   }
   
-  .card-header h2 {
+  .cardre-header h2 {
     margin: 0;
   }
   
-  .card-body {
+  .cardre-body {
     padding: 20px;
   }
   
@@ -63,53 +63,53 @@ body {
     background-color: #ff7f00;
   }
   
-  .table {
+  .tablere {
     width: 100%;
     border-collapse: collapse;
     text-align: center;
   }
   
-  .table th, .table td {
+  .tablere th, .tablere td {
     border: 1px solid #ddd;
     padding: 5px;
   }
   
-  .table th {
+  .tablere th {
     background-color: #ff9800;
     color: white;
   }
   
-  .btnr {
+  .btnre {
     padding: 5px 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
   
-  .btnr-danger {
+  .btnre-danger {
     background-color: black;
     color: white;
   }
 
-  .btnr-primary {
+  .btnre-primary {
     background-color: #ff7f00;
     color: white;
   }
 
-  .btnr-primary:hover {
+  .btnre-primary:hover {
     background-color: black;
   }
 
-  .btnr-success {
+  .btnre-success {
     background-color: black;
     color: white;
   }
 
-    .btnr-success:hover {
+    .btnre-success:hover {
         background-color: #ff7f00;
     }
   
-  .btnr-danger:hover {
+  .btnre-danger:hover {
     background-color: #ff7f00;
   }
   
@@ -119,11 +119,11 @@ body {
   }
   
   @media (max-width: 768px) {
-    .container {
+    .containerre {
       padding: 10px;
     }
   
-    .card-body {
+    .cardre-body {
       padding: 15px;
     }
   
@@ -131,14 +131,14 @@ body {
       padding: 8px;
     }
   
-    .btnr-danger {
+    .btnre-danger {
       padding: 3px 8px;
       font-size: 0.9rem;
     }
   }
   
   @media (max-width: 576px) {
-    .card-header h2 {
+    .cardre-header h2 {
       font-size: 1.5em;
     }
   
@@ -146,7 +146,7 @@ body {
       padding: 7px;
     }
   
-    .btnr-danger {
+    .btnre-danger {
       padding: 2px 6px;
       font-size: 0.8rem;
     }

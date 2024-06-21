@@ -8,11 +8,11 @@ body {
     padding: 0;
   }
   
-  .container {
+  .containerate {
     padding: 20px;
   }
   
-  .card {
+  .cardate {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -20,21 +20,21 @@ body {
     overflow: hidden;
   }
   
-  .card-header {
+  .cardate-header {
     background: linear-gradient(90deg, #000000, #ff7f00);
     color: #fff;
     padding: 15px;
   }
   
-  .card-header h2 {
+  .cardate-header h2 {
     margin: 0;
   }
   
-  .card-body {
+  .cardate-body {
     padding: 20px;
   }
   
-  .date-container {
+  .date-containerate {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +54,7 @@ body {
     background-color: white;
   }
   
-  .card-container {
+  .cardate-containerate {
     display: flex;
     justify-content: space-around;
     margin-top: 10px;
@@ -62,7 +62,7 @@ body {
     flex-wrap: wrap;
   }
   
-  .card-style {
+  .cardate-style {
     flex: 1;
     padding: 12px;
     margin: 0 5px;
@@ -73,21 +73,21 @@ body {
     background-color: #f9f9f9;
   }
   
-  .present-card {
+  .present-cardate {
     border: 1px solid #ccc;
     padding: 1rem;
     border-radius: 8px;
     background-color: #f9f9f9;
   }
   
-  .absent-card {
+  .absent-cardate {
     border: 1px solid #ccc;
     padding: 1rem;
     border-radius: 8px;
     background-color: #f9f9f9;
   }
   
-  .leave-card {
+  .leave-cardate {
     border: 1px solid #ccc;
     padding: 1rem;
     border-radius: 8px;
@@ -116,11 +116,11 @@ body {
   }
   
   @media (max-width: 768px) {
-    .container {
+    .containerate {
       padding: 10px;
     }
   
-    .card-body {
+    .cardate-body {
       padding: 15px;
     }
   
@@ -130,7 +130,7 @@ body {
   }
   
   @media (max-width: 576px) {
-    .card-header h2 {
+    .cardate-header h2 {
       font-size: 1.5em;
     }
   

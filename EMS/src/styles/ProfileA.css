@@ -5,11 +5,11 @@ body {
     padding: 0;
   }
   
-  .container {
+  .containerpa {
     padding: 20px;
   }
   
-  .card {
+  .cardpa {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -17,30 +17,31 @@ body {
     overflow: hidden;
   }
   
-  .card-header {
+  .cardpa-header {
     background: linear-gradient(90deg, #000000, #ff7f00);
     color: #fff;
     padding: 15px;
   }
   
-  .card-header h2 {
+  .cardpa-header h2 {
     margin: 0;
   }
   
-  .card-body {
+  .cardpa-body {
     padding: 20px;
   }
   
-  .form-group label {
+  .form-group-pa label {
     color: #333;
     font-size: 1.1em;
+    margin-bottom: 5px;
   }
   
   b {
     color: #ff7f00; /* Orange color for labels */
   }
   
-  .form-group label b {
+  .form-group-pa label b {
     font-weight: bold;
     color: #ff7f00; /* Orange color for labels */
   }
@@ -50,25 +51,25 @@ body {
   }
   
   @media (max-width: 768px) {
-    .container {
+    .containerpa {
       padding: 10px;
     }
   
-    .card-body {
+    .cardpa-body {
       padding: 15px;
     }
   
-    .form-group label {
+    .form-group-pa label {
       font-size: 1em;
     }
   }
   
   @media (max-width: 576px) {
-    .card-header h2 {
+    .cardpa-header h2 {
       font-size: 1.5em;
     }
   
-    .form-group label {
+    .form-group-pa label {
       font-size: 0.9em;
     }
   }

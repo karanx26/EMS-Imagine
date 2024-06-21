@@ -34,16 +34,16 @@ function ProfileA() {
 
   return (
     <>
-      <div className="container mt-5">
+      <div className="containerpa mt-5">
         <div className="row justify-content-center">
           <div className="col-md-7">
-            <div className="card">
-              <div className="card-header text-center">
+            <div className="cardpa">
+              <div className="cardpa-header text-center">
                 <h2 className="text-white">PROFILE</h2>
               </div>
-              <div className="card-body">
+              <div className="cardpa-body">
                 <form>
-                  <div className="form-group mb-3">
+                  <div className="form-group-pa mb-3">
                     <label><b>Unique Id: </b> {adminData.uid}</label>
                     <br />
                     <label><b>Password: </b> {adminData.password}</label>

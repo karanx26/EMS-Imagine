@@ -41,16 +41,16 @@ function ProfileE() {
 
   return (
     <>
-      <div className="container mt-5">
+      <div className="containerpe mt-5">
         <div className="row justify-content-center">
           <div className="col-md-7">
-            <div className="card">
-              <div className="card-header text-center">
+            <div className="cardpe">
+              <div className="cardpe-header text-center">
                 <h2 className="text-white">PROFILE</h2>
               </div>
-              <div className="card-body">
+              <div className="cardpe-body">
                 <form>
-                  <div className="form-group mb-3">
+                  <div className="form-group-pe mb-3">
                     <label><b>Unique Id: </b> {employeeData.uid}</label>
                     <br />
                     <label><b>Name: </b> {employeeData.name}</label>

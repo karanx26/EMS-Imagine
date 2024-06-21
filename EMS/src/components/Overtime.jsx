@@ -62,14 +62,14 @@ function Overtime() {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="containerote mt-5">
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <div className="card">
-            <div className="card-header text-center">
+          <div className="cardote">
+            <div className="cardote-header text-center">
               <h2 className="text-white">OVERTIME RECORDS</h2>
             </div>
-            <div className="card-body">
+            <div className="cardote-body">
               <div className="add-overtime-form">
                 <h3 className="text-center">Add Overtime</h3>
                 <input
@@ -93,7 +93,7 @@ function Overtime() {
                   placeholder="Description"
                   className="form-control mb-3"
                 />
-                <button onClick={handleAddOvertime} className="btno btno-primary w-100">Add Overtime</button>
+                <button onClick={handleAddOvertime} className="btnote btnote-primary w-100">Add Overtime</button>
               </div>
 
               {loading ? (
@@ -103,7 +103,7 @@ function Overtime() {
                   {overtimeData.length === 0 ? (
                     <p className="text-center">No records found</p>
                   ) : (
-                    <table className="table mt-3">
+                    <table className="tableote mt-3">
                       <thead>
                         <tr>
                           <th>Date</th>
@@ -119,7 +119,7 @@ function Overtime() {
                             <td>{record.hours}</td>
                             <td>{record.description}</td>
                             <td>
-                              <button className="btno btno-dangero" onClick={() => handleDeleteOvertime(record._id)}>Delete</button>
+                              <button className="btnote btnote-dangero" onClick={() => handleDeleteOvertime(record._id)}>Delete</button>
                             </td>
                           </tr>
                         ))}

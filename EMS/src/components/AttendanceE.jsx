@@ -58,15 +58,15 @@ const AttendanceE = () => {
   const totals = calculateTotals(attendanceData);
 
   return (
-    <div className="container mt-5">
+    <div className="containerate mt-5">
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <div className="card">
-            <div className="card-header text-center">
+          <div className="cardate">
+            <div className="cardate-header text-center">
               <h2 className="text-white">MONTHLY ATTENDANCE</h2>
             </div>
-            <div className="card-body">
-              <div className="date-container">
+            <div className="cardate-body">
+              <div className="date-containerate">
                 <label htmlFor="year">Year:</label>
                 <select
                   id="year"
@@ -90,16 +90,16 @@ const AttendanceE = () => {
                   ))}
                 </select>
               </div>
-              <div className="card-container">
-                <div className="card-style present-card">
+              <div className="cardate-containerate">
+                <div className="cardate-style present-cardate">
                   <h5>Present</h5>
                   <p>{totals.present}</p>
                 </div>
-                <div className="card-style absent-card">
+                <div className="cardate-style absent-cardate">
                   <h5>Absent</h5>
                   <p>{totals.absent}</p>
                 </div>
-                <div className="card-style leave-card">
+                <div className="cardate-style leave-cardate">
                   <h5>Leave</h5>
                   <p>{totals.leave}</p>
                 </div>
