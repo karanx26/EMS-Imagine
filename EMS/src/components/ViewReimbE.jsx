@@ -66,6 +66,7 @@ function ViewReimbE() {
       <br />
       <br />
       <h2 className="text-center">REIMBURSEMENT APPLICATIONS</h2>
+      <br/>
       <div className="filters-container text-center mb-4">
         <div className="dropdown mb-2">
           <button
@@ -116,11 +117,11 @@ function ViewReimbE() {
                 Approved
               </button>
             </li>
-            {/* <li>
+            <li>
               <button className={`dropdown-item ${statusFilter === "Pending" && "active"}`} onClick={() => setStatusFilter("Pending")}>
                 Pending
               </button>
-            </li> */}
+            </li>
             <li>
               <button className={`dropdown-item ${statusFilter === "Rejected" && "active"}`} onClick={() => setStatusFilter("Rejected")}>
                 Rejected
@@ -219,7 +220,7 @@ function ViewReimbE() {
                     <td>{reimbursement.status}</td>
                     <td>{reimbursement.review}</td>
                     <td>
-                      <Link to={`/homee/editreimb/${reimbursement._id}`} className="btn btn-primary btn-sm">
+                      <Link to={`/homee/editreimb/${reimbursement._id}`} className="btn btn-vw btn-sm">
                         View
                       </Link>
                     </td>

@@ -34,11 +34,11 @@ function LeaveApplicationE() {
     setPaymentTypeFilter(event.target.value);
   };
 
-  const handleClearFilters = () => {
-    setTimePeriodFilter("All");
-    setStatusFilter("All");
-    setPaymentTypeFilter("All");
-  };
+  // const handleClearFilters = () => {
+  //   setTimePeriodFilter("All");
+  //   setStatusFilter("All");
+  //   setPaymentTypeFilter("All");
+  // };
 
   const filterByTimePeriod = (leave) => {
     const currentDate = new Date();
@@ -63,73 +63,137 @@ function LeaveApplicationE() {
   });
 
   return (
-    <div className="container">
-      <h2 className="heading">LEAVE APPLICATIONS</h2>
+    <>
+      <br />
+      <br />
+      <h2 className="text-center">LEAVE APPLICATIONS</h2>
+      <br />
 
-      <div className="filters">
-        <div className="filter-group">
-          <label className="filter-label">Time Period:</label>
-          <select className="form-select" value={timePeriodFilter} onChange={handleTimePeriodFilterChange}>
-            <option value="All">All Time</option>
-            <option value="Last Month">Last Month</option>
-            <option value="Last Year">Last Year</option>
-          </select>
+      <div className="filters-container text-center mb-4">
+        <div className="dropdown mb-2">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownTimeButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Filter by Time Period: {timePeriodFilter}
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownTimeButton">
+            <li>
+              <button className={`dropdown-item ${timePeriodFilter === "All" && "active"}`} onClick={() => setTimePeriodFilter("All")}>
+                All Time
+              </button>
+            </li>
+            <li>
+              <button className={`dropdown-item ${timePeriodFilter === "Last Month" && "active"}`} onClick={() => setTimePeriodFilter("Last Month")}>
+                Last Month
+              </button>
+            </li>
+            <li>
+              <button className={`dropdown-item ${timePeriodFilter === "Last Year" && "active"}`} onClick={() => setTimePeriodFilter("Last Year")}>
+                Last Year
+              </button>
+            </li>
+          </ul>
         </div>
-        <div className="filter-group">
-          <label className="filter-label">Status:</label>
-          <select className="form-select" value={statusFilter} onChange={handleStatusFilterChange}>
-            <option value="All">All</option>
-            {/* <option value="Pending">Pending</option> */}
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-          </select>
+        <div className="dropdown mb-2">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownStatusButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Filter by Status: {statusFilter}
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownStatusButton">
+            <li>
+              <button className={`dropdown-item ${statusFilter === "All" && "active"}`} onClick={() => setStatusFilter("All")}>
+                All
+              </button>
+            </li>
+            <li>
+              <button className={`dropdown-item ${statusFilter === "Approved" && "active"}`} onClick={() => setStatusFilter("Approved")}>
+                Approved
+              </button>
+            </li>
+            <li>
+              <button className={`dropdown-item ${statusFilter === "Rejected" && "active"}`} onClick={() => setStatusFilter("Rejected")}>
+                Rejected
+              </button>
+            </li>
+          </ul>
         </div>
-        <div className="filter-group">
-          <label className="filter-label">Leave Payment Type:</label>
-          <select className="form-select" value={paymentTypeFilter} onChange={handlePaymentTypeFilterChange}>
-            <option value="All">All</option>
-            <option value="Paid">Paid</option>
-            <option value="Unpaid">Unpaid</option>
-          </select>
+        <div className="dropdown mb-2">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownPaymentTypeButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Filter by Payment Type: {paymentTypeFilter}
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownPaymentTypeButton">
+            <li>
+              <button className={`dropdown-item ${paymentTypeFilter === "All" && "active"}`} onClick={() => setPaymentTypeFilter("All")}>
+                All
+              </button>
+            </li>
+            <li>
+              <button className={`dropdown-item ${paymentTypeFilter === "Paid" && "active"}`} onClick={() => setPaymentTypeFilter("Paid")}>
+                Paid
+              </button>
+            </li>
+            <li>
+              <button className={`dropdown-item ${paymentTypeFilter === "Unpaid" && "active"}`} onClick={() => setPaymentTypeFilter("Unpaid")}>
+                Unpaid
+              </button>
+            </li>
+          </ul>
         </div>
-        <div className="filter-group">
+        {/* <div className="filter-group">
           <button className="btn btn-secondary" onClick={handleClearFilters}>Clear All Filters</button>
-        </div>
+        </div> */}
       </div>
 
-      {filteredLeaves.length > 0 ? (
-        <table className="leave-table">
-          <thead>
-            <tr>
-              <th>Leave Type</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Total Days</th>
-              <th>Reason</th>
-              <th>Status</th>
-              <th>Leave Payment Type</th>
-              <th>Review</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredLeaves.map((leave) => (
-              <tr key={leave._id}>
-                <td>{leave.leaveType}</td>
-                <td>{new Date(leave.startDate).toLocaleDateString()}</td>
-                <td>{new Date(leave.endDate).toLocaleDateString()}</td>
-                <td>{leave.totalDays}</td>
-                <td>{leave.reason}</td>
-                <td>{leave.status}</td>
-                <td>{leave.leavePaymentType}</td>
-                <td>{leave.review}</td>
+      <div className="tableleapp-container">
+        {filteredLeaves.length > 0 ? (
+          <table className="tableleapp tableleapp-bordered">
+            <thead>
+              <tr>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Total Days</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Leave Payment Type</th>
+                <th>Review</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p className="text-center"><br />No leave applications found.</p>
-      )}
-    </div>
+            </thead>
+            <tbody>
+              {filteredLeaves.map((leave) => (
+                <tr key={leave._id}>
+                  <td>{leave.leaveType}</td>
+                  <td>{new Date(leave.startDate).toLocaleDateString()}</td>
+                  <td>{new Date(leave.endDate).toLocaleDateString()}</td>
+                  <td>{leave.totalDays}</td>
+                  <td>{leave.reason}</td>
+                  <td>{leave.status}</td>
+                  <td>{leave.leavePaymentType}</td>
+                  <td>{leave.review}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-center"><br />No leave applications found.</p>
+        )}
+      </div>
+    </>
   );
 }
 

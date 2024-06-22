@@ -80,11 +80,11 @@ const LeaveE = () => {
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-8">
-          <div className="card">
-            <div className="card-header">
+          <div className="cardlee">
+            <div className="cardlee-header">
               <h2>LEAVE APPLICATION FORM</h2>
             </div>
-            <div className="card-body">
+            <div className="cardlee-body">
               <form onSubmit={handleSubmit}>
                 <div className="form-group mb-3">
                   <label htmlFor="uid">Employee Unique Id:</label>

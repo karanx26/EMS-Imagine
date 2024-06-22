@@ -33,6 +33,7 @@ function ManageClientE() {
 
   return (
     <>
+      <br />
       <div id="manage-client-container">
         <div className="button-container">
           <Link to="/homee/addcliente" className="manage-button">
@@ -41,13 +42,12 @@ function ManageClientE() {
           </Link>
         </div>
         <br />
-
         <h2 className="text-center">CLIENT LIST</h2>
         <br />
 
-        <div className="card">
-          <div className="card-body">
-            <div className="form-group d-flex align-items-center">
+        <div className="cardmce">
+          <div className="cardmce-body">
+            <div className="form-group d-flex justify-content-center align-items-center">
               <label htmlFor="clientTypeFilter" className="mr-2">
                 Client Type:
               </label>
@@ -67,15 +67,15 @@ function ManageClientE() {
         </div>
         <br />
 
-        <div className="table-container">
-          <table className="table table-bordered client-table">
+        <div className="tablemce-container">
+          <table className="tablemce tablemce-bordered client-tablemce">
             <thead>
               <tr>
                 <th>#</th>
                 <th>UID</th>
                 <th>Name</th>
                 <th>Client Type</th>
-                <th>Phone</th>                
+                <th>Phone</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -88,8 +88,13 @@ function ManageClientE() {
                   <td>{client.clientType}</td>
                   <td>{client.phone}</td>
                   <td>
-                        <Link to={`/homee/editcliente/${client.uid}`} className="btn btn-primary btn-sm">View</Link>
-                      </td>
+                    <Link
+                      to={`/homee/editcliente/${client.uid}`}
+                      className="btn btn-orange btn-xs"
+                    >
+                      View
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

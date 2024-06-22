@@ -47,19 +47,19 @@ function Overtime() {
       });
   };
 
-  const handleDeleteOvertime = (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this overtime record?");
-    if (confirmDelete) {
-      axios.delete(`http://localhost:8001/overtime/${id}`)
-        .then(response => {
-          setOvertimeData(overtimeData.filter(record => record._id !== id));
-          window.alert("Overtime record deleted successfully!");
-        })
-        .catch(error => {
-          setError("There was an error deleting the overtime record!");
-        });
-    }
-  };
+  // const handleDeleteOvertime = (id) => {
+  //   const confirmDelete = window.confirm("Are you sure you want to delete this overtime record?");
+  //   if (confirmDelete) {
+  //     axios.delete(`http://localhost:8001/overtime/${id}`)
+  //       .then(response => {
+  //         setOvertimeData(overtimeData.filter(record => record._id !== id));
+  //         window.alert("Overtime record deleted successfully!");
+  //       })
+  //       .catch(error => {
+  //         setError("There was an error deleting the overtime record!");
+  //       });
+  //   }
+  // };
 
   return (
     <div className="containerote mt-5">
@@ -109,7 +109,7 @@ function Overtime() {
                           <th>Date</th>
                           <th>Hours</th>
                           <th>Description</th>
-                          <th>Actions</th>
+                          {/* <th>Actions</th> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -118,9 +118,9 @@ function Overtime() {
                             <td>{new Date(record.date).toLocaleDateString()}</td>
                             <td>{record.hours}</td>
                             <td>{record.description}</td>
-                            <td>
+                            {/* <td>
                               <button className="btnote btnote-dangero" onClick={() => handleDeleteOvertime(record._id)}>Delete</button>
-                            </td>
+                            </td> */}
                           </tr>
                         ))}
                       </tbody>

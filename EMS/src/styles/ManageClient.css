@@ -1,3 +1,12 @@
+/* ManageClient.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
 #manage-client-container {
   display: flex;
   flex-direction: column;
@@ -5,16 +14,14 @@
   padding: 20px;
 }
 
-h1 {
-  margin-bottom: 30px;
-  color: #333;
+h2.text-center {
+  color: black; /* Orange color for the heading */
 }
 
 .button-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px; /* Reduce margin between buttons and table */
-  margin-top: 20px;
+  margin-bottom: 20px; /* Margin between buttons and tablemce */
 }
 
 .manage-button {
@@ -23,59 +30,110 @@ h1 {
   justify-content: center;
   width: 150px; /* Set a fixed width */
   height: 50px; /* Set a fixed height */
-  background-color: orange;
+  background-color: #ff7f00; /* Orange color for button */
   color: white;
   text-decoration: none;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s, box-shadow 0.3s;
-  font-size: 14px; /* Decrease font size */
+  font-size: 14px; /* Font size */
   white-space: nowrap; /* Prevent button text from wrapping */
 }
 
 .manage-button i {
-  font-size: 20px; /* Decrease icon size */
-  margin-right: 5px; /* Adjust margin between icon and text */
+  font-size: 20px; /* Icon size */
+  margin-right: 5px; /* Margin between icon and text */
 }
 
 .manage-button:hover {
-  background-color: black;
+  background-color: black; /* Hover color */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-.card {
+.cardmce {
   border: 1px solid #dfdfdf;
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  box-shadow: none;
+  border-radius: 8px; /* Rounded corners */
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 90%;
+  max-width: 1000px; /* Limit width */
+  margin: 0 auto; /* Center cardmce */
 }
 
-.table-container {
-  width: 80%;
-  max-width: 800px;
-  margin-top: 30px;
+.cardmce-body {
+  padding: 20px;
+  justify-content: center;
+  align-items: center;;
 }
 
-.client-table {
+.tablemce-container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.tablemce {
+  font-size: 1rem;
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
-.client-table th,
-.client-table td {
+.tablemce th,
+.tablemce td {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
 }
 
-.client-table th {
-  background-color: #f2f2f2;
+.tablemce th {
+  background-color: #ff7f00; /* Orange for tablemce headers */
+  color: white;
+  padding: 8px;
 }
 
-.client-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+.tablemce td {
+  padding: 5px;
 }
 
-.client-table tbody tr:hover {
-  background-color: #f1f1f1;
+.btn-orange{
+  background-color: #ff7f00; /* Orange color for button */
+  color: white;
+  cursor: pointer;
+}
+
+.btn-orange:hover {
+  background-color: black; /* Hover color */
+  color: white;
+}
+
+.tablemce tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Alternate row color */
+}
+
+.tablemce tbody tr:hover {
+  background-color: #f1f1f1; /* Hover color */
+}
+
+@media (max-width: 768px) {
+  .cardmce {
+    padding: 5px;
+  }
+
+  .tablemce th, .tablemce td {
+    padding: 5px;
+  }  
+}
+
+@media (max-width: 576px) {
+  h2.text-center {
+    font-size: 1.5em;
+  }
+
+  .tablemce th, .tablemce td {
+    padding: 5px;
+  }
+
+  
 }

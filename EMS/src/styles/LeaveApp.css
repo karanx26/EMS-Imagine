@@ -1,70 +1,94 @@
-/* leaveE.css */
-.container {
-    padding: 20px;
+/* LeaveApp.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+h2.text-center {
+  color: black; 
+}
+
+.filters-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 90%;
+  margin: 0 auto 20px auto;
+}
+
+.filters-container .dropdown {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.tableleapp-container {
+  width: 90%;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.tableleapp {
+  font-size: 1rem;
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.tableleapp th, .tableleapp td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.tableleapp th {
+  background-color: #ff7f00; /* Orange for the tableleapp headers */
+  color: white;
+  padding: 15px;
+}
+
+.tableleapp td {
+  padding: 12px;
+}
+
+.btn-secondary {
+  background-color: gray;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .filters-container {
+    padding: 10px;
   }
-  
-  .heading {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    color: black;
+
+  .tableleapp th, .tableleapp td {
+    padding: 8px;
   }
-  
-  .leave-table {
-    width: 90%;
-    border-collapse: collapse;
-    margin-bottom: 10px;
-    border: 2px solid #ddd;
-    margin-left: auto;
-    margin-right: auto;
-  }  
-  
-  .leave-table th,
-  .leave-table td {
-    padding: 5px;
-    border: 1px solid #ddd;
-    text-align: center;
+
+  .btn-secondary {
+    padding: 8px 12px;
+    font-size: 0.9rem;
   }
-  
-  .leave-table th {
-    background-color: #ff7f00;
-    color: white;
-  }  
-  
-  .delete-button {
-    padding: 4px 8px;
-    background-color: black;
-    color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    cursor: pointer;
+}
+
+@media (max-width: 576px) {
+  h2.text-center {
+    font-size: 1.5em;
   }
-  
-  .delete-button:hover {
-    background-color: #ff7f00;
-    color: white;
+
+  .tableleapp th, .tableleapp td {
+    padding: 6px;
   }
-  
-  @media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-  
-    .leave-table th, 
-    .leave-table td {
-        padding: 5px;
-    }
-  
-    .delete-button {
-        padding: 4px 8px;
-        font-size: 0.9em;
-    }
+
+  .btn-secondary {
+    padding: 6px 10px;
+    font-size: 0.8rem;
   }
-  
-  @media (max-width: 576px) {
-    .delete-button {
-        padding: 3px 6px;
-        font-size: 0.8em;
-    }
-  }
-  
+}

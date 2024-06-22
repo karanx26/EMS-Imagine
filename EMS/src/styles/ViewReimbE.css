@@ -1,96 +1,96 @@
 /* ViewReimbE.css */
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
-    
-  .tablevre-container {
-    /* overflow-x: auto; Add horizontal scrolling */
-    width: 90%;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+h2.text-center {
+  color: black; /* Orange color for the heading */
+}
+
+.filters-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 90%;
+  margin: 0 auto 20px auto;
+}
+
+.filters-container .dropdown {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.tablevre-container {
+  width: 90%;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.tablevre {
+  font-size: 1rem;
+  width: 100%;
   border-collapse: collapse;
-  /* border: 2px solid #ddd; */
-  margin-left: auto;
-  margin-right: auto;
-  }
-  
-  .tablevre {
-    font-size: 0.875rem;
-    width: 100%;
-    border-collapse: collapse;
-    /* min-width: 600px;  */
-  }
-  
-  .tablevre th, .tablevre td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
-  
-  .tablevre th {
-    background-color: #ff7f00;
-    color: white;
+  margin-bottom: 20px;
+}
+
+.tablevre th, .tablevre td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.tablevre th {
+  background-color: #ff7f00; /* Orange for the table headers */
+  color: white;
+  padding: 15px;
+}
+
+.tablevre td {
+  padding: 12px;
+}
+
+.btn-vw {
+  background-color: black; /* Orange for vw buttons */
+  color: white;
+  border: none;
+}
+
+.btn-vw:hover {
+  background-color: #ff7f00; /* Darker shade of orange on hover */
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .filters-container {
     padding: 10px;
   }
-  
-  .tablevre td {
+
+  .tablevre th, .tablevre td {
     padding: 8px;
   }
-  
-  .btnvre {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+
+  .btn-vw {
+    padding: 8px 12px;
+    font-size: 0.9rem;
   }
-  
-  .btnvre-danger {
-    background-color: black;
-    color: white;
+}
+
+@media (max-width: 576px) {
+  h2.text-center {
+    font-size: 1.5em;
   }
-  
-  .btnvre-danger:hover {
-    background-color: #ff7f00;
+
+  .tablevre th, .tablevre td {
+    padding: 6px;
   }
-  
-  .error {
-    color: red;
-    margin-top: 20px;
+
+  .btn-vw {
+    padding: 6px 10px;
+    font-size: 0.8rem;
   }
-  
-  @media (max-width: 768px) {
-    .container {
-      padding: 10px;
-    }
-  
-    .card-body {
-      padding: 15px;
-    }
-  
-    .tablevre th, .tablevre td {
-      padding: 10px;
-    }
-  
-    .btnvre-danger {
-      padding: 3px 8px;
-      font-size: 0.9rem;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .card-header h2 {
-      font-size: 1.5em;
-    }
-  
-    .tablevre th, .tablevre td {
-      padding: 8px;
-    }
-  
-    .btnvre-danger {
-      padding: 2px 6px;
-      font-size: 0.8rem;
-    }
-  }
-  
+}

@@ -2,85 +2,17 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;/* TaskE.css */
+    background-color: #f4f4f4;
     .container {
       padding: 20px;
     }
-    
-    .heading {
-      text-align: center;
-      margin-top: 20px;
-      margin-bottom: 15px;
-      color: black;
-    }
-    
-    .task-table {
-      width: 90%;
-      border-collapse: collapse;
-      margin-bottom: 10px;
-      border: 2px solid #ddd;
-      margin-left: auto;
-      margin-right: auto;
-    }  
-    
-    .task-table th,
-    .task-table td {
-      padding: 5px;
-      border: 1px solid #ddd;
-      text-align: center;
-    }
-    
-    .task-table th {
-      background-color: #ff7f00;
-      color: white;
-    }  
-    
-    .status-button {
-      padding: 4px 8px;
-      background-color: black;
-      color: white;
-      border: 1px solid black;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    .status-button:hover {
-      background-color: #ff7f00;
-      color: white;
-    }
-    
-    @media (max-width: 768px) {
-      .container {
-          padding: 10px;
-      }
-    
-      .task-table th, 
-      .task-table td {
-          padding: 5px;
-      }
-    
-      .status-button {
-          padding: 4px 8px;
-          font-size: 0.9em;
-      }
-    }
-    
-    @media (max-width: 576px) {
-      .status-button {
-          padding: 3px 6px;
-          font-size: 0.8em;
-      }
-    }
-    
-    margin: 0;
-    padding: 0;
-  }
+  }    
   
   .container {
     padding: 20px;
   }
   
-  .card {
+  .cardlee {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -88,18 +20,18 @@ body {
     overflow: hidden;
   }
   
-  .card-header {
+  .cardlee-header {
     background: linear-gradient(90deg, #000000, #ff7f00);
     color: #fff;
     padding: 15px;
     text-align: center;
   }
   
-  .card-header h2 {
+  .cardlee-header h2 {
     margin: 0;
   }
   
-  .card-body {
+  .cardlee-body {
     padding: 20px;
   }
   
@@ -153,7 +85,7 @@ body {
       padding: 10px;
     }
   
-    .card-body {
+    .cardlee-body {
       padding: 15px;
     }
   
@@ -167,7 +99,7 @@ body {
   }
   
   @media (max-width: 576px) {
-    .card-header h2 {
+    .cardlee-header h2 {
       font-size: 1.5em;
     }
   
