@@ -34,8 +34,8 @@ function ManageClientA() {
   return (
     <>
       <div id="manage-client-container">
-        <div className="button-container">
-          <Link to="/homea/addclienta" className="manage-button">
+        <div className="buttonmc-container">
+          <Link to="/homea/addclienta" className="manage-buttonmc">
             <i className="bi bi-person-plus-fill"></i>
             Add Clients
           </Link>
@@ -45,9 +45,9 @@ function ManageClientA() {
         <h2 className="text-center">CLIENT LIST</h2>
         <br />
 
-        <div className="card">
-          <div className="card-body">
-            <div className="form-group d-flex align-items-center">
+        <div className="cardmce">
+          <div className="cardmce-body">
+            <div className="form-group d-flex justify-content-center align-items-center">
               <label htmlFor="clientTypeFilter" className="mr-2">
                 Client Type:
               </label>
@@ -67,8 +67,8 @@ function ManageClientA() {
         </div>
         <br />
 
-        <div className="table-container">
-          <table className="table table-bordered client-table">
+        <div className="tablemce-container">
+          <table className="tablemce tablemce-bordered client-tablemce">
             <thead>
               <tr>
                 <th>#</th>
@@ -88,7 +88,7 @@ function ManageClientA() {
                   <td>{client.clientType}</td>
                   <td>{client.phone}</td>
                   <td>
-                        <Link to={`/homea/editclient/${client.uid}`} className="btn btn-primary btn-sm">View</Link>
+                        <Link to={`/homea/editclient/${client.uid}`} className="btn btn-orange btn-sm">View</Link>
                       </td>
                 </tr>
               ))}

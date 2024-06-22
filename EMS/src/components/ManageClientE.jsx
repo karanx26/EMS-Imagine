@@ -35,8 +35,8 @@ function ManageClientE() {
     <>
       <br />
       <div id="manage-client-container">
-        <div className="button-container">
-          <Link to="/homee/addcliente" className="manage-button">
+        <div className="buttonmc-container">
+          <Link to="/homee/addcliente" className="manage-buttonmc">
             <i className="bi bi-person-plus-fill"></i>
             Add Clients
           </Link>

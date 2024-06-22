@@ -140,7 +140,7 @@ const AddClientA = () => {
                 </div>
                 
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-primary">Add Client</button>
+                  <button type="submit" className="btn btn-orange">Add Client</button>
                 </div>
               </form>
             </div>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import "../styles/AddClient.css"; // Import the CSS file
 
 const AddClientE = () => {
   const navigate = useNavigate();
@@ -141,7 +140,7 @@ const AddClientE = () => {
                 </div>
                 
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-primary">Add Client</button>
+                  <button type="submit" className="btn btn-orange">Add Client</button>
                 </div>
               </form>
             </div>

@@ -18,34 +18,34 @@ h2.text-center {
   color: black; /* Orange color for the heading */
 }
 
-.button-container {
+.buttonmc-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px; /* Margin between buttons and tablemce */
+  margin-bottom: 20px; /* Margin between buttonmcs and tablemce */
 }
 
-.manage-button {
+.manage-buttonmc {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 150px; /* Set a fixed width */
   height: 50px; /* Set a fixed height */
-  background-color: #ff7f00; /* Orange color for button */
+  background-color: #ff7f00; /* Orange color for buttonmc */
   color: white;
   text-decoration: none;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s, box-shadow 0.3s;
   font-size: 14px; /* Font size */
-  white-space: nowrap; /* Prevent button text from wrapping */
+  white-space: nowrap; /* Prevent buttonmc text from wrapping */
 }
 
-.manage-button i {
+.manage-buttonmc i {
   font-size: 20px; /* Icon size */
   margin-right: 5px; /* Margin between icon and text */
 }
 
-.manage-button:hover {
+.manage-buttonmc:hover {
   background-color: black; /* Hover color */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
@@ -98,7 +98,7 @@ h2.text-center {
 }
 
 .btn-orange{
-  background-color: #ff7f00; /* Orange color for button */
+  background-color: #ff7f00; /* Orange color for buttonmc */
   color: white;
   cursor: pointer;
 }

@@ -80,7 +80,7 @@ function HomeA() {
                   </Link>
                 </li>
 
-                <li className="w-100">
+                {/* <li className="w-100">
                   <Link
                     to="/homea/manageinventorya"
                     className="nav-link px-0 align-middle text-white"
@@ -90,7 +90,7 @@ function HomeA() {
                       Manage Inventory
                     </span>
                   </Link>
-                </li>
+                </li> */}
 
                 <li className="w-100" onClick={handleLogout}>
                   <Link
@@ -141,7 +141,7 @@ function HomeA() {
                   </Link>
                 </li>
                 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link
                     to="/homea/manageinventorya"
                     className="nav-link text-white"
@@ -151,7 +151,7 @@ function HomeA() {
                       Manage Inventory
                     
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item" onClick={handleLogout}>
                   <Link to="/login" className="nav-link text-white">
                     <i className="bi bi-power"></i> Logout

@@ -66,7 +66,7 @@ function ClientDocs() {
     <div className="container mt-5">
       <div className="card" style={{ maxWidth: "500px", margin: "0 auto" }}>
         <div className="card-body">
-          <h4 className="card-title text-center mb-3">Upload New Document</h4>
+          <h4 className="card-title text-center mb-5">Upload New Document</h4>
           <form onSubmit={handleUpload}>
             <div className="form-group mb-4">
               <label htmlFor="documentName">Document Name:</label>
@@ -79,8 +79,10 @@ function ClientDocs() {
                 required
               />
             </div>
-            <div className="form-group mb-3">
+            <div className="form-group mb-6">
               <label htmlFor="fileUpload">Upload Document:</label>
+              <br/>
+              <small>Supported file types: PDF, DOC, DOCX, PNG, JPG, JPEG</small>
               <input
                 id="fileUpload"
                 type="file"
@@ -90,7 +92,7 @@ function ClientDocs() {
               />
             </div>
             <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-sm btn-primary text-center w-20">Upload</button>
+            <button type="submit" className="btn btn-orange text-center btn-sm">Upload</button>
             </div>
           </form>
         </div>
@@ -106,7 +108,7 @@ function ClientDocs() {
                 <div>
                   <strong>{doc.documentName}</strong> - <a href={`http://localhost:8001/${doc.docs[0]}`} target="_blank" rel="noopener noreferrer">View</a>
                 </div>
-                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(doc._id)}>Delete</button>
+                <button className="btn btn-danger btn-xs" onClick={() => handleDelete(doc._id)}>Delete</button>
               </li>
             ))}
           </ul>
