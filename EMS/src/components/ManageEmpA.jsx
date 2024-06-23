@@ -31,69 +31,64 @@ function ManageEmpA() {
 
   return (
     <>
-      <div id="manage-emp-container">
-        <div className="button-container">
-          <Link to="/homea/taska" className="manage-button">
+      <div id="manageme-emp-containerme">
+        <div className="button-containerme">
+          <Link to="/homea/taska" className="manageme-button">
             <i className="bi bi-list-task"></i>
             Task Assignment
           </Link>
-          <Link to="/homea/attendancea" className="manage-button">
+          <Link to="/homea/attendancea" className="manageme-button">
             <i className="bi bi-calendar-check-fill"></i>
             Attendance
           </Link>
-          <Link to="/homea/reimba" className="manage-button">
+          <Link to="/homea/reimba" className="manageme-button">
             <i className="bi bi-currency-dollar"></i>
             Reimbursement
           </Link>
-          <Link to="/homea/leavea" className="manage-button">
+          <Link to="/homea/leavea" className="manageme-button">
             <i className="bi bi-envelope-open-fill"></i>
             Leave Application
           </Link>
-
-          <Link to="/homea/overtimea" className="manage-button">
+          <Link to="/homea/overtimea" className="manageme-button">
             <i className="bi bi-clock-fill"></i>
             Overtime
           </Link>
-
-
-          <Link to="/homea/addempa" className="manage-button">
+          <Link to="/homea/addempa" className="manageme-button">
             <i className="bi bi-person-plus-fill"></i>
             Add Employees
           </Link>
         </div>
-        <div className="px-5 mt-3">
-          <div className="card mt-3">
-            <div className="card-header text-center">
-              <h2>EMPLOYEE LIST</h2>
-            </div>
-            <div className="card-body">
-              <table className="table table-striped custom-table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Uid</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Department</th>
-                    <th>Action</th>
+        <div className="table-containerme mt-3">
+          <div className="table-header text-center">
+            <h2>EMPLOYEE LIST</h2>
+          </div>
+          <div className="table-responsive">
+            <table className="table table-striped custom-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Uid</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Department</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {employee.map((e, index) => (
+                  <tr key={e.uid}>
+                    <td>{index + 1}</td>
+                    <td>{e.uid}</td>
+                    <td>{e.name}</td>
+                    <td>{e.phone}</td>
+                    <td>{e.department}</td>
+                    <td>
+                      <Link to={`/homea/editempa/${e.uid}`} className="btn btn-orange btn-sm">Edit</Link>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {employee.map((e, index) => (
-                    <tr key={e.uid}>
-                      <td>{index + 1}</td>
-                      <td>{e.uid}</td>
-                      <td>{e.name}</td>
-                      <td>{e.phone}</td>
-                      <td>{e.department}</td>
-                      <td>
-                        <Link to={`/homea/editempa/${e.uid}`} className="btn btn-primary btn-sm">Edit</Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

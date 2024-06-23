@@ -116,7 +116,7 @@ function EditClientE() {
                   <div className="d-flex justify-content-center">
                     <button type="button" className="btn btn-primary mt-3" style={{ marginRight: '20px' }} onClick={handleUpdate}>Update</button>
                     <button type="button" className="btn btn-success mt-3" style={{marginRight: '20px' }} onClick={handleShowDocuments}>Show Documents</button>
-                    <button type="button" className="btn btn-danger mt-3" onClick={handleDelete}>Delete</button>
+                    <button type="button" className="btn btn-danger mt-3" style={{ marginRight: '20px' }} onClick={handleDelete}>Delete</button>
                   </div>
                 </div>
               </form>

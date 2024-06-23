@@ -1,31 +1,30 @@
-#manage-emp-container {
+/* containerme for the managemement section */
+#manageme-emp-containerme {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
 }
 
-h1 {
-  margin-bottom: 30px;
-  color: #333;
-}
 
-.button-container {
+/* Styling the button containerme */
+.button-containerme {
   display: flex;
   gap: 10px; /* Adjust the gap between buttons as needed */
   flex-wrap: wrap; /* Allow buttons to wrap to the next line if needed */
   justify-content: center; /* Center the buttons horizontally */
-  margin-bottom: 10px; /* Reduce margin between buttons and table */
+  margin-bottom: 20px; /* Reduce margin between buttons and table */
   margin-top: 20px;
 }
 
-.manage-button {
+/* Styling for each button */
+.manageme-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px; /* Set a fixed width */
+  width: 160px; /* Set a fixed width */
   height: 50px; /* Set a fixed height */
-  background-color: orange;
+  background-color: #ff7f00;
   color: white;
   text-decoration: none;
   border-radius: 8px;
@@ -35,55 +34,58 @@ h1 {
   white-space: nowrap; /* Prevent button text from wrapping */
 }
 
-.manage-button i {
+/* Icon styling within the buttons */
+.manageme-button i {
   font-size: 20px; /* Decrease icon size */
   margin-right: 5px; /* Adjust margin between icon and text */
 }
 
-.manage-button:hover {
+/* Button hover effect */
+.manageme-button:hover {
   background-color: black;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Reduce margin-top for the table */
-.table {
-  margin-top: 0;
+
+
+/* Table containerme and table styling */
+.table-containerme {
+  width: 80%;
+  max-width: 1200px; /* Set a max width for the table containerme */
+}
+
+.table-header {
+  background: linear-gradient(90deg, #000000, #ff7f00);
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: white;
+}
+
+/* Custom table styling */
+.table.custom-table th, .table.custom-table td {
+  padding: 5px 10px; /* Adjust padding for more space between columns */
+}
+
+.table-responsive {
+  overflow-x: auto;
 }
 
 /* Media query for smaller screens */
-@media (max-width: 600px) {
-  .button-container {
+@media (max-width: 768px) {
+  .button-containerme {
       flex-direction: column; /* Stack buttons vertically */
       align-items: center; /* Center align the buttons */
       gap: 15px; /* Increase gap between buttons */
   }
+  
+  .manageme-button {
+      width: 100%; /* Make buttons full width */
+  }
 }
-
-/* Custom CSS for the card container and table styling */
-.card {
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-  background-color: #f8f9fa; /* Light gray background for header */
-  border-bottom: 1px solid #e0e0e0;
-  padding: 15px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.card-header h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  color: #333;
-}
-
-.card-body {
-  padding: 20px;
-}
-
-.table.custom-table th, .table.custom-table td {
-  padding: 10px 15px; /* Adjust padding for more space between columns */
-}
-
