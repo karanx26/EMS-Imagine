@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../styles/Overtime.css";
+import "../styles/OvertimeA.css";
 
 const monthNames = [
   "January", "February", "March", "April", "May", "June",
@@ -13,7 +13,7 @@ function OvertimeA() {
   const [overtimeData, setOvertimeData] = useState([]);
   const [totalOvertimeHours, setTotalOvertimeHours] = useState(null);
   const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(new Date().getMonth() + 1); // Months are 0-based in JS Date
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -41,8 +41,18 @@ function OvertimeA() {
     setError(null);
 
     try {
-      const response = await axios.get(`http://localhost:8001/overtime/employee/${uid}`);
+      const response = await axios.get(`http://localhost:8001/overtime/employee/${uid}`, {
+        params: {
+          year,
+          month
+        }
+      });
       setOvertimeData(response.data);
+      if (response.data.length === 0) {
+        setTotalOvertimeHours(0);
+      } else {
+        setTotalOvertimeHours(null);
+      }
     } catch (err) {
       if (err.response) {
         setError(`Error: ${err.response.data.message}`);
@@ -83,77 +93,109 @@ function OvertimeA() {
 
   return (
     <div className="overtime-container">
-      <h1>Admin: Overtime Records by Employee</h1>
 
-      <div className="employee-search-form">
-        <select
-          value={selectedEmployeeUid}
-          onChange={(e) => setSelectedEmployeeUid(e.target.value)}
-        >
-          <option value="">Select Employee</option>
-          {employees.map((employee) => (
-            <option key={employee.uid} value={employee.uid}>
-              {employee.name}
-            </option>
-          ))}
-        </select>
-        <button onClick={() => fetchOvertimeDataByEmployee(selectedEmployeeUid)}>
-          Fetch Overtime Records
-        </button>
-      </div>
+    <div className="header-overtime">
+      <h2>OVERTIME RECORDS</h2>
+    </div>
+    <div className="form-overtime-container">
 
-      <div className="month-selection-form">
-        <input
-          type="number"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          placeholder="Year"
-        />
-        <select
-          value={month}
-          onChange={(e) => setMonth(e.target.value)}
-        >
-          {monthNames.map((name, index) => (
-            <option key={index} value={index + 1}>
-              {name}
-            </option>
-          ))}
-        </select>
-        <button onClick={() => fetchTotalOvertimeHours(selectedEmployeeUid, year, month)}>
-          Calculate Total Overtime Hours
-        </button>
+      <div className="form-sectionota">
+        <div className="form-groupota">
+          <label htmlFor="employee-select"><strong>Select Employee:</strong></label>
+          <select
+            id="employee-select"
+            value={selectedEmployeeUid}
+            onChange={(e) => setSelectedEmployeeUid(e.target.value)}
+          >
+            <option value="">Select Employee</option>
+            {employees.map((employee) => (
+              <option key={employee.uid} value={employee.uid}>
+                {employee.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <div className="form-groupota">
+          <label htmlFor="year-input"><strong>Year:</strong></label>
+          <input
+            id="year-input"
+            type="number"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            placeholder="Year"
+          />
+        </div>
+        
+        <div className="form-groupota">
+          <label htmlFor="month-select"><strong>Month:</strong></label>
+          <select
+            id="month-select"
+            value={month}
+            onChange={(e) => setMonth(e.target.value)}
+          >
+            {monthNames.map((name, index) => (
+              <option key={index} value={index + 1}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <div className="form-groupota">
+          <button onClick={() => fetchOvertimeDataByEmployee(selectedEmployeeUid)}>
+            Fetch Overtime Records
+          </button>
+        </div>
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p className="loading">Loading...</p>
       ) : (
         <>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Hours</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {overtimeData.map((record) => (
-                <tr key={record._id}>
-                  <td>{new Date(record.date).toLocaleDateString()}</td>
-                  <td>{record.hours}</td>
-                  <td>{record.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {totalOvertimeHours !== null && (
-            <div className="total-overtime">
-              <p>Total Overtime Hours for {monthNames[month - 1]} {year}: {totalOvertimeHours}</p>
-            </div>
+          {overtimeData.length === 0 ? (
+            <p className="text-center">No record found</p>
+          ) : (
+            <>
+            <div class="tableota-container">
+              <table className="tableota">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Hours</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {overtimeData.map((record) => (
+                    <tr key={record._id}>
+                      <td>{new Date(record.date).toLocaleDateString()}</td>
+                      <td>{record.hours}</td>
+                      <td>{record.description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              </div>
+              
+              <div className="form-groupota">
+                <button onClick={() => fetchTotalOvertimeHours(selectedEmployeeUid, year, month)}>
+                  Calculate Total Overtime Hours
+                </button>
+              </div>
+              
+              {totalOvertimeHours !== null && (
+                <div className="total-overtime">
+                  <p>Total Overtime Hours for {monthNames[month - 1]} {year}: {totalOvertimeHours}</p>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
+      
       {error && <p className="error">{error}</p>}
+      </div>
     </div>
   );
 }

@@ -63,7 +63,7 @@ function ManageEmpA() {
             <h2>EMPLOYEE LIST</h2>
           </div>
           <div className="table-responsive">
-            <table className="table table-striped custom-table">
+            <table className="table custom-table">
               <thead>
                 <tr>
                   <th>#</th>

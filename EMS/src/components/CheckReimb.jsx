@@ -68,7 +68,7 @@ const CheckReimb = () => {
   return (
     <div className="container mt-5">
       <div className="card">
-        <div className="card-header bg-orange text-white">
+        <div className="card-header bg-orange text-white text-center">
           <h2>APPLICATION DETAILS</h2>
         </div>
         <div className="card-body">

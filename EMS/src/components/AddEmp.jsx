@@ -176,7 +176,7 @@ const AddEmp = () => {
                   />
                 </div>
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-primary">Add Employee</button>
+                  <button type="submit" className="btn btn-orange">Add Employee</button>
                 </div>
               </form>
             </div>

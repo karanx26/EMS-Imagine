@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-import "bootstrap-icons/font/bootstrap-icons.css";
+import "../styles/TaskA.css"; // Import custom CSS for styling
 
 const TaskA = () => {
   const [employees, setEmployees] = useState([]);
@@ -77,108 +76,34 @@ const TaskA = () => {
   const handleDeleteTask = async (taskId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this task?");
     if (confirmDelete) {
-    try {
-      await axios.delete(`http://localhost:8001/tasks/${taskId}`);
-      setPendingTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
-      setCompletedTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
-    } catch (error) {
-      console.error("Error deleting task:", error);
-      alert("Error deleting task.");
+      try {
+        await axios.delete(`http://localhost:8001/tasks/${taskId}`);
+        setPendingTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
+        setCompletedTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
+      } catch (error) {
+        console.error("Error deleting task:", error);
+        alert("Error deleting task.");
+      }
     }
-  }
-  };
-
-  const containerStyle = {
-    width: "70%",
-    margin: "50px auto",
-    padding: "20px",
-    border: "1px solid #ddd",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#fff",
-  };
-
-  const tableStyle = {
-    width: "80%",
-    borderCollapse: "collapse",
-    marginBottom: "20px",
-    margin: "35px auto",
-  };
-
-  const thTdStyle = {
-    border: "1px solid #ddd",
-    padding: "12px",
-    textAlign: "left",
-  };
-
-  const thStyle = {
-    backgroundColor: "#f9f9f9",
-  };
-
-  const inputStyle = {
-    width: "100%",
-    padding: "10px",
-    margin: "8px 0",
-    boxSizing: "border-box",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-    transition: "all 0.3s ease",
-  };
-
-  const buttonStyle = {
-    padding: "5px 10px",
-    backgroundColor: "#007bff",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    margin: "10px 10px",
-    transition: "background-color 0.3s ease",
-    display: "flex",
-    justifyContent: "center",
-  };
-
-  const buttonStyleDelete = {
-    ...buttonStyle,
-    backgroundColor: "#dc3545",
-  };
-  const buttonStylePending = {
-    ...buttonStyle,
-    backgroundColor: "orange",
-  };
-  const buttonStyleComplete = {
-    ...buttonStyle,
-    backgroundColor: "green",
-  };
-
-  const buttonContainerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "20px",
-  };
-
-  const headingCardStyle = {
-    textAlign: "center",
-    backgroundColor: "#f8f9fa",
-    padding: "10px",
-    borderRadius: "5px",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-    margin: "40px auto",
-    width: "80%",
-    color: "black",
   };
 
   return (
     <>
-      <div style={containerStyle}>
-        <h2 className="text-center">TASK ASSIGNMENT</h2>
+      <div className="containerta">
+
+      <div className="header-containerta">
+
+        <h2>TASK ASSIGNMENT</h2>
+      </div>
+
+      <div className="form-containerta">
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className="form-groupta">
             <label>Employee:</label>
             <select
               value={selectedEmployee}
               onChange={(e) => setSelectedEmployee(e.target.value)}
-              style={inputStyle}
+              className="form-controlta"
             >
               <option value="" disabled>
                 Select an employee
@@ -190,107 +115,114 @@ const TaskA = () => {
               ))}
             </select>
           </div>
-          <div>
+          <div className="form-groupta">
             <label>Task:</label>
             <input
               type="text"
-              style={inputStyle}
+              className="form-controlta"
               value={taskDetails.task}
               onChange={(e) => handleTaskChange("task", e.target.value)}
               placeholder="Enter task details"
             />
           </div>
-          <div>
+          <div className="form-groupta">
             <label>Deadline:</label>
             <input
               type="date"
-              style={inputStyle}
+              className="form-controlta"
               value={taskDetails.deadline}
               onChange={(e) => handleTaskChange("deadline", e.target.value)}
             />
           </div>
-          <div style={buttonContainerStyle}>
-            <button type="submit" style={buttonStyle}>
+          <div className="button-containerta">
+            <button type="submit" className="btnta btnta-primary">
               Assign Task
             </button>
           </div>
         </form>
+        </div>
       </div>
-      <div style={buttonContainerStyle}>
-        <button onClick={fetchPendingTasks} style={buttonStylePending}>
+      <div className="button-containerta">
+        <button onClick={fetchPendingTasks} className="btnta btnta-warning">
           Show All Pending Tasks
         </button>
-        <button onClick={fetchCompletedTasks} style={buttonStyleComplete}>
+        </div>
+        <div className="button-containerta">
+        <button onClick={fetchCompletedTasks} className="btnta btnta-success">
           Show All Completed Tasks
         </button>
       </div>
       {showPending && (
-        <div>
-          <div style={headingCardStyle}>
+        <div className="tasks-containerta">
+          <div className="tasks-header">
             <h3>PENDING TASKS</h3>
           </div>
           {pendingTasks.length === 0 ? (
-            <p style={{ textAlign: "center" }}>No pending tasks found.</p>
+            <p className="text-center">No pending tasks found.</p>
           ) : (
-            <table style={tableStyle}>
-              <thead>
-                <tr>
-                  <th style={{ ...thTdStyle, ...thStyle }}>Task</th>
-                  <th style={{ ...thTdStyle, ...thStyle }}>Employee Name</th>
-                  <th style={{ ...thTdStyle, ...thStyle }}>Deadline</th>
-                  <th style={{ ...thTdStyle, ...thStyle }}>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pendingTasks.map((task) => (
-                  <tr key={task._id}>
-                    <td style={thTdStyle}>{task.task}</td>
-                    <td style={thTdStyle}>{employees.find(e => e.uid === task.uid)?.name}</td>
-                    <td style={thTdStyle}>{new Date(task.deadline).toLocaleDateString()}</td>
-                    <td style={thTdStyle}>
-                      <button style={buttonStyleDelete} onClick={() => handleDeleteTask(task._id)}>
-                        Delete
-                      </button>
-                    </td>
+            <div className="tableta-responsive">
+              <table className="tableta">
+                <thead>
+                  <tr>
+                    <th>Task</th>
+                    <th>Employee Name</th>
+                    <th>Deadline</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {pendingTasks.map((task) => (
+                    <tr key={task._id}>
+                      <td>{task.task}</td>
+                      <td>{employees.find(e => e.uid === task.uid)?.name}</td>
+                      <td>{new Date(task.deadline).toLocaleDateString()}</td>
+                      <td>
+                        <button className="btnta btnta-danger" onClick={() => handleDeleteTask(task._id)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       )}
       {showCompleted && (
-        <div>
-          <div style={headingCardStyle}>
+        <div className="tasks-containerta">
+          <div className="tasks-header">
             <h3>COMPLETED TASKS</h3>
           </div>
           {completedTasks.length === 0 ? (
-            <p style={{ textAlign: "center" }}>No completed tasks found.</p>
+            <p className="text-center">No completed tasks found.</p>
           ) : (
-            <table style={tableStyle}>
-              <thead>
-                <tr>
-                  <th style={{ ...thTdStyle, ...thStyle }}>Task</th>
-                  <th style={{ ...thTdStyle, ...thStyle }}>Employee Name</th>
-                  <th style={{ ...thTdStyle, ...thStyle }}>Deadline</th>
-                  <th style={{ ...thTdStyle, ...thStyle }}>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {completedTasks.map((task) => (
-                  <tr key={task._id}>
-                    <td style={thTdStyle}>{task.task}</td>
-                    <td style={thTdStyle}>{employees.find(e => e.uid === task.uid)?.name}</td>
-                    <td style={thTdStyle}>{new Date(task.deadline).toLocaleDateString()}</td>
-                    <td style={thTdStyle}>
-                      <button style={buttonStyleDelete} onClick={() => handleDeleteTask(task._id)}>
-                        Delete
-                      </button>
-                    </td>
+            <div className="tableta-responsive">
+              <table className="tableta">
+                <thead>
+                  <tr>
+                    <th>Task</th>
+                    <th>Employee Name</th>
+                    <th>Deadline</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {completedTasks.map((task) => (
+                    <tr key={task._id}>
+                      <td>{task.task}</td>
+                      <td>{employees.find(e => e.uid === task.uid)?.name}</td>
+                      <td>{new Date(task.deadline).toLocaleDateString()}</td>
+                      <td>
+                        <button className="btnta btnta-danger" onClick={() => handleDeleteTask(task._id)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       )}

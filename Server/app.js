@@ -819,29 +819,35 @@ app.post('/overtime', async (req, res) => {
 
 // Get overtime records for a specific employee
 app.get('/overtime/employee/:uid', async (req, res) => {
-  const { uid } = req.params;
   try {
-    const overtimeRecords = await Overtime.find({ uid }).sort({ date: -1 }).lean();
-    if (overtimeRecords.length === 0) {
-      return res.status(404).json({ message: 'No overtime records found for the given UID' });
+    const { uid } = req.params;
+    const { year, month } = req.query;
+    const query = { uid: uid };
+
+    if (year && month) {
+      const startDate = new Date(year, month - 1, 1);
+      const endDate = new Date(year, month, 0);
+      query.date = { $gte: startDate, $lte: endDate };
     }
+
+    const overtimeRecords = await Overtime.find(query);
     res.json(overtimeRecords);
-  } catch (error) {
-    console.error('Error fetching overtime records:', error);
-    res.status(500).json({ message: 'Internal server error' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching overtime records' });
   }
 });
 
+
 // Fetch all employees
-app.get('/employees', async (req, res) => {
-  try {
-    const employees = await employees.find({}, { uid: 1, name: 1 }).lean();
-    res.json(employees);
-  } catch (error) {
-    console.error('Error fetching employees:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
+// app.get('/employees', async (req, res) => {
+//   try {
+//     const employees = await employees.find({}, { uid: 1, name: 1 }).lean();
+//     res.json(employees);
+//   } catch (error) {
+//     console.error('Error fetching employees:', error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// });
 
 // Add a new overtime record
 app.post('/overtime', async (req, res) => {
@@ -890,29 +896,31 @@ app.put('/overtime/:id', async (req, res) => {
 });
 
 app.get('/overtime/employee/:uid/month/:year/:month', async (req, res) => {
-  const { uid, year, month } = req.params;
-  const startDate = new Date(year, month - 1, 1);
-  const endDate = new Date(year, month, 0);
-
   try {
-    const overtimeRecords = await Overtime.find({
-      uid,
-      date: {
-        $gte: startDate,
-        $lte: endDate,
+    const { uid, year, month } = req.params;
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0);
+
+    const totalHours = await Overtime.aggregate([
+      {
+        $match: {
+          uid: uid,
+          date: { $gte: startDate, $lte: endDate }
+        }
       },
-    });
+      {
+        $group: {
+          _id: null,
+          totalHours: { $sum: '$hours' }
+        }
+      }
+    ]);
 
-    const totalHours = overtimeRecords.reduce((acc, record) => acc + record.hours, 0);
-
-    res.json({ totalHours });
-  } catch (error) {
-    console.error('Error calculating total overtime hours:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.json({ totalHours: totalHours[0] ? totalHours[0].totalHours : 0 });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching total overtime hours' });
   }
 });
-
-
 
 
 

@@ -11,7 +11,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 20px;  
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 h2.text-center {
@@ -53,12 +55,23 @@ h2.text-center {
 
 .cardmce {
   border: 1px solid #dfdfdf;
-  border-radius: 8px; /* Rounded corners */
+  border-radius: 8px; 
   background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   width: 90%;
-  max-width: 1000px; /* Limit width */
-  margin: 0 auto; /* Center cardmce */
+  max-width: 1000px; 
+  margin: 0 auto; 
+
+}
+
+.cardmce-header {
+  background: linear-gradient(90deg, #000000, #ff7f00); /* Orange gradient for cardmce header */
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+
 }
 
 .cardmce-body {
@@ -106,6 +119,17 @@ h2.text-center {
 
 .btn-orange:hover {
   background-color: black; /* Hover color */
+  color: white;
+}
+
+.btn-black{
+  background-color: black; /* Orange color for buttonmc */
+  color: white;
+  cursor: pointer;
+}
+
+.btn-black:hover {
+  background-color: #ff7f00; /* Hover color */
   color: white;
 }
 

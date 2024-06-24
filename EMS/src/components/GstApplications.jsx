@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "../styles/GstApplications.css";  // Import the CSS file here
 
 const GstApplications = () => {
   const [reimbursements, setReimbursements] = useState([]);
@@ -44,90 +45,63 @@ const GstApplications = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const tableContainerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "30px",
-  };
-
-  const tableStyle = {
-    fontSize: "0.875rem",
-    width: "80%",
-    borderCollapse: "collapse",
-  };
-
-  const thStyles = {
-    border: "1px solid #ddd",
-    padding: "10px",
-    backgroundColor: "#f2f2f2",
-    textAlign: "center",
-  };
-
-  const tdStyles = {
-    border: "1px solid #ddd",
-    padding: "8px",
-    textAlign: "center",
-  };
-
   return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">GST APPLICATIONS</h2>
-      <div className="mb-4 text-center">
+    <div className="containergst mt-5">
+      <h2 className="gstheader">GST APPLICATIONS</h2>
+      <br />
+      <div className="dategst mb-4 text-center">
         <div className="mb-2">
           <label htmlFor="startDate" className="form-label">
-            Start Date
+            <strong>Start Date: </strong>
           </label>
           <input
             type="date"
             id="startDate"
-            className="form-control"
+            className="form-control-gst"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
           />
         </div>
         <div className="mb-2">
           <label htmlFor="endDate" className="form-label">
-            End Date
+          <strong>End Date: </strong>
           </label>
           <input
             type="date"
             id="endDate"
-            className="form-control"
+            className="form-control-gst"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
           />
         </div>
       </div>
-      <div style={tableContainerStyle}>
+      <div className="tablegst-containergst">
+      <div class="tablegst-scrollable">
         {filteredReimbursements.length > 0 ? (
-          <table className="table table-bordered" style={tableStyle}>
+          <table className="tablegst tablegst-bordered">
             <thead>
               <tr>
-                {/* <th style={thStyles}>UID</th> */}
-                <th style={thStyles}>Employee Name</th>
-                <th style={thStyles}>Expense Type</th>
-                <th style={thStyles}>Start Date</th>
-                <th style={thStyles}>End Date</th>
-                <th style={thStyles}>Total Expense</th>
-                {/* <th style={thStyles}>Status</th> */}
-                <th style={thStyles}>Proofs</th>
+                {/* <th>UID</th> */}
+                <th>Employee Name</th>
+                <th>Expense Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Total Expense</th>
+                {/* <th>Status</th> */}
+                <th>Proofs</th>
               </tr>
             </thead>
             <tbody>
               {filteredReimbursements.map((reimbursement) => (
                 <tr key={reimbursement._id}>
-                  {/* <td style={tdStyles}>{reimbursement.uid}</td> */}
-                  <td style={tdStyles}>{reimbursement.employeeName}</td>
-                  <td style={tdStyles}>{reimbursement.expenseType}</td>
-                  <td style={tdStyles}>
-                    {new Date(reimbursement.startDate).toLocaleDateString()}
-                  </td>
-                  <td style={tdStyles}>
-                    {new Date(reimbursement.endDate).toLocaleDateString()}
-                  </td>
-                  <td style={tdStyles}>{reimbursement.totalExpense}</td>
-                  {/* <td style={tdStyles}>{reimbursement.status}</td> */}
-                  <td style={tdStyles}>
+                  {/* <td>{reimbursement.uid}</td> */}
+                  <td>{reimbursement.employeeName}</td>
+                  <td>{reimbursement.expenseType}</td>
+                  <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
+                  <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
+                  <td>{reimbursement.totalExpense}</td>
+                  {/* <td>{reimbursement.status}</td> */}
+                  <td>
                     {reimbursement.proofs.map((proof, index) => (
                       <a
                         key={index}
@@ -135,17 +109,20 @@ const GstApplications = () => {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        Proof {index + 1}<br />
+                        Proof {index + 1}
+                        <br />
                       </a>
                     ))}
-                    </td>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
         ) : (
           <div>No approved GST applications found for the selected period.</div>
         )}
+        </div>
       </div>
     </div>
   );

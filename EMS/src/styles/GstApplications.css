@@ -1,0 +1,86 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.containergst {
+    width: 70%;
+    max-width: 1200px;
+    margin: 50px auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.gstheader {
+    background: linear-gradient(90deg, #000000, #ff7f00);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-control-gst {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.dategst {
+    padding: 10px;
+}
+
+/* tablegst containergst */
+.tablegst-containergst {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.tablegst-scrollable {
+    width: 80%;
+    overflow-x: auto; /* Allow horizontal scrolling */
+}
+
+.tablegst {
+    font-size: 0.875rem;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tablegst th, .tablegst td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.tablegst th {
+    background-color: #ff7f00;
+    color: white;
+}
+
+.tablegst td a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.tablegst td a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-control-gst {
+        max-width: none;
+        width: 100%;
+    }
+
+    .tablegst-scrollable {
+        width: 100%;
+    }
+}

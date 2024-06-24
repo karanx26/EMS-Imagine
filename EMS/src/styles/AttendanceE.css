@@ -93,11 +93,18 @@ body {
     border-radius: 8px;
     background-color: #f9f9f9;
   }
-  
+
+  .attendance-table-container {
+    width: 100%;
+    overflow-x: auto; /* Make table scrollable horizontally */
+    margin-top: 20px;
+}
+
   .attendance-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    min-width: 600px;
   }
   
   .attendance-table th, .attendance-table td {
@@ -127,6 +134,15 @@ body {
     .form-group label {
       font-size: 1em;
     }
+
+    .date-containerate {
+      flex-direction: column;
+      align-items: center; /* Align items to the start of the container */
+  }
+
+  .select-style {
+      margin: 0.5rem 0; /* Add some margin for spacing between elements */
+  }
   }
   
   @media (max-width: 576px) {
@@ -138,4 +154,16 @@ body {
       font-size: 0.9em;
     }
   }
+  .attendance-table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.attendance-table-container::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 4px;
+}
+
+.attendance-table-container::-webkit-scrollbar-track {
+    background-color: #f0f4f8;
+}
   

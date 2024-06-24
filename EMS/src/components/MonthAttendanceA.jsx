@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import '../styles/AttendanceA.css';
 
 const MonthAttendanceA = () => {
   const navigate = useNavigate();
@@ -63,65 +64,6 @@ const MonthAttendanceA = () => {
     setSelectedEmployeeId(e.target.value);
   };
 
-  const tableStyles = {
-    width: '70%',
-    borderCollapse: 'collapse',
-    marginTop: '20px'
-  };
-
-  const thStyles = {
-    border: '1px solid #ddd',
-    padding: '10px',
-    backgroundColor: '#f2f2f2',
-    textAlign: 'center'
-  };
-
-  const tdStyles = {
-    border: '1px solid #ddd',
-    padding: '8px',
-    textAlign: 'center'
-  };
-
-  const selectStyles = {
-    padding: '0.5rem',
-    margin: '0 0.5rem',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    fontSize: '1rem',
-    backgroundColor: 'white'
-  };
-
-  const dateContainerStyles = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: '1rem',
-    border: '1px solid #ccc',
-    padding: '1rem',
-    borderRadius: '8px',
-    backgroundColor: '#f9f9f9',
-  };
-
-  const cardStyles = {
-    flex: '1',
-    paddingTop: '12px',
-    margin: '0 5px',
-    marginBottom: '12px',
-    borderRadius: '8px',
-    border: '1px solid #ccc',
-    textAlign: 'center',
-    backgroundColor: '#f9f9f9',
-  };
-
-  const cardContainerStyles = {
-    display: 'flex',
-    justifyContent: 'space-around',
-    marginTop: '10px',
-    width: '60%',
-    maxWidth: '600px',
-    flexWrap: 'wrap'
-  };
-
   const calculateTotals = (attendanceData) => {
     let totals = { present: 0, absent: 0, leave: 0 };
 
@@ -137,22 +79,21 @@ const MonthAttendanceA = () => {
   const totals = calculateTotals(attendanceData);
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px',
-      margin: '20px',
-    }}>
-      <h2>MONTHLY ATTENDANCE</h2><br />
-      <div style={dateContainerStyles}>
+    <div className="containerata">
+    <br />
+    <div className="cardata">
+        <div className="cardata-header">
+      <h2>MONTHLY ATTENDANCE</h2>
+      </div>
+      <br />
+      <div className="cardata-body">
+      <div className="date-containerata">
         <label htmlFor="year">Year:</label>
         <select
           id="year"
           value={selectedYear}
           onChange={handleYearChange}
-          style={selectStyles}
+          className="select-style"
         >
           {years.map(year => (
             <option key={year} value={year}>{year}</option>
@@ -163,7 +104,7 @@ const MonthAttendanceA = () => {
           id="month"
           value={selectedMonth}
           onChange={handleMonthChange}
-          style={selectStyles}
+          className="select-style"
         >
           {monthNames.map((month, index) => (
             <option key={index} value={index + 1}>{month}</option>
@@ -174,53 +115,57 @@ const MonthAttendanceA = () => {
           id="employee"
           value={selectedEmployeeId}
           onChange={handleEmployeeChange}
-          style={selectStyles}
+          className="select-style"
         >
           {employees.map(employee => (
             <option key={employee.uid} value={employee.uid}>{employee.name}</option>
           ))}
         </select>
       </div>
-      <div style={cardContainerStyles}>
-        <div style={cardStyles}>
+      <div className="cardata-containerata">
+        <div className="cardata-style">
           <h5>Present</h5>
           <p>{totals.present}</p>
         </div>
-        <div style={cardStyles}>
+        <div className="cardata-style">
           <h5>Absent</h5>
           <p>{totals.absent}</p>
         </div>
-        <div style={cardStyles}>
+        <div className="cardata-style">
           <h5>Leave</h5>
           <p>{totals.leave}</p>
         </div>
       </div>
       {attendanceData.length > 0 ? (
-        <table style={tableStyles}>
-          <thead>
-            <tr>
-              <th style={thStyles}>Date</th>
-              <th style={thStyles}>Day</th>
-              <th style={thStyles}>Present</th>
-              <th style={thStyles}>Absent</th>
-              <th style={thStyles}>Leave</th>
-            </tr>
-          </thead>
-          <tbody>
-            {attendanceData.map(record => (
-              <tr key={record.date}>
-                <td style={tdStyles}>{record.date}</td>
-                <td style={tdStyles}>{record.day}</td>
-                <td style={tdStyles}>{record.status.present ? 'Yes' : '-'}</td>
-                <td style={tdStyles}>{record.status.absent ? 'Yes' : '-'}</td>
-                <td style={tdStyles}>{record.status.leave ? 'Yes' : '-'}</td>
+        <div className="attendance-table-container">
+          <table className="attendance-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Day</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Leave</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {attendanceData.map(record => (
+                <tr key={record.date}>
+                  <td>{record.date}</td>
+                  <td>{record.day}</td>
+                  <td>{record.status.present ? 'Yes' : '-'}</td>
+                  <td>{record.status.absent ? 'Yes' : '-'}</td>
+                  <td>{record.status.leave ? 'Yes' : '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <p>No attendance records for the selected month.</p>
       )}
+      </div>
+    </div>
     </div>
   );
 };

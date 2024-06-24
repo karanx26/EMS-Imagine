@@ -1,0 +1,200 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eef2f7;
+    margin: 0;
+    padding: 0;
+}
+
+.containerata {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.cardata {
+    background-color: #ffffff;
+    border: 1px solid #d1d8e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.cardata-header {
+    background: linear-gradient(90deg, #000000, #ff7f00);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.cardata-body {
+    padding: 20px;
+}
+
+.date-containerata {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f0f4f8;
+}
+
+.select-style {
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.cardata-containerata {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.cardata-style {
+    flex: 1;
+    padding: 12px;
+    margin: 0 5px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.attendance-table-container {
+    width: 100%;
+    overflow-x: auto; /* Make table scrollable horizontally */
+    margin-top: 20px;
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Ensure minimum width for better readability */
+}
+
+.attendance-table th, .attendance-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.attendance-table th {
+    background-color: #ff7f00; /* Light blue color */
+    color: white;
+    font-size: 1rem;
+}
+
+.attendance-table td {
+    background-color: #ffffff;
+}
+
+.radio-style {
+    cursor: pointer;
+}
+
+.buttonata {
+    margin-top: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.submit-buttonata {
+    background-color: black;
+    color: white;
+}
+
+.submit-buttonata:hover {
+    background-color: #ff7f00;
+}
+
+.update-buttonata {
+    background-color: #ff7f00;
+    color: white;
+}
+
+.update-buttonata:hover {
+    background-color: black;
+}
+
+.view-buttonata {
+    background-color: black;
+    color: white;
+}
+
+.view-buttonata:hover {
+    background-color: #ff7f00;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .containerata {
+        padding: 10px;
+    }
+
+    .cardata-body {
+        padding: 15px;
+    }
+
+    .form-group label {
+        font-size: 1em;
+    }
+
+    .cardata-containerata {
+        flex-direction: column;
+    }
+
+    .cardata-style {
+        margin: 5px 0;
+    }
+    
+    .date-containerata {
+        flex-direction: column;
+        align-items: center; /* Align items to the start of the container */
+    }
+
+    .select-style {
+        margin: 0.5rem 0; /* Add some margin for spacing between elements */
+    }
+}
+
+@media (max-width: 576px) {
+    .cardata-header h2 {
+        font-size: 1.5em;
+    }
+
+    .form-group label {
+        font-size: 0.9em;
+    }
+
+    .cardata-body {
+        padding: 10px;
+    }
+}
+
+/* Additional styling for horizontal scrolling on small screens */
+.attendance-table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.attendance-table-container::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 4px;
+}
+
+.attendance-table-container::-webkit-scrollbar-track {
+    background-color: #f0f4f8;
+}

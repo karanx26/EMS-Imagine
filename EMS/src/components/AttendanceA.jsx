@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import '../styles/AttendanceA.css'; // Import the CSS file
 
 const AttendanceA = () => {
   const navigate = useNavigate();
@@ -54,7 +55,6 @@ const AttendanceA = () => {
     };
 
     if (isUpdate) {
-      // Update existing attendance
       try {
         setLoading(true);
         await axios.put(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/${selectedDate}`, attendanceData);
@@ -66,7 +66,6 @@ const AttendanceA = () => {
         setLoading(false);
       }
     } else {
-      // Check if attendance already exists for the selected date
       try {
         setLoading(true);
         const res = await axios.get(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/${selectedDate}`);
@@ -81,7 +80,6 @@ const AttendanceA = () => {
         return;
       }
 
-      // Submit new attendance
       axios.post("http://localhost:8001/attendance", attendanceData)
         .then(response => {
           console.log(response.data);
@@ -98,7 +96,6 @@ const AttendanceA = () => {
   };
 
   const handleUpdate = async () => {
-    // Fetch existing attendance for the selected date
     try {
       setLoading(true);
       const res = await axios.get(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/${selectedDate}`);
@@ -117,7 +114,7 @@ const AttendanceA = () => {
     }
   };
 
-  const years = Array.from(new Array(20), (_, index) => new Date().getFullYear() - 10 + index); // 10 years back and 10 years ahead
+  const years = Array.from(new Array(20), (_, index) => new Date().getFullYear() - 10 + index);
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -140,230 +137,146 @@ const AttendanceA = () => {
 
   const summary = calculateSummary();
 
-  const tableStyles = {
-    width: '100%',
-    borderCollapse: 'collapse',
-    marginTop: '20px'
-  };
-
-  const thStyles = {
-    border: '1px solid #ddd',
-    padding: '10px',
-    backgroundColor: '#f2f2f2',
-    textAlign: 'center'
-  };
-
-  const tdStyles = {
-    border: '1px solid #ddd',
-    padding: '8px',
-    textAlign: 'center'
-  };
-
-  const radioStyles = {
-    cursor: 'pointer'
-  };
-
-  const selectStyles = {
-    padding: '0.5rem',
-    margin: '0 0.5rem',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    fontSize: '1rem',
-    backgroundColor: 'white'
-  };
-
-  const dateContainerStyles = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: '1rem',
-    border: '1px solid #ccc',
-    padding: '1rem',
-    borderRadius: '8px',
-    backgroundColor: '#f9f9f9',
-  };
-
-  const summaryCardStyles = {
-    flex: '1',
-    paddingTop: '12px',
-    margin: '0 5px',
-    marginBottom: '20px',
-    borderRadius: '8px',
-    border: '1px solid #ccc',
-    textAlign: 'center',
-    backgroundColor: '#f9f9f9',
-  };
-
-  const summaryContainerStyles = {
-    display: 'flex',
-    justifyContent: 'space-around',
-    marginTop: '20px',
-    width: '60%',
-    maxWidth: '600px',
-    flexWrap: 'wrap'
-  };
-
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px',
-      margin: '20px',
-    }}>
-      <h2>ATTENDANCE</h2>
-      <div style={summaryContainerStyles}>
-        <div style={summaryCardStyles}>
-          <h6>Total Present</h6>
-          <p>{summary.present}</p>
+    <div className="containerata">
+      <br />
+      <div className="cardata">
+        <div className="cardata-header">
+          <h2>ATTENDANCE</h2>
         </div>
-        <div style={summaryCardStyles}>
-          <h6>Total Absent</h6>
-          <p>{summary.absent}</p>
-        </div>
-        <div style={summaryCardStyles}>
-          <h6>Total On Leave</h6>
-          <p>{summary.onLeave}</p>
+        <div className="cardata-body">
+          <div className="cardata-containerata">
+            <div className="cardata-style">
+              <h6>Total Present</h6>
+              <p>{summary.present}</p>
+            </div>
+            <div className="cardata-style">
+              <h6>Total Absent</h6>
+              <p>{summary.absent}</p>
+            </div>
+            <div className="cardata-style">
+              <h6>Total On Leave</h6>
+              <p>{summary.onLeave}</p>
+            </div>
+          </div>
+          <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
+            <div className="date-containerata">
+              <label htmlFor="year">Year:</label>
+              <select
+                id="year"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className="select-style"
+              >
+                {years.map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+              <label htmlFor="month">Month:</label>
+              <select
+                id="month"
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(e.target.value)}
+                className="select-style"
+              >
+                {monthNames.map((month, index) => (
+                  <option key={index} value={index + 1}>{month}</option>
+                ))}
+              </select>
+              <label htmlFor="date">Date:</label>
+              <select
+                id="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="select-style"
+              >
+                {days.map(date => (
+                  <option key={date} value={date}>{date}</option>
+                ))}
+              </select>
+              <label>Day: </label>
+              <span className="select-style">{selectedDay}</span>
+            </div>
+            <div className="attendance-table-container">
+            <table className="attendance-table">
+              <thead>
+                <tr>
+                  <th>UID</th>
+                  <th>Name</th>
+                  <th>Present</th>
+                  <th>Absent</th>
+                  <th>Leave</th>
+                </tr>
+              </thead>
+              <tbody>
+                {employees.map(employee => (
+                  <tr key={employee.uid}>
+                    <td>{employee.uid}</td>
+                    <td>{employee.name}</td>
+                    <td>
+                      <input
+                        type="radio"
+                        name={`attendance-${employee.uid}`}
+                        value="present"
+                        checked={attendance[employee.uid]?.present || false}
+                        onChange={(e) => handleAttendanceChange(employee.uid, e)}
+                        className="radio-style"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="radio"
+                        name={`attendance-${employee.uid}`}
+                        value="absent"
+                        checked={attendance[employee.uid]?.absent || false}
+                        onChange={(e) => handleAttendanceChange(employee.uid, e)}
+                        className="radio-style"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="radio"
+                        name={`attendance-${employee.uid}`}
+                        value="leave"
+                        checked={attendance[employee.uid]?.leave || false}
+                        onChange={(e) => handleAttendanceChange(employee.uid, e)}
+                        className="radio-style"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            </div>
+            <br />
+            <button
+              type="submit"
+              className={`buttonata submit-buttonata ${loading ? 'disabled' : ''}`}
+              disabled={loading}
+            >
+              {loading ? 'Submitting...' : isUpdate ? 'Update' : 'Submit'}
+            </button><br />
+            {!isUpdate && (
+              <button
+                type="button"
+                onClick={handleUpdate}
+                className="buttonata update-buttonata"
+                disabled={loading}
+              >
+                Load for Update
+              </button>
+            )}
+            <br />
+            <button
+              type="button"
+              onClick={() => navigate("/homea/monthlyattendancea")}
+              className="buttonata view-buttonata"
+            >
+              View Monthly Attendance
+            </button>
+          </form>
         </div>
       </div>
-      <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
-        <div style={dateContainerStyles}>
-          <label htmlFor="year">Year:</label>
-          <select
-            id="year"
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            style={selectStyles}
-          >
-            {years.map(year => (
-              <option key={year} value={year}>{year}</option>
-            ))}
-          </select>
-          <label htmlFor="month">Month:</label>
-          <select
-            id="month"
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(e.target.value)}
-            style={selectStyles}
-          >
-            {monthNames.map((month, index) => (
-              <option key={index} value={index + 1}>{month}</option>
-            ))}
-          </select>
-          <label htmlFor="date">Date:</label>
-          <select
-            id="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            style={selectStyles}
-          >
-            {days.map(date => (
-              <option key={date} value={date}>{date}</option>
-            ))}
-          </select>
-          <label>Day: </label>
-          <span style={selectStyles}>{selectedDay}</span>
-        </div>
-        <table style={tableStyles}>
-          <thead>
-            <tr>
-              <th style={thStyles}>UID</th>
-              <th style={thStyles}>Name</th>
-              <th style={thStyles}>Present</th>
-              <th style={thStyles}>Absent</th>
-              <th style={thStyles}>Leave</th>
-            </tr>
-          </thead>
-          <tbody>
-            {employees.map(employee => (
-              <tr key={employee.uid}>
-                <td style={tdStyles}>{employee.uid}</td>
-                <td style={tdStyles}>{employee.name}</td>
-                <td style={tdStyles}>
-                  <input
-                    type="radio"
-                    name={`attendance-${employee.uid}`}
-                    value="present"
-                    checked={attendance[employee.uid]?.present || false}
-                    onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={radioStyles}
-                  />
-                </td>
-                <td style={tdStyles}>
-                  <input
-                    type="radio"
-                    name={`attendance-${employee.uid}`}
-                    value="absent"
-                    checked={attendance[employee.uid]?.absent || false}
-                    onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={radioStyles}
-                  />
-                </td>
-                <td style={tdStyles}>
-                  <input
-                    type="radio"
-                    name={`attendance-${employee.uid}`}
-                    value="leave"
-                    checked={attendance[employee.uid]?.leave || false}
-                    onChange={(e) => handleAttendanceChange(employee.uid, e)}
-                    style={radioStyles}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button
-          type="submit"
-          style={{
-            marginTop: '30px',
-            padding: '5px 10px',
-            backgroundColor: loading ? '#ddd' : '#4CAF50',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-          disabled={loading}
-        >
-          {loading ? 'Submitting...' : isUpdate ? 'Update' : 'Submit'}
-        </button><br />
-        {!isUpdate && (
-          <button
-            type="button"
-            onClick={handleUpdate}
-            style={{
-              marginTop: '30px',
-              padding: '5px 10px',
-              backgroundColor: '#f39c12',
-              color: 'white',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-            disabled={loading}
-          >
-            Load for Update
-          </button>
-        )}
-        <br />
-
-        <button
-          type="button"
-          onClick={
-            () => navigate("/homea/monthlyattendancea")
-          }
-          style={{
-            marginTop: '30px',
-            padding: '5px 10px',
-            backgroundColor: '#337ab7',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',            
-          }}
-        >
-          View Monthly Attendance
-        </button>
-      </form>
     </div>
   );
 };

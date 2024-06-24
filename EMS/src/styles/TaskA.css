@@ -1,0 +1,160 @@
+/* General containerta Styling */
+.containerta {
+    width: 60%; /* Reduced width */
+    margin: 50px auto;
+    
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+
+  .header-containerta{
+    background: linear-gradient(90deg, #000000, #ff7f00);
+    color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-containerta{
+    padding: 20px;
+  }
+  
+  /* Heading Styling */
+  .text-center {
+    text-align: center;
+    /* margin-bottom: 20px; */
+  }
+  
+  
+  /* Form groupta Styling */
+  .form-groupta {
+    margin-bottom: 20px;
+  }
+  
+  /* Form controlta Styling */
+  .form-controlta {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+  }
+  
+  /* Button containerta Styling */
+  .button-containerta {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Align items vertically center */
+  
+  }
+  
+  
+  /* Button Styling */
+  .btnta {
+    
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    justify-content: center;
+    color: white;
+    font-size: 0.9em; /* Smaller font size */
+    max-width: 200px; /* Limit the width of the containerta */
+  }
+  
+  .btnta-primary {
+    background-color: #ff7f00;
+    margin-top: 20px;
+    padding: 5px 15px; /* Reduced padding */
+  }
+  
+  .btnta-primary:hover {
+    background-color: black;
+  }
+  
+  .btnta-warning {
+    background-color: black;
+    margin-top: 20px;
+    padding: 5px 15px; /* Reduced padding */
+  }
+  
+  .btnta-warning:hover {
+    background-color: #ff7f00;
+  }
+  
+  .btnta-success {
+    background-color: #ff7f00;
+    margin-top: 20px;
+    padding: 5px 15px; /* Reduced padding */
+  }
+  
+  .btnta-success:hover {
+    background-color: black;
+  }
+  
+  .btnta-danger {
+    background-color: #dc3545;
+    padding: 2px 8px; /* Reduced padding */
+  }
+  
+  .btnta-danger:hover {
+    background-color: #a71d2a;
+  }
+  
+  /* Tasks containerta Styling */
+  .tasks-containerta {
+    width: 60%; /* Reduced width */
+    margin: 50px auto;
+  }
+  
+  /* Tasks Header Styling */
+  .tasks-header {
+    background: linear-gradient(90deg, #000000, #ff7f00);
+    color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* tableta Styling */
+  .tableta-responsive {
+    overflow-x: auto;
+  }
+  
+  .tableta {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .tableta th, .tableta td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .tableta th {
+    background-color: #f9f9f9;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .containerta, .tasks-containerta {
+      width: 90%;
+    }
+  
+    .button-containerta {
+      flex-direction: column;
+    }
+  
+    .btnta {
+      width: 100%;
+    }
+  }
+  

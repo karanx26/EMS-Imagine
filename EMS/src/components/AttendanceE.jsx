@@ -105,6 +105,7 @@ const AttendanceE = () => {
                 </div>
               </div>
               {attendanceData.length > 0 ? (
+                <div className="attendance-table-container">
                 <table className="attendance-table">
                   <thead>
                     <tr>
@@ -127,6 +128,7 @@ const AttendanceE = () => {
                     ))}
                   </tbody>
                 </table>
+                </div>
               ) : (
                 <p className="text-center"><br />No attendance records found for the selected month.</p>
               )}

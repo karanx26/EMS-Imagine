@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link, useNavigate } from "react-router-dom";
+import "../styles/ReimbursementA.css"; // Import the CSS file
 
 const ReimbursementA = () => {
   const [reimbursements, setReimbursements] = useState([]);
@@ -108,346 +107,332 @@ const ReimbursementA = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const tableContainerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "30px",
-  };
-
-  const tableStyle = {
-    fontSize: "0.875rem",
-    width: "80%",
-    borderCollapse: "collapse",
-  };
-
-  const thStyles = {
-    border: "1px solid #ddd",
-    padding: "10px",
-    backgroundColor: "#f2f2f2",
-    textAlign: "center",
-  };
-
-  const tdStyles = {
-    border: "1px solid #ddd",
-    padding: "8px",
-    textAlign: "center",
-  };
-
   // Calculate total expense
   const totalExpense = filteredReimbursements.reduce((total, reimbursement) => {
     return total + reimbursement.totalExpense;
   }, 0);
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">REIMBURSEMENT APPLICATIONS</h2>
-      <div className="mb-4 text-center">
-        <div className="dropdown mb-2">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownTimeButton"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Filter by Time Period: {timeFilter}
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownTimeButton">
-            <li>
-              <button
-                className={`dropdown-item ${timeFilter === "All" && "active"}`}
-                onClick={() => setTimeFilter("All")}
-              >
-                All
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${timeFilter === "Last Week" && "active"}`}
-                onClick={() => setTimeFilter("Last Week")}
-              >
-                Last Week
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${timeFilter === "Last Month" && "active"}`}
-                onClick={() => setTimeFilter("Last Month")}
-              >
-                Last Month
-              </button>
-            </li>
-          </ul>
+    <>
+      <div className="containerrba mt-5">
+        <div className="header-containerrba">
+          <h2>REIMBURSEMENT APPLICATIONS</h2>
         </div>
-        <div className="dropdown mb-2">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownStatusButton"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Filter by Status: {statusFilter}
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownStatusButton">
-            <li>
-              <button
-                className={`dropdown-item ${statusFilter === "Approved" && "active"}`}
-                onClick={() => setStatusFilter("Approved")}
-              >
-                Approved
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${statusFilter === "Rejected" && "active"}`}
-                onClick={() => setStatusFilter("Rejected")}
-              >
-                Rejected
-              </button>
-            </li>
-            {adminId === "A001" && (
-              <>
-                <li>
+        <div className="form-containerrba text-center">
+          <div className="filtersrba mb-4">
+            <div className="row g-3">
+              <div className="col-md-4 col-sm-6">
+                <div className="dropdown mb-2">
                   <button
-                    className={`dropdown-item ${statusFilter === "Pending" && "active"}`}
-                    onClick={() => setStatusFilter("Pending")}
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownTimeButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                    Pending
+                    Filter by Time Period: {timeFilter}
                   </button>
-                </li>
-                <li>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownTimeButton">
+                    <li>
+                      <button
+                        className={`dropdown-item ${timeFilter === "All" && "active"}`}
+                        onClick={() => setTimeFilter("All")}
+                      >
+                        All
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${timeFilter === "Last Week" && "active"}`}
+                        onClick={() => setTimeFilter("Last Week")}
+                      >
+                        Last Week
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${timeFilter === "Last Month" && "active"}`}
+                        onClick={() => setTimeFilter("Last Month")}
+                      >
+                        Last Month
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="col-md-4 col-sm-6">
+                <div className="dropdown mb-2">
                   <button
-                    className={`dropdown-item ${statusFilter === "On Hold by Admin 1" && "active"}`}
-                    onClick={() => setStatusFilter("On Hold by Admin 1")}
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownStatusButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                    On Hold by Admin 1
+                    Filter by Status: {statusFilter}
                   </button>
-                </li>
-              </>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownStatusButton">
+                    <li>
+                      <button
+                        className={`dropdown-item ${statusFilter === "Approved" && "active"}`}
+                        onClick={() => setStatusFilter("Approved")}
+                      >
+                        Approved
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${statusFilter === "Rejected" && "active"}`}
+                        onClick={() => setStatusFilter("Rejected")}
+                      >
+                        Rejected
+                      </button>
+                    </li>
+                    {adminId === "A001" && (
+                      <>
+                        <li>
+                          <button
+                            className={`dropdown-item ${statusFilter === "Pending" && "active"}`}
+                            onClick={() => setStatusFilter("Pending")}
+                          >
+                            Pending
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className={`dropdown-item ${statusFilter === "On Hold by Admin 1" && "active"}`}
+                            onClick={() => setStatusFilter("On Hold by Admin 1")}
+                          >
+                            On Hold by Admin 1
+                          </button>
+                        </li>
+                      </>
+                    )}
+                    {adminId === "A002" && (
+                      <>
+                        <li>
+                          <button
+                            className={`dropdown-item ${statusFilter === "Second Level Pending" && "active"}`}
+                            onClick={() => setStatusFilter("Second Level Pending")}
+                          >
+                            Second Level Pending
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className={`dropdown-item ${statusFilter === "On Hold by Admin 2" && "active"}`}
+                            onClick={() => setStatusFilter("On Hold by Admin 2")}
+                          >
+                            On Hold by Admin 2
+                          </button>
+                        </li>
+                      </>
+                    )}
+                    {adminId === "A003" && (
+                      <>
+                        <li>
+                          <button
+                            className={`dropdown-item ${statusFilter === "Third Level Pending" && "active"}`}
+                            onClick={() => setStatusFilter("Third Level Pending")}
+                          >
+                            Third Level Pending
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className={`dropdown-item ${statusFilter === "On Hold by Admin 3" && "active"}`}
+                            onClick={() => setStatusFilter("On Hold by Admin 3")}
+                          >
+                            On Hold by Admin 3
+                          </button>
+                        </li>
+                      </>
+                    )}
+                    <li>
+                      <button
+                        className={`dropdown-item ${statusFilter === "All" && "active"}`}
+                        onClick={() => setStatusFilter("All")}
+                      >
+                        All
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="col-md-4 col-sm-6">
+                <div className="dropdown mb-2">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownExpenseTypeButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Filter by Expense Type: {expenseTypeFilter || "All"}
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownExpenseTypeButton">
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("")}
+                      >
+                        All
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "fuel" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("fuel")}
+                      >
+                        Fuel
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "raw-material" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("raw-material")}
+                      >
+                        Raw Material
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "food" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("food")}
+                      >
+                        Food
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "accomodation" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("accomodation")}
+                      >
+                        Accomodation
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "no-bill-claim" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("no-bill-claim")}
+                      >
+                        No Bill Claim
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "stamp-paper" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("stamp-paper")}
+                      >
+                        Stamp Paper
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "travelling-transportation" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("travelling-transportation")}
+                      >
+                        Travelling/Transportation
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "advance-payment" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("advance-payment")}
+                      >
+                        Advance Payment
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`dropdown-item ${expenseTypeFilter === "other" && "active"}`}
+                        onClick={() => setExpenseTypeFilter("other")}
+                      >
+                        Other
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="col-12 text-center">
+                <div className="mb-2">
+                  <label htmlFor="employeeFilter" className="form-label">
+                    Filter by Employee:
+                  </label>
+                  <select
+                    id="employeeFilter"
+                    className="form-select-rba"
+                    value={employeeFilter}
+                    onChange={(e) => setEmployeeFilter(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    {reimbursements
+                      .map((reimbursement) => reimbursement.employeeName)
+                      .filter((value, index, self) => self.indexOf(value) === index)
+                      .map((employeeName) => (
+                        <option key={employeeName} value={employeeName}>
+                          {employeeName}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="tablerba-containerrba">
+            {filteredReimbursements.length > 0 ? (
+              <table className="tablerba">
+                <thead>
+                  <tr>
+                    <th>UID</th>
+                    <th>Employee Name</th>
+                    <th>Expense Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Total Expense</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredReimbursements.map((reimbursement) => (
+                    <tr key={reimbursement._id}>
+                      <td>{reimbursement.uid}</td>
+                      <td>{reimbursement.employeeName}</td>
+                      <td>{reimbursement.expenseType}</td>
+                      <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
+                      <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
+                      <td>{reimbursement.totalExpense}</td>
+                      <td>{reimbursement.status}</td>
+                      <td>
+                        <Link
+                          to={`/homea/checkreimb/${reimbursement._id}`}
+                          className="btn btn-black btn-sm"
+                        >
+                          View
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div>No reimbursement applications found.</div>
             )}
-            {adminId === "A002" && (
-              <>
-                <li>
-                  <button
-                    className={`dropdown-item ${statusFilter === "Second Level Pending" && "active"}`}
-                    onClick={() => setStatusFilter("Second Level Pending")}
-                  >
-                    Second Level Pending
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className={`dropdown-item ${statusFilter === "On Hold by Admin 2" && "active"}`}
-                    onClick={() => setStatusFilter("On Hold by Admin 2")}
-                  >
-                    On Hold by Admin 2
-                  </button>
-                </li>
-              </>
-            )}
-            {adminId === "A003" && (
-              <>
-                <li>
-                  <button
-                    className={`dropdown-item ${statusFilter === "Third Level Pending" && "active"}`}
-                    onClick={() => setStatusFilter("Third Level Pending")}
-                  >
-                    Third Level Pending
-                  </button>
-                </li>
-                <li>
-                  <button
-                    className={`dropdown-item ${statusFilter === "On Hold by Admin 3" && "active"}`}
-                    onClick={() => setStatusFilter("On Hold by Admin 3")}
-                  >
-                    On Hold by Admin 3
-                  </button>
-                </li>
-              </>
-            )}
-            <li>
-              <button
-                className={`dropdown-item ${statusFilter === "All" && "active"}`}
-                onClick={() => setStatusFilter("All")}
-              >
-                All
-              </button>
-            </li>
-          </ul>
+          </div>
+          {filteredReimbursements.length > 0 && (
+            <div className="text-center mt-4">
+              <h5>Total Expense: {totalExpense}</h5>
+            </div>
+          )}
         </div>
-        <div className="dropdown mb-2">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownExpenseTypeButton"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Filter by Expense Type: {expenseTypeFilter || "All"}
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownExpenseTypeButton">
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "" && "active"}`}
-                onClick={() => setExpenseTypeFilter("")}
-              >
-                All
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "fuel" && "active"}`}
-                onClick={() => setExpenseTypeFilter("fuel")}
-              >
-                Fuel
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "raw-material" && "active"}`}
-                onClick={() => setExpenseTypeFilter("raw-material")}
-              >
-                Raw Material
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "food" && "active"}`}
-                onClick={() => setExpenseTypeFilter("food")}
-              >
-                Food
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "accomodation" && "active"}`}
-                onClick={() => setExpenseTypeFilter("accomodation")}
-              >
-                Accomodation
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "no-bill-claim" && "active"}`}
-                onClick={() => setExpenseTypeFilter("no-bill-claim")}
-              >
-                No Bill Claim
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "stamp-paper" && "active"}`}
-                onClick={() => setExpenseTypeFilter("stamp-paper")}
-              >
-                Stamp Paper
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "travelling-transportation" && "active"}`}
-                onClick={() => setExpenseTypeFilter("travelling-transportation")}
-              >
-                Travelling/Transportation
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "advance-payment" && "active"}`}
-                onClick={() => setExpenseTypeFilter("advance-payment")}
-              >
-                Advance Payment
-              </button>
-            </li>
-            <li>
-              <button
-                className={`dropdown-item ${expenseTypeFilter === "other" && "active"}`}
-                onClick={() => setExpenseTypeFilter("other")}
-              >
-                Other
-              </button>
-            </li>
-          </ul>
-        </div>
-        <div className="mb-2">
-          <label htmlFor="employeeFilter" className="form-label">
-            Filter by Employee: {employeeFilter || "All"}
-          </label>
-          <select
-            id="employeeFilter"
-            className="form-select"
-            value={employeeFilter}
-            onChange={(e) => setEmployeeFilter(e.target.value)}
-          >
-            <option value="">All</option>
-            {reimbursements
-              .map((reimbursement) => reimbursement.employeeName)
-              .filter((value, index, self) => self.indexOf(value) === index)
-              .map((employeeName) => (
-                <option key={employeeName} value={employeeName}>
-                  {employeeName}
-                </option>
-              ))}
-          </select>
-        </div>
-        <button className="btn btn-link" onClick={clearFilters}>
-          Clear Filters
+      </div>
+      <div className="text-center">
+        <button className="btn btn-orange mt-1" onClick={() => navigate('/homea/gst-applications')}>
+          GST Applications
         </button>
       </div>
-      <div style={tableContainerStyle}>
-        {filteredReimbursements.length > 0 ? (
-          <table className="table table-bordered" style={tableStyle}>
-            <thead>
-              <tr>
-                <th style={thStyles}>UID</th>
-                <th style={thStyles}>Employee Name</th>
-                <th style={thStyles}>Expense Type</th>
-                <th style={thStyles}>Start Date</th>
-                <th style={thStyles}>End Date</th>
-                <th style={thStyles}>Total Expense</th>
-                <th style={thStyles}>Status</th>
-                <th style={thStyles}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredReimbursements.map((reimbursement) => (
-                <tr key={reimbursement._id}>
-                  <td style={tdStyles}>{reimbursement.uid}</td>
-                  <td style={tdStyles}>{reimbursement.employeeName}</td>
-                  <td style={tdStyles}>{reimbursement.expenseType}</td>
-                  <td style={tdStyles}>
-                    {new Date(reimbursement.startDate).toLocaleDateString()}
-                  </td>
-                  <td style={tdStyles}>
-                    {new Date(reimbursement.endDate).toLocaleDateString()}
-                  </td>
-                  <td style={tdStyles}>{reimbursement.totalExpense}</td>
-                  <td style={tdStyles}>{reimbursement.status}</td>
-                  <td style={tdStyles}>
-                    <Link
-                      to={`/homea/checkreimb/${reimbursement._id}`}
-                      className="btn btn-primary btn-sm"
-                    >
-                      View
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <div>No reimbursement applications found.</div>
-        )}
-      </div>
-      {filteredReimbursements.length > 0 && (
-        <div className="text-center mt-4">
-          <h5>Total Expense: {totalExpense}</h5>
-        </div>
-      )}
-      <button className="btn btn-primary mt-4" onClick={() => navigate('/homea/gst-applications')}>
-        GST Applications
-      </button>
-    </div>
+    </>
   );
 };
 

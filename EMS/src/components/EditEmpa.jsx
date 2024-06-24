@@ -128,8 +128,8 @@ function EditEmpa() {
                 </div>
                 <div className="form-group row">
                   <div className="d-flex justify-content-center">
-                    <button type="button" className="btn btn-primary mt-3" style={{ marginRight: '20px' }}  onClick={handleUpdate}>Update</button>
-                    <button type="button" className="btn btn-danger mt-3" style={{ marginRight: '20px' }} onClick={handleDelete}>Delete</button>
+                    <button type="button" className="btn btn-orange mt-3" style={{ marginRight: '20px' }}  onClick={handleUpdate}>Update</button>
+                    <button type="button" className="btn btn-black mt-3" style={{ marginRight: '20px' }} onClick={handleDelete}>Delete</button>
                   </div>
                 </div>
               </form>

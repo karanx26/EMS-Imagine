@@ -33,6 +33,7 @@ function ManageClientA() {
 
   return (
     <>
+      <br />
       <div id="manage-client-container">
         <div className="buttonmc-container">
           <Link to="/homea/addclienta" className="manage-buttonmc">
@@ -41,12 +42,15 @@ function ManageClientA() {
           </Link>
         </div>
         <br />
-
-        <h2 className="text-center">CLIENT LIST</h2>
-        <br />
-
         <div className="cardmce">
-          <div className="cardmce-body">
+          
+        <div className="cardmce-header">
+        <h2 >CLIENT LIST</h2>
+        </div>
+
+        <div className="cardmce-body">
+
+        
             <div className="form-group d-flex justify-content-center align-items-center">
               <label htmlFor="clientTypeFilter" className="mr-2">
                 Client Type:
@@ -63,9 +67,6 @@ function ManageClientA() {
                 <option value="Government">Government</option>
               </select>
             </div>
-          </div>
-        </div>
-        <br />
 
         <div className="tablemce-container">
           <table className="tablemce tablemce-bordered client-tablemce">
@@ -88,12 +89,14 @@ function ManageClientA() {
                   <td>{client.clientType}</td>
                   <td>{client.phone}</td>
                   <td>
-                        <Link to={`/homea/editclient/${client.uid}`} className="btn btn-orange btn-sm">View</Link>
+                        <Link to={`/homea/editclient/${client.uid}`} className="btn btn-black btn-sm">View</Link>
                       </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
+          </div>
         </div>
       </div>
     </>

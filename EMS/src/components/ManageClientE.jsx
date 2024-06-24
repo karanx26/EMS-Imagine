@@ -34,6 +34,7 @@ function ManageClientE() {
   return (
     <>
       <br />
+  
       <div id="manage-client-container">
         <div className="buttonmc-container">
           <Link to="/homee/addcliente" className="manage-buttonmc">
@@ -42,10 +43,12 @@ function ManageClientE() {
           </Link>
         </div>
         <br />
-        <h2 className="text-center">CLIENT LIST</h2>
-        <br />
-
         <div className="cardmce">
+        <div className="cardmce-header">
+        <h2 >CLIENT LIST</h2>
+        </div>
+
+        
           <div className="cardmce-body">
             <div className="form-group d-flex justify-content-center align-items-center">
               <label htmlFor="clientTypeFilter" className="mr-2">
@@ -63,9 +66,6 @@ function ManageClientE() {
                 <option value="Government">Government</option>
               </select>
             </div>
-          </div>
-        </div>
-        <br />
 
         <div className="tablemce-container">
           <table className="tablemce tablemce-bordered client-tablemce">
@@ -90,7 +90,7 @@ function ManageClientE() {
                   <td>
                     <Link
                       to={`/homee/editcliente/${client.uid}`}
-                      className="btn btn-orange btn-xs"
+                      className="btn btn-black btn-xs"
                     >
                       View
                     </Link>
@@ -99,6 +99,8 @@ function ManageClientE() {
               ))}
             </tbody>
           </table>
+          </div>
+        </div>
         </div>
       </div>
     </>
