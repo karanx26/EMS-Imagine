@@ -41,13 +41,16 @@ const TaskE = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="heading">TASKS</h2>
+    <div className="containertse">
+    <div className="headingtse">
+      <h2>TASKS</h2>
+      </div>
       {loading ? (
         <p>Loading tasks...</p>
       ) : error ? (
         <p>{error}</p>
       ) : tasks.length ? (
+        <div className="tabletse-responsive">
         <table className="task-table">
           <thead>
             <tr>
@@ -77,6 +80,7 @@ const TaskE = () => {
             ))}
           </tbody>
         </table>
+        </div>
       ) : (
         
         <p className="text-center"><br />No tasks assigned.</p>

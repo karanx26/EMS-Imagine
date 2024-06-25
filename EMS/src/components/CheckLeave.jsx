@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/CheckRL.css';
 
 const CheckLeave = () => {
   const { id } = useParams();
@@ -71,12 +72,12 @@ const CheckLeave = () => {
   }
 
   return (
-    <div className="container mt-5">
-      <div className="card">
-        <div className="card-header bg-orange text-white">
+    <div className="containercrl mt-5">
+      <div className="cardcrl">
+        <div className="cardcrl-header">
           <h2>APPLICATION DETAILS</h2>
         </div>
-        <div className="card-body">
+        <div className="cardcrl-body">
           <p><strong>Employee UID:</strong> {leave.uid}</p>
           <p><strong>Leave Type:</strong> {leave.leaveType}</p>
           <p><strong>Start Date:</strong> {new Date(leave.startDate).toLocaleDateString()}</p>
@@ -117,17 +118,18 @@ const CheckLeave = () => {
             </label>
           </div>
         </div>
-        <div>
+        <div className="cardcrl-footer">
+          <div className="button-groupcrl">
           {leave.status === 'Pending' && adminId === 'A001' && (
             <>
               <button
-                className="btn btn-sm btn-warning mb-2"
+                className="btn btn-warningcrl"
                 onClick={() => handleStatusChange(leave._id, 'Second Level Pending')}
               >
                 Send for Approval
               </button>
               <button
-                className="btn btn-sm btn-danger mb-2"
+                className="btn btn-dangercrl"
                 onClick={() => handleStatusChange(leave._id, 'Rejected')}
               >
                 Reject
@@ -137,13 +139,13 @@ const CheckLeave = () => {
           {leave.status === 'Second Level Pending' && adminId === 'A002' && (
             <>
               <button
-                className="btn btn-sm btn-success mb-2"
+                className="btn btn-successcr"
                 onClick={() => handleStatusChange(leave._id, 'Approved')}
               >
                 Approve
               </button>
               <button
-                className="btn btn-sm btn-danger mb-2"
+                className="btn btn-dangercrl"
                 onClick={() => handleStatusChange(leave._id, 'Rejected')}
               >
                 Reject
@@ -151,11 +153,12 @@ const CheckLeave = () => {
             </>
           )}
           <button
-            className="btn btn-sm btn-secondary"
+            className="btn btn-successcrl"
             onClick={() => handleDelete(leave._id)}
           >
             Delete
           </button>
+        </div>
         </div>
       </div>
     </div>
