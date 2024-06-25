@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/CheckUpdC.css"; // Reuse the same CSS file
+import "../styles/CheckUpdC.css"; 
 
 function CheckUpdC() {
   const [documents, setDocuments] = useState([]);
@@ -18,10 +18,12 @@ function CheckUpdC() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const res = await axios.get(`http://localhost:8001/clientDocuments/${userId}`);
+        const res = await axios.get(
+          `http://localhost:8001/clientDocuments/${userId}`
+        );
         setDocuments(res.data);
       } catch (err) {
-        console.error('Error fetching documents:', err);
+        console.error("Error fetching documents:", err);
       }
     };
     fetchDocuments();
@@ -42,7 +44,14 @@ function CheckUpdC() {
                 <ul className="list-group list-group-flush">
                   {documents.map((doc) => (
                     <li key={doc._id} className="list-group-item">
-                      <strong>{doc.documentName}</strong> - <a href={`http://localhost:8001/${doc.docs[0]}`} target="_blank" rel="noopener noreferrer">View</a>
+                      <strong>{doc.documentName}</strong> -{" "}
+                      <a
+                        href={`http://localhost:8001/${doc.docs[0]}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View
+                      </a>
                     </li>
                   ))}
                 </ul>

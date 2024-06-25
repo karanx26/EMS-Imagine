@@ -13,7 +13,7 @@ function ProfileE() {
     department: "",
     dob: "",
     joiningDate: "",
-    address: ""
+    address: "",
   });
 
   useEffect(() => {
@@ -51,21 +51,37 @@ function ProfileE() {
               <div className="cardpe-body">
                 <form>
                   <div className="form-group-pe mb-3">
-                    <label><b>Unique Id: </b> {employeeData.uid}</label>
+                    <label>
+                      <b>Unique Id: </b> {employeeData.uid}
+                    </label>
                     <br />
-                    <label><b>Name: </b> {employeeData.name}</label>
+                    <label>
+                      <b>Name: </b> {employeeData.name}
+                    </label>
                     <br />
-                    <label><b>Phone no: </b> {employeeData.phone}</label>
+                    <label>
+                      <b>Phone no: </b> {employeeData.phone}
+                    </label>
                     <br />
-                    <label><b>Email: </b> {employeeData.email}</label>
+                    <label>
+                      <b>Email: </b> {employeeData.email}
+                    </label>
                     <br />
-                    <label><b>Department: </b> {employeeData.department}</label>
+                    <label>
+                      <b>Department: </b> {employeeData.department}
+                    </label>
                     <br />
-                    <label><b>Date of Birth: </b> {employeeData.dob}</label>
+                    <label>
+                      <b>Date of Birth: </b> {employeeData.dob}
+                    </label>
                     <br />
-                    <label><b>Joining Date: </b> {employeeData.joiningDate}</label>
+                    <label>
+                      <b>Joining Date: </b> {employeeData.joiningDate}
+                    </label>
                     <br />
-                    <label><b>Address: </b> {employeeData.address}</label>
+                    <label>
+                      <b>Address: </b> {employeeData.address}
+                    </label>
                     <br />
                   </div>
                 </form>

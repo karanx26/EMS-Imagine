@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import '../styles/CheckRL.css';  // Import the CSS file
+import "../styles/CheckRL.css"; 
 
 const CheckReimb = () => {
   const { id } = useParams();
@@ -16,7 +16,9 @@ const CheckReimb = () => {
   useEffect(() => {
     const fetchReimbursement = async () => {
       try {
-        const response = await axios.get(`http://localhost:8001/reimbursements/${id}`);
+        const response = await axios.get(
+          `http://localhost:8001/reimbursements/${id}`
+        );
         setReimbursement(response.data);
       } catch (error) {
         setError("Error fetching reimbursement application");
@@ -31,7 +33,10 @@ const CheckReimb = () => {
 
   const handleStatusChange = async (id, status) => {
     try {
-      await axios.patch(`http://localhost:8001/reimbursements/${id}/status`, { status, review });
+      await axios.patch(`http://localhost:8001/reimbursements/${id}/status`, {
+        status,
+        review,
+      });
       setReimbursement((prevReimbursement) => ({
         ...prevReimbursement,
         status,
@@ -43,7 +48,9 @@ const CheckReimb = () => {
   };
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this reimbursement application?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this reimbursement application?"
+    );
     if (confirmDelete) {
       try {
         await axios.delete(`http://localhost:8001/reimbursements/${id}`);
@@ -73,33 +80,59 @@ const CheckReimb = () => {
           <h2>APPLICATION DETAILS</h2>
         </div>
         <div className="cardcrl-body">
-          <p><strong>Employee UID:</strong> {reimbursement.uid}</p>
-          <p><strong>Expense Type:</strong> {reimbursement.expenseType}</p>
-          <p><strong>Vehicle Type:</strong> {reimbursement.vehicleType || '-'}</p>
-          <p><strong>Total Kms:</strong> {reimbursement.totalKms || '-'}</p>
-          <p><strong>Description:</strong> {reimbursement.description}</p>
-          <p><strong>Start Date:</strong> {new Date(reimbursement.startDate).toLocaleDateString()}</p>
-          <p><strong>End Date:</strong> {new Date(reimbursement.endDate).toLocaleDateString()}</p>
-          <p><strong>GST Type:</strong> {reimbursement.gstType}</p>
-          <p><strong>Status:</strong> {reimbursement.status}</p>
-          <p><strong>Total Expense:</strong> {reimbursement.totalExpense}</p>
+          <p>
+            <strong>Employee UID:</strong> {reimbursement.uid}
+          </p>
+          <p>
+            <strong>Expense Type:</strong> {reimbursement.expenseType}
+          </p>
+          <p>
+            <strong>Vehicle Type:</strong> {reimbursement.vehicleType || "-"}
+          </p>
+          <p>
+            <strong>Total Kms:</strong> {reimbursement.totalKms || "-"}
+          </p>
+          <p>
+            <strong>Description:</strong> {reimbursement.description}
+          </p>
+          <p>
+            <strong>Start Date:</strong>{" "}
+            {new Date(reimbursement.startDate).toLocaleDateString()}
+          </p>
+          <p>
+            <strong>End Date:</strong>{" "}
+            {new Date(reimbursement.endDate).toLocaleDateString()}
+          </p>
+          <p>
+            <strong>GST Type:</strong> {reimbursement.gstType}
+          </p>
+          <p>
+            <strong>Status:</strong> {reimbursement.status}
+          </p>
+          <p>
+            <strong>Total Expense:</strong> {reimbursement.totalExpense}
+          </p>
           <div>
             <strong>Proofs:</strong>
             <ul>
-              {reimbursement.proofs && reimbursement.proofs.length > 0 ? (
-                reimbursement.proofs.map((proof, index) => (
-                  <div key={index}>
-                    <a href={`http://localhost:8001/${proof}`} target="_blank" rel="noopener noreferrer">
-                      View Proof {index + 1}
-                    </a>
-                  </div>
-                ))
-              ) : (
-                "No Proof Uploaded"
-              )}
+              {reimbursement.proofs && reimbursement.proofs.length > 0
+                ? reimbursement.proofs.map((proof, index) => (
+                    <div key={index}>
+                      <a
+                        href={`http://localhost:8001/${proof}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View Proof {index + 1}
+                      </a>
+                    </div>
+                  ))
+                : "No Proof Uploaded"}
             </ul>
           </div>
-          <p><strong>Review:</strong> {reimbursement.review}</p>
+          <p>
+            <strong>Review:</strong> {reimbursement.review}
+          </p>
           <div>
             <textarea
               value={review}
@@ -113,46 +146,115 @@ const CheckReimb = () => {
         </div>
         <div className="cardcrl-footer">
           <div className="button-groupcrl">
-            {(reimbursement.status === "Pending" || reimbursement.status === "On Hold by Admin 1") && adminId === "A001"  && (
-              <>
-                <button className="btn btn-warningcrl" onClick={() => handleStatusChange(reimbursement._id, "Second Level Pending")}>
-                  Send for Approval
-                </button>
-                <button className="btn btn-dangercrl" onClick={() => handleStatusChange(reimbursement._id, "Rejected")}>
-                  Reject
-                </button>
-                <button className="btn btn-secondarycrl" onClick={() => handleStatusChange(reimbursement._id, "On Hold by Admin 1")}>
-                  On Hold
-                </button>
-              </>
-            )}
-            {(reimbursement.status === "Second Level Pending" || reimbursement.status === "On Hold by Admin 2") && adminId === "A002"  && (
-              <>
-                <button className="btn btn-warningcrl" onClick={() => handleStatusChange(reimbursement._id, "Third Level Pending")}>
-                  Send for Approval
-                </button>
-                <button className="btn btn-dangercrl" onClick={() => handleStatusChange(reimbursement._id, "Rejected")}>
-                  Reject
-                </button>
-                <button className="btn btn-secondarycrl" onClick={() => handleStatusChange(reimbursement._id, "On Hold by Admin 2")}>
-                  On Hold
-                </button>
-              </>
-            )}
-            {(reimbursement.status === "Third Level Pending" || reimbursement.status === "On Hold by Admin 3") && adminId === "A003"  && (
-              <>
-                <button className="btn btn-successcr" onClick={() => handleStatusChange(reimbursement._id, "Approved")}>
-                  Approve
-                </button>
-                <button className="btn btn-dangercrl" onClick={() => handleStatusChange(reimbursement._id, "Rejected")}>
-                  Reject
-                </button>
-                <button className="btn btn-secondarycrl" onClick={() => handleStatusChange(reimbursement._id, "On Hold by Admin 3")}>
-                  On Hold
-                </button>
-              </>
-            )}
-            <button className="btn btn-successcrl" onClick={() => handleDelete(reimbursement._id)}>
+            {(reimbursement.status === "Pending" ||
+              reimbursement.status === "On Hold by Admin 1") &&
+              adminId === "A001" && (
+                <>
+                  <button
+                    className="btn btn-warningcrl"
+                    onClick={() =>
+                      handleStatusChange(
+                        reimbursement._id,
+                        "Second Level Pending"
+                      )
+                    }
+                  >
+                    Send for Approval
+                  </button>
+                  <button
+                    className="btn btn-dangercrl"
+                    onClick={() =>
+                      handleStatusChange(reimbursement._id, "Rejected")
+                    }
+                  >
+                    Reject
+                  </button>
+                  <button
+                    className="btn btn-secondarycrl"
+                    onClick={() =>
+                      handleStatusChange(
+                        reimbursement._id,
+                        "On Hold by Admin 1"
+                      )
+                    }
+                  >
+                    On Hold
+                  </button>
+                </>
+              )}
+            {(reimbursement.status === "Second Level Pending" ||
+              reimbursement.status === "On Hold by Admin 2") &&
+              adminId === "A002" && (
+                <>
+                  <button
+                    className="btn btn-warningcrl"
+                    onClick={() =>
+                      handleStatusChange(
+                        reimbursement._id,
+                        "Third Level Pending"
+                      )
+                    }
+                  >
+                    Send for Approval
+                  </button>
+                  <button
+                    className="btn btn-dangercrl"
+                    onClick={() =>
+                      handleStatusChange(reimbursement._id, "Rejected")
+                    }
+                  >
+                    Reject
+                  </button>
+                  <button
+                    className="btn btn-secondarycrl"
+                    onClick={() =>
+                      handleStatusChange(
+                        reimbursement._id,
+                        "On Hold by Admin 2"
+                      )
+                    }
+                  >
+                    On Hold
+                  </button>
+                </>
+              )}
+            {(reimbursement.status === "Third Level Pending" ||
+              reimbursement.status === "On Hold by Admin 3") &&
+              adminId === "A003" && (
+                <>
+                  <button
+                    className="btn btn-successcr"
+                    onClick={() =>
+                      handleStatusChange(reimbursement._id, "Approved")
+                    }
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="btn btn-dangercrl"
+                    onClick={() =>
+                      handleStatusChange(reimbursement._id, "Rejected")
+                    }
+                  >
+                    Reject
+                  </button>
+                  <button
+                    className="btn btn-secondarycrl"
+                    onClick={() =>
+                      handleStatusChange(
+                        reimbursement._id,
+                        "On Hold by Admin 3"
+                      )
+                    }
+                  >
+                    On Hold
+                  </button>
+                </>
+              )}
+            <button
+              className="btn btn-successcrl"
+              onClick={() => handleDelete(reimbursement._id)}
+            >
               Delete
             </button>
           </div>

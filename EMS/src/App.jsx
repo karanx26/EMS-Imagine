@@ -22,11 +22,8 @@ import CheckReimb from "./components/CheckReimb";
 import GstApplications from "./components/GstApplications";
 import ManageClientA from "./components/ManageClientA";
 import ManageInventoryA from "./components/ManageInventoryA";
-
-
 import ProfileC from "./components/ProfileC";
 import CheckUpdC from "./components/CheckUpdC";
-
 import ProfileE from "./components/ProfileE";
 import TaskE from "./components/TaskE";
 import AttendanceE from "./components/AttendanceE";
@@ -39,15 +36,12 @@ import LeaveApplicationE from "./components/LeaveApplicationE";
 import ManageClientE from "./components/ManageClientE";
 import AddEmp from "./components/AddEmp";
 import EditEmpa from "./components/EditEmpa";
-
 import AddClientA from "./components/AddClientA";
 import AddClientE from "./components/AddClientE";
 import EditClientA from "./components/EditClientA";
 import EditClientE from "./components/EditClientE";
 import ClientDocs from "./components/ClientDocs";
-
-
-import PrivateRoute from "./components/PrivateRoute"; // Import the PrivateRoute component
+import PrivateRoute from "./components/PrivateRoute"; 
 
 function App() {
   return (
@@ -58,8 +52,6 @@ function App() {
         <Route path="/loginforma" element={<LoginformA />} />
         <Route path="/loginforme" element={<LoginformE />} />
         <Route path="/loginformc" element={<LoginformC />} />
-
-
 
         <Route
           path="/homea"
@@ -75,20 +67,23 @@ function App() {
           <Route path="/homea/overtimea" element={<OvertimeA />} />
           <Route path="/homea/taska" element={<TaskA />} />
           <Route path="/homea/leavea" element={<LeaveA />} />
-          <Route path="/homea/checkleave/:id" element={<CheckLeave />} /> 
+          <Route path="/homea/checkleave/:id" element={<CheckLeave />} />
           <Route path="/homea/addempa" element={<AddEmp />} />
           <Route path="/homea/editempa/:uid" element={<EditEmpa />} />
-          <Route path="/homea/monthlyattendancea" element={<MonthAttendanceA />} />
+          <Route
+            path="/homea/monthlyattendancea"
+            element={<MonthAttendanceA />}
+          />
           <Route path="/homea/reimba" element={<ReimbursementA />} />
           <Route path="/homea/checkreimb/:id" element={<CheckReimb />} />
-          <Route path="/homea//gst-applications" element={<GstApplications />} />
+          <Route
+            path="/homea//gst-applications"
+            element={<GstApplications />}
+          />
           <Route path="/homea/editclient/:uid" element={<EditClientA />} />
           <Route path="/homea/clientdocs/:uid" element={<ClientDocs />} />
 
-          <Route path="/homea/manageclienta" element={
-            <ManageClientA />
-            
-            } />
+          <Route path="/homea/manageclienta" element={<ManageClientA />} />
           <Route path="/homea/addclienta" element={<AddClientA />} />
           <Route
             path="/homea/manageinventorya"
@@ -113,10 +108,13 @@ function App() {
           <Route path="/homee/editreimb/:id" element={<EditReimb />} />
           <Route path="/homee/managecliente" element={<ManageClientE />} />
           <Route path="/homee/addcliente" element={<AddClientE />} />
-          <Route path="/homee/editcliente/:uid" element={<EditClientE />} />  
-          <Route path="/homee/clientdocs/:uid" element={<ClientDocs />} />        
+          <Route path="/homee/editcliente/:uid" element={<EditClientE />} />
+          <Route path="/homee/clientdocs/:uid" element={<ClientDocs />} />
           <Route path="/homee/leavee" element={<LeaveE />} />
-          <Route path="/homee/leaveapplication" element={<LeaveApplicationE />} />
+          <Route
+            path="/homee/leaveapplication"
+            element={<LeaveApplicationE />}
+          />
         </Route>
 
         <Route

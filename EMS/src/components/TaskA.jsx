@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../styles/TaskA.css"; // Import custom CSS for styling
+import "../styles/TaskA.css"; 
 
 const TaskA = () => {
   const [employees, setEmployees] = useState([]);
@@ -44,7 +44,7 @@ const TaskA = () => {
       await axios.post("http://localhost:8001/tasks", { tasks: [task] });
       alert("Task assigned successfully!");
       setTaskDetails({ task: "", deadline: "" });
-      fetchPendingTasks(); // Fetch and update pending tasks immediately after assigning
+      fetchPendingTasks(); 
     } catch (error) {
       console.error("Error assigning task:", error);
       alert("Error assigning task.");
@@ -53,7 +53,9 @@ const TaskA = () => {
 
   const fetchPendingTasks = async () => {
     try {
-      const response = await axios.get("http://localhost:8001/tasks?status=Pending");
+      const response = await axios.get(
+        "http://localhost:8001/tasks?status=Pending"
+      );
       setPendingTasks(response.data);
       setShowPending(true);
       setShowCompleted(false);
@@ -64,7 +66,9 @@ const TaskA = () => {
 
   const fetchCompletedTasks = async () => {
     try {
-      const response = await axios.get("http://localhost:8001/tasks?status=Done");
+      const response = await axios.get(
+        "http://localhost:8001/tasks?status=Done"
+      );
       setCompletedTasks(response.data);
       setShowPending(false);
       setShowCompleted(true);
@@ -74,12 +78,18 @@ const TaskA = () => {
   };
 
   const handleDeleteTask = async (taskId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this task?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
     if (confirmDelete) {
       try {
         await axios.delete(`http://localhost:8001/tasks/${taskId}`);
-        setPendingTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
-        setCompletedTasks((prevTasks) => prevTasks.filter(task => task._id !== taskId));
+        setPendingTasks((prevTasks) =>
+          prevTasks.filter((task) => task._id !== taskId)
+        );
+        setCompletedTasks((prevTasks) =>
+          prevTasks.filter((task) => task._id !== taskId)
+        );
       } catch (error) {
         console.error("Error deleting task:", error);
         alert("Error deleting task.");
@@ -90,64 +100,62 @@ const TaskA = () => {
   return (
     <>
       <div className="containerta">
+        <div className="header-containerta">
+          <h2>TASK ASSIGNMENT</h2>
+        </div>
 
-      <div className="header-containerta">
-
-        <h2>TASK ASSIGNMENT</h2>
-      </div>
-
-      <div className="form-containerta">
-        <form onSubmit={handleSubmit}>
-          <div className="form-groupta">
-            <label>Employee:</label>
-            <select
-              value={selectedEmployee}
-              onChange={(e) => setSelectedEmployee(e.target.value)}
-              className="form-controlta"
-            >
-              <option value="" disabled>
-                Select an employee
-              </option>
-              {employees.map((employee) => (
-                <option key={employee.uid} value={employee.uid}>
-                  {employee.name}
+        <div className="form-containerta">
+          <form onSubmit={handleSubmit}>
+            <div className="form-groupta">
+              <label>Employee:</label>
+              <select
+                value={selectedEmployee}
+                onChange={(e) => setSelectedEmployee(e.target.value)}
+                className="form-controlta"
+              >
+                <option value="" disabled>
+                  Select an employee
                 </option>
-              ))}
-            </select>
-          </div>
-          <div className="form-groupta">
-            <label>Task:</label>
-            <input
-              type="text"
-              className="form-controlta"
-              value={taskDetails.task}
-              onChange={(e) => handleTaskChange("task", e.target.value)}
-              placeholder="Enter task details"
-            />
-          </div>
-          <div className="form-groupta">
-            <label>Deadline:</label>
-            <input
-              type="date"
-              className="form-controlta"
-              value={taskDetails.deadline}
-              onChange={(e) => handleTaskChange("deadline", e.target.value)}
-            />
-          </div>
-          <div className="button-containerta">
-            <button type="submit" className="btnta btnta-primary">
-              Assign Task
-            </button>
-          </div>
-        </form>
+                {employees.map((employee) => (
+                  <option key={employee.uid} value={employee.uid}>
+                    {employee.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-groupta">
+              <label>Task:</label>
+              <input
+                type="text"
+                className="form-controlta"
+                value={taskDetails.task}
+                onChange={(e) => handleTaskChange("task", e.target.value)}
+                placeholder="Enter task details"
+              />
+            </div>
+            <div className="form-groupta">
+              <label>Deadline:</label>
+              <input
+                type="date"
+                className="form-controlta"
+                value={taskDetails.deadline}
+                onChange={(e) => handleTaskChange("deadline", e.target.value)}
+              />
+            </div>
+            <div className="button-containerta">
+              <button type="submit" className="btnta btnta-primary">
+                Assign Task
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <div className="button-containerta">
         <button onClick={fetchPendingTasks} className="btnta btnta-warning">
           Show All Pending Tasks
         </button>
-        </div>
-        <div className="button-containerta">
+      </div>
+      <div className="button-containerta">
         <button onClick={fetchCompletedTasks} className="btnta btnta-success">
           Show All Completed Tasks
         </button>
@@ -174,10 +182,13 @@ const TaskA = () => {
                   {pendingTasks.map((task) => (
                     <tr key={task._id}>
                       <td>{task.task}</td>
-                      <td>{employees.find(e => e.uid === task.uid)?.name}</td>
+                      <td>{employees.find((e) => e.uid === task.uid)?.name}</td>
                       <td>{new Date(task.deadline).toLocaleDateString()}</td>
                       <td>
-                        <button className="btnta btnta-danger" onClick={() => handleDeleteTask(task._id)}>
+                        <button
+                          className="btnta btnta-danger"
+                          onClick={() => handleDeleteTask(task._id)}
+                        >
                           Delete
                         </button>
                       </td>
@@ -211,10 +222,13 @@ const TaskA = () => {
                   {completedTasks.map((task) => (
                     <tr key={task._id}>
                       <td>{task.task}</td>
-                      <td>{employees.find(e => e.uid === task.uid)?.name}</td>
+                      <td>{employees.find((e) => e.uid === task.uid)?.name}</td>
                       <td>{new Date(task.deadline).toLocaleDateString()}</td>
                       <td>
-                        <button className="btnta btnta-danger" onClick={() => handleDeleteTask(task._id)}>
+                        <button
+                          className="btnta btnta-danger"
+                          onClick={() => handleDeleteTask(task._id)}
+                        >
                           Delete
                         </button>
                       </td>

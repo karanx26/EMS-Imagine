@@ -11,21 +11,22 @@ const AddClientE = () => {
     phone: "",
     address: "",
     locationLink: "",
-    clientType: ""
+    clientType: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8001/addclient", formData)
-      .then(response => {
+    axios
+      .post("http://localhost:8001/addclient", formData)
+      .then((response) => {
         console.log(response.data);
         alert("Client added successfully");
         setFormData({
@@ -35,11 +36,11 @@ const AddClientE = () => {
           phone: "",
           address: "",
           locationLink: "",
-          clientType: ""
+          clientType: "",
         });
         navigate("/homee/managecliente");
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error adding client:", error);
       });
   };
@@ -88,7 +89,9 @@ const AddClientE = () => {
                     required
                     className="form-control"
                   >
-                    <option value="" disabled>Select Client Type</option>
+                    <option value="" disabled>
+                      Select Client Type
+                    </option>
                     <option value="Retail">Retail</option>
                     <option value="Commercial">Commercial</option>
                     <option value="Government">Government</option>
@@ -128,7 +131,9 @@ const AddClientE = () => {
                   />
                 </div>
                 <div className="form-group mb-3">
-                  <label htmlFor="locationLink">Google Map Location Link:</label>
+                  <label htmlFor="locationLink">
+                    Google Map Location Link:
+                  </label>
                   <input
                     type="url"
                     id="locationLink"
@@ -138,9 +143,11 @@ const AddClientE = () => {
                     className="form-control"
                   />
                 </div>
-                
+
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-orange">Add Client</button>
+                  <button type="submit" className="btn btn-orange">
+                    Add Client
+                  </button>
                 </div>
               </form>
             </div>

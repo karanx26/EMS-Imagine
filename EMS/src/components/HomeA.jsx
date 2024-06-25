@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
-import "../styles/HomeC.css"; // Import your custom CSS
+import "../styles/HomeC.css";
 
 function HomeA() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function HomeA() {
       if (result.data.Status) {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("uid");
-        window.location.href = "/login"; // Redirect to login page
+        window.location.href = "/login"; 
       }
     });
   };
@@ -118,14 +118,9 @@ function HomeA() {
                 </li>
 
                 <li className="nav-item">
-                  <Link
-                    to="/homea/manageempa"
-                    className="nav-link text-white"
-                  >
+                  <Link to="/homea/manageempa" className="nav-link text-white">
                     <i className="bi bi-people"></i>
-                    
-                      Manage Employees
-                    
+                    Manage Employees
                   </Link>
                 </li>
 
@@ -135,12 +130,10 @@ function HomeA() {
                     className="nav-link text-white"
                   >
                     <i className="bi bi-people"></i>
-                    
-                      Manage Clients
-                    
+                    Manage Clients
                   </Link>
                 </li>
-                
+
                 {/* <li className="nav-item">
                   <Link
                     to="/homea/manageinventorya"

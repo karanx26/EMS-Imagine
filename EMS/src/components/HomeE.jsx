@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
-import "../styles/HomeC.css"; // Import your custom CSS
+import "../styles/HomeC.css";
 
 function HomeE() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function HomeE() {
       if (result.data.Status) {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("uid");
-        window.location.href = "/login"; // Redirect to login page
+        window.location.href = "/login";
       }
     });
   };
@@ -142,12 +142,18 @@ function HomeE() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={`/homee/taske/${userId}`} className="nav-link text-white">
+                <Link
+                  to={`/homee/taske/${userId}`}
+                  className="nav-link text-white"
+                >
                   <i className="bi bi-check2-square"></i> Task
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to={`/homee/attendance/${userId}`} className="nav-link text-white">
+                <Link
+                  to={`/homee/attendance/${userId}`}
+                  className="nav-link text-white"
+                >
                   <i className="bi bi-clipboard"></i> Attendance
                 </Link>
               </li>
@@ -157,7 +163,10 @@ function HomeE() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/homee/reimbursemente" className="nav-link text-white">
+                <Link
+                  to="/homee/reimbursemente"
+                  className="nav-link text-white"
+                >
                   <i className="bi bi-cash-stack"></i> Reimbursement
                 </Link>
               </li>

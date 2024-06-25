@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import "../styles/AttendanceE.css";  // Import the CSS file
+import "../styles/AttendanceE.css"; 
 
 const AttendanceE = () => {
   const navigate = useNavigate();
@@ -11,10 +11,23 @@ const AttendanceE = () => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [loading, setLoading] = useState(false);
 
-  const years = Array.from(new Array(20), (_, index) => new Date().getFullYear() - 10 + index); // 10 years back and 10 years ahead
+  const years = Array.from(
+    new Array(20),
+    (_, index) => new Date().getFullYear() - 10 + index
+  ); 
   const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   useEffect(() => {
@@ -26,7 +39,9 @@ const AttendanceE = () => {
   const fetchAttendanceData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/employee/${uid}`);
+      const response = await axios.get(
+        `http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/employee/${uid}`
+      );
       setAttendanceData(response.data);
     } catch (error) {
       console.error("Error fetching monthly attendance:", error);
@@ -46,7 +61,7 @@ const AttendanceE = () => {
   const calculateTotals = (attendanceData) => {
     let totals = { present: 0, absent: 0, leave: 0 };
 
-    attendanceData.forEach(record => {
+    attendanceData.forEach((record) => {
       if (record.status.present) totals.present++;
       if (record.status.absent) totals.absent++;
       if (record.status.leave) totals.leave++;
@@ -74,8 +89,10 @@ const AttendanceE = () => {
                   onChange={handleYearChange}
                   className="select-style"
                 >
-                  {years.map(year => (
-                    <option key={year} value={year}>{year}</option>
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
                   ))}
                 </select>
                 <label htmlFor="month">Month:</label>
@@ -86,7 +103,9 @@ const AttendanceE = () => {
                   className="select-style"
                 >
                   {monthNames.map((month, index) => (
-                    <option key={index} value={index + 1}>{month}</option>
+                    <option key={index} value={index + 1}>
+                      {month}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -106,31 +125,34 @@ const AttendanceE = () => {
               </div>
               {attendanceData.length > 0 ? (
                 <div className="attendance-table-container">
-                <table className="attendance-table">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Day</th>
-                      <th>Present</th>
-                      <th>Absent</th>
-                      <th>Leave</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {attendanceData.map(record => (
-                      <tr key={record.date}>
-                        <td>{record.date}</td>
-                        <td>{record.day}</td>
-                        <td>{record.status.present ? 'Yes' : '-'}</td>
-                        <td>{record.status.absent ? 'Yes' : '-'}</td>
-                        <td>{record.status.leave ? 'Yes' : '-'}</td>
+                  <table className="attendance-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Day</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                        <th>Leave</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {attendanceData.map((record) => (
+                        <tr key={record.date}>
+                          <td>{record.date}</td>
+                          <td>{record.day}</td>
+                          <td>{record.status.present ? "Yes" : "-"}</td>
+                          <td>{record.status.absent ? "Yes" : "-"}</td>
+                          <td>{record.status.leave ? "Yes" : "-"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               ) : (
-                <p className="text-center"><br />No attendance records found for the selected month.</p>
+                <p className="text-center">
+                  <br />
+                  No attendance records found for the selected month.
+                </p>
               )}
             </div>
           </div>

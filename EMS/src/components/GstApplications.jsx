@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../styles/GstApplications.css";  // Import the CSS file here
+import "../styles/GstApplications.css"; 
 
 const GstApplications = () => {
   const [reimbursements, setReimbursements] = useState([]);
@@ -14,8 +14,14 @@ const GstApplications = () => {
   useEffect(() => {
     const fetchReimbursements = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/reimbursements");
-        setReimbursements(response.data.filter((r) => r.gstType === "GST" && r.status === "Approved"));
+        const response = await axios.get(
+          "http://localhost:8001/reimbursements"
+        );
+        setReimbursements(
+          response.data.filter(
+            (r) => r.gstType === "GST" && r.status === "Approved"
+          )
+        );
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -64,7 +70,7 @@ const GstApplications = () => {
         </div>
         <div className="mb-2">
           <label htmlFor="endDate" className="form-label">
-          <strong>End Date: </strong>
+            <strong>End Date: </strong>
           </label>
           <input
             type="date"
@@ -76,52 +82,57 @@ const GstApplications = () => {
         </div>
       </div>
       <div className="tablegst-containergst">
-      <div class="tablegst-scrollable">
-        {filteredReimbursements.length > 0 ? (
-          <table className="tablegst tablegst-bordered">
-            <thead>
-              <tr>
-                {/* <th>UID</th> */}
-                <th>Employee Name</th>
-                <th>Expense Type</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Total Expense</th>
-                {/* <th>Status</th> */}
-                <th>Proofs</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredReimbursements.map((reimbursement) => (
-                <tr key={reimbursement._id}>
-                  {/* <td>{reimbursement.uid}</td> */}
-                  <td>{reimbursement.employeeName}</td>
-                  <td>{reimbursement.expenseType}</td>
-                  <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
-                  <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
-                  <td>{reimbursement.totalExpense}</td>
-                  {/* <td>{reimbursement.status}</td> */}
-                  <td>
-                    {reimbursement.proofs.map((proof, index) => (
-                      <a
-                        key={index}
-                        href={`http://localhost:8001/${proof}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Proof {index + 1}
-                        <br />
-                      </a>
-                    ))}
-                  </td>
+        <div class="tablegst-scrollable">
+          {filteredReimbursements.length > 0 ? (
+            <table className="tablegst tablegst-bordered">
+              <thead>
+                <tr>
+                  {/* <th>UID</th> */}
+                  <th>Employee Name</th>
+                  <th>Expense Type</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Total Expense</th>
+                  {/* <th>Status</th> */}
+                  <th>Proofs</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-
-        ) : (
-          <div>No approved GST applications found for the selected period.</div>
-        )}
+              </thead>
+              <tbody>
+                {filteredReimbursements.map((reimbursement) => (
+                  <tr key={reimbursement._id}>
+                    {/* <td>{reimbursement.uid}</td> */}
+                    <td>{reimbursement.employeeName}</td>
+                    <td>{reimbursement.expenseType}</td>
+                    <td>
+                      {new Date(reimbursement.startDate).toLocaleDateString()}
+                    </td>
+                    <td>
+                      {new Date(reimbursement.endDate).toLocaleDateString()}
+                    </td>
+                    <td>{reimbursement.totalExpense}</td>
+                    {/* <td>{reimbursement.status}</td> */}
+                    <td>
+                      {reimbursement.proofs.map((proof, index) => (
+                        <a
+                          key={index}
+                          href={`http://localhost:8001/${proof}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Proof {index + 1}
+                          <br />
+                        </a>
+                      ))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div>
+              No approved GST applications found for the selected period.
+            </div>
+          )}
         </div>
       </div>
     </div>

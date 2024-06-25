@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import '../styles/LeaveApp.css';
+import "../styles/LeaveApp.css";
 
 function LeaveApplicationE() {
   const [leaves, setLeaves] = useState([]);
   const [timePeriodFilter, setTimePeriodFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
   const [paymentTypeFilter, setPaymentTypeFilter] = useState("All");
-  const userId = localStorage.getItem("uid"); // Assuming you store the user ID in local storage
+  const userId = localStorage.getItem("uid"); 
 
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await axios.get(`http://localhost:8001/leaves/${userId}`);
+        const response = await axios.get(
+          `http://localhost:8001/leaves/${userId}`
+        );
         setLeaves(response.data);
       } catch (error) {
         console.error("Error fetching leave applications:", error);
@@ -55,10 +57,14 @@ function LeaveApplicationE() {
     return true;
   };
 
-  const filteredLeaves = leaves.filter(leave => {
+  const filteredLeaves = leaves.filter((leave) => {
     if (!filterByTimePeriod(leave)) return false;
     if (statusFilter !== "All" && statusFilter !== leave.status) return false;
-    if (paymentTypeFilter !== "All" && paymentTypeFilter !== leave.leavePaymentType) return false;
+    if (
+      paymentTypeFilter !== "All" &&
+      paymentTypeFilter !== leave.leavePaymentType
+    )
+      return false;
     return true;
   });
 
@@ -82,17 +88,32 @@ function LeaveApplicationE() {
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownTimeButton">
             <li>
-              <button className={`dropdown-item ${timePeriodFilter === "All" && "active"}`} onClick={() => setTimePeriodFilter("All")}>
+              <button
+                className={`dropdown-item ${
+                  timePeriodFilter === "All" && "active"
+                }`}
+                onClick={() => setTimePeriodFilter("All")}
+              >
                 All Time
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${timePeriodFilter === "Last Month" && "active"}`} onClick={() => setTimePeriodFilter("Last Month")}>
+              <button
+                className={`dropdown-item ${
+                  timePeriodFilter === "Last Month" && "active"
+                }`}
+                onClick={() => setTimePeriodFilter("Last Month")}
+              >
                 Last Month
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${timePeriodFilter === "Last Year" && "active"}`} onClick={() => setTimePeriodFilter("Last Year")}>
+              <button
+                className={`dropdown-item ${
+                  timePeriodFilter === "Last Year" && "active"
+                }`}
+                onClick={() => setTimePeriodFilter("Last Year")}
+              >
                 Last Year
               </button>
             </li>
@@ -110,17 +131,32 @@ function LeaveApplicationE() {
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownStatusButton">
             <li>
-              <button className={`dropdown-item ${statusFilter === "All" && "active"}`} onClick={() => setStatusFilter("All")}>
+              <button
+                className={`dropdown-item ${
+                  statusFilter === "All" && "active"
+                }`}
+                onClick={() => setStatusFilter("All")}
+              >
                 All
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${statusFilter === "Approved" && "active"}`} onClick={() => setStatusFilter("Approved")}>
+              <button
+                className={`dropdown-item ${
+                  statusFilter === "Approved" && "active"
+                }`}
+                onClick={() => setStatusFilter("Approved")}
+              >
                 Approved
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${statusFilter === "Rejected" && "active"}`} onClick={() => setStatusFilter("Rejected")}>
+              <button
+                className={`dropdown-item ${
+                  statusFilter === "Rejected" && "active"
+                }`}
+                onClick={() => setStatusFilter("Rejected")}
+              >
                 Rejected
               </button>
             </li>
@@ -136,19 +172,37 @@ function LeaveApplicationE() {
           >
             Filter by Payment Type: {paymentTypeFilter}
           </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownPaymentTypeButton">
+          <ul
+            className="dropdown-menu"
+            aria-labelledby="dropdownPaymentTypeButton"
+          >
             <li>
-              <button className={`dropdown-item ${paymentTypeFilter === "All" && "active"}`} onClick={() => setPaymentTypeFilter("All")}>
+              <button
+                className={`dropdown-item ${
+                  paymentTypeFilter === "All" && "active"
+                }`}
+                onClick={() => setPaymentTypeFilter("All")}
+              >
                 All
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${paymentTypeFilter === "Paid" && "active"}`} onClick={() => setPaymentTypeFilter("Paid")}>
+              <button
+                className={`dropdown-item ${
+                  paymentTypeFilter === "Paid" && "active"
+                }`}
+                onClick={() => setPaymentTypeFilter("Paid")}
+              >
                 Paid
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${paymentTypeFilter === "Unpaid" && "active"}`} onClick={() => setPaymentTypeFilter("Unpaid")}>
+              <button
+                className={`dropdown-item ${
+                  paymentTypeFilter === "Unpaid" && "active"
+                }`}
+                onClick={() => setPaymentTypeFilter("Unpaid")}
+              >
                 Unpaid
               </button>
             </li>
@@ -190,7 +244,10 @@ function LeaveApplicationE() {
             </tbody>
           </table>
         ) : (
-          <p className="text-center"><br />No leave applications found.</p>
+          <p className="text-center">
+            <br />
+            No leave applications found.
+          </p>
         )}
       </div>
     </>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../styles/ReimbursementE.css"; // Make sure to import the CSS file
+import "../styles/ReimbursementE.css"; 
 
 const ReimbursementE = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +15,7 @@ const ReimbursementE = () => {
     vehicleType: "",
     totalKms: "",
     totalExpense: "",
-    gstType: "", // Added field for GST type
+    gstType: "",
   });
 
   const navigate = useNavigate();
@@ -89,7 +89,7 @@ const ReimbursementE = () => {
       data.append("startDate", formData.startDate);
       data.append("endDate", formData.endDate);
       data.append("totalExpense", formData.totalExpense);
-      data.append("gstType", formData.gstType); // Append GST type
+      data.append("gstType", formData.gstType); 
       formData.proofs.forEach((proof) => {
         data.append("proofs", proof);
       });
@@ -115,7 +115,7 @@ const ReimbursementE = () => {
         vehicleType: "",
         totalKms: "",
         totalExpense: "",
-        gstType: "", // Reset GST type
+        gstType: "", 
       });
     } catch (error) {
       console.error("Error submitting form data:", error);

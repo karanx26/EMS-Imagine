@@ -3,17 +3,14 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
 
-function ManageInventoryA() 
-{
+function ManageInventoryA() {
   localStorage.removeItem("isLoggedIn");
   window.localStorage.removeItem("isLoggedIn");
-  return(
+  return (
     <>
       <h1>Manage Inventory</h1>
     </>
-  )
+  );
 }
-  
-
 
 export default ManageInventoryA;

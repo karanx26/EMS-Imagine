@@ -14,23 +14,22 @@ const AddEmp = () => {
     dob: "",
     joiningDate: "",
     salary: "",
-    address: ""
+    address: "",
   });
-
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8001/addempa", formData)
-      .then(response => {
+    axios
+      .post("http://localhost:8001/addempa", formData)
+      .then((response) => {
         console.log(response.data);
         alert("Employee added successfully");
         setFormData({
@@ -43,11 +42,11 @@ const AddEmp = () => {
           dob: "",
           joiningDate: "",
           salary: "",
-          address: ""
+          address: "",
         });
         navigate("/homea/manageempa");
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error adding employee:", error);
       });
   };
@@ -176,7 +175,9 @@ const AddEmp = () => {
                   />
                 </div>
                 <div className="form-group text-center">
-                  <button type="submit" className="btn btn-orange">Add Employee</button>
+                  <button type="submit" className="btn btn-orange">
+                    Add Employee
+                  </button>
                 </div>
               </form>
             </div>

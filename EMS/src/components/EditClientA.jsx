@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/EditClient.css"; // Import custom CSS for additional styling if needed
+import "../styles/EditClient.css"; 
 
 function EditClientA() {
   const { uid } = useParams();
@@ -26,7 +26,10 @@ function EditClientA() {
 
   const handleUpdate = async () => {
     try {
-      const res = await axios.put(`http://localhost:8001/clients/${uid}`, client);
+      const res = await axios.put(
+        `http://localhost:8001/clients/${uid}`,
+        client
+      );
       if (res.status === 200) {
         alert("Client details updated successfully!");
         navigate("/homea/manageclienta");
@@ -40,20 +43,22 @@ function EditClientA() {
   };
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this client?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this client?"
+    );
     if (confirmDelete) {
-    try {
-      const res = await axios.delete(`http://localhost:8001/clients/${uid}`);
-      if (res.status === 200) {
-        navigate("/homea/manageclienta");
-      } else {
-        alert("Failed to delete client.");
+      try {
+        const res = await axios.delete(`http://localhost:8001/clients/${uid}`);
+        if (res.status === 200) {
+          navigate("/homea/manageclienta");
+        } else {
+          alert("Failed to delete client.");
+        }
+      } catch (err) {
+        console.log(err);
+        alert("An error occurred while deleting the client.");
       }
-    } catch (err) {
-      console.log(err);
-      alert("An error occurred while deleting the client.");
     }
-  }
   };
 
   const handleShowDocuments = () => {
@@ -73,50 +78,120 @@ function EditClientA() {
                 <div className="form-group row mb-3">
                   <label className="col-sm-3 col-form-label">Unique Id:</label>
                   <div className="col-sm-9">
-                    <input type="text" className="form-control" value={client.uid} readOnly />
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={client.uid}
+                      readOnly
+                    />
                   </div>
                 </div>
                 <div className="form-group row mb-3">
                   <label className="col-sm-3 col-form-label">Password:</label>
                   <div className="col-sm-9">
-                    <input type="text" className="form-control" value={client.password} readOnly />
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={client.password}
+                      readOnly
+                    />
                   </div>
                 </div>
                 <div className="form-group row mb-3">
                   <label className="col-sm-3 col-form-label">Name:</label>
                   <div className="col-sm-9">
-                    <input type="text" className="form-control" value={client.name} onChange={(e) => setClient({ ...client, name: e.target.value })} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={client.name}
+                      onChange={(e) =>
+                        setClient({ ...client, name: e.target.value })
+                      }
+                    />
                   </div>
                 </div>
                 <div className="form-group row mb-3">
                   <label className="col-sm-3 col-form-label">Phone:</label>
                   <div className="col-sm-9">
-                    <input type="text" className="form-control" value={client.phone} onChange={(e) => setClient({ ...client, phone: e.target.value })} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={client.phone}
+                      onChange={(e) =>
+                        setClient({ ...client, phone: e.target.value })
+                      }
+                    />
                   </div>
                 </div>
                 <div className="form-group row mb-3">
-                  <label className="col-sm-3 col-form-label">Client Type:</label>
+                  <label className="col-sm-3 col-form-label">
+                    Client Type:
+                  </label>
                   <div className="col-sm-9">
-                    <input type="text" className="form-control" value={client.clientType} onChange={(e) => setClient({ ...client, clientType: e.target.value })} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={client.clientType}
+                      onChange={(e) =>
+                        setClient({ ...client, clientType: e.target.value })
+                      }
+                    />
                   </div>
                 </div>
                 <div className="form-group row mb-3">
                   <label className="col-sm-3 col-form-label">Address:</label>
                   <div className="col-sm-9">
-                    <input type="text" className="form-control" value={client.address} onChange={(e) => setClient({ ...client, address: e.target.value })} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={client.address}
+                      onChange={(e) =>
+                        setClient({ ...client, address: e.target.value })
+                      }
+                    />
                   </div>
                 </div>
                 <div className="form-group row mb-3">
-                  <label className="col-sm-3 col-form-label">Location Link:</label>
+                  <label className="col-sm-3 col-form-label">
+                    Location Link:
+                  </label>
                   <div className="col-sm-9">
-                    <input type="text" className="form-control" value={client.locationLink} onChange={(e) => setClient({ ...client, locationLink: e.target.value })} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={client.locationLink}
+                      onChange={(e) =>
+                        setClient({ ...client, locationLink: e.target.value })
+                      }
+                    />
                   </div>
                 </div>
                 <div className="form-group row">
                   <div className="d-flex justify-content-center">
-                    <button type="button" className="btn btn-primary mt-3" style={{ marginRight: '20px' }} onClick={handleUpdate}>Update</button>
-                    <button type="button" className="btn btn-success mt-3" style={{ marginRight: '20px' }} onClick={handleShowDocuments}>Show Documents</button>
-                    <button type="button" className="btn btn-danger mt-3" style={{ marginRight: '20px' }} onClick={handleDelete}>Delete</button>
+                    <button
+                      type="button"
+                      className="btn btn-primary mt-3"
+                      style={{ marginRight: "20px" }}
+                      onClick={handleUpdate}
+                    >
+                      Update
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-success mt-3"
+                      style={{ marginRight: "20px" }}
+                      onClick={handleShowDocuments}
+                    >
+                      Show Documents
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-danger mt-3"
+                      style={{ marginRight: "20px" }}
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </form>

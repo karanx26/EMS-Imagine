@@ -11,7 +11,7 @@ function ProfileC() {
     phone: "",
     address: "",
     locationLink: "",
-    clientType: ""
+    clientType: "",
   });
 
   useEffect(() => {

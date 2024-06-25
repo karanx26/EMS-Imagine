@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
-import "../styles/HomeC.css"; // Import your custom CSS
+import "../styles/HomeC.css"; 
 
 function HomeC() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function HomeC() {
       if (result.data.Status) {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("uid");
-        window.location.href = "/login"; // Redirect to login page
+        window.location.href = "/login"; 
       }
     });
   };
@@ -61,7 +61,9 @@ function HomeC() {
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-files ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Check Documents</span>
+                  <span className="ms-2 d-none d-sm-inline">
+                    Check Documents
+                  </span>
                 </Link>
               </li>
 

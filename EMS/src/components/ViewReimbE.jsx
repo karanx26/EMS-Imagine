@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/ViewReimbE.css"; // Import the CSS file
+import "../styles/ViewReimbE.css"; 
 import { Link } from "react-router-dom";
 
 function ViewReimbE() {
@@ -13,7 +13,9 @@ function ViewReimbE() {
   useEffect(() => {
     const fetchReimbursements = async () => {
       try {
-        const response = await axios.get(`http://localhost:8001/reimbursement/${uid}`);
+        const response = await axios.get(
+          `http://localhost:8001/reimbursement/${uid}`
+        );
         setReimbursements(response.data);
       } catch (error) {
         console.error("Error fetching reimbursements:", error);
@@ -33,30 +35,32 @@ function ViewReimbE() {
 
   const getLastMonth = () => {
     const today = new Date();
-    const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+    const lastMonth = new Date(
+      today.getFullYear(),
+      today.getMonth() - 1,
+      today.getDate()
+    );
     return lastMonth;
   };
 
   const filteredReimbursements = reimbursements.filter((reimbursement) => {
     const startDate = new Date(reimbursement.startDate);
 
-    // Filter by time period
     const isInTimeFilter =
       timeFilter === "All" ||
       (timeFilter === "Last Week" && startDate >= getLastWeek()) ||
       (timeFilter === "Last Month" && startDate >= getLastMonth());
 
-    // Filter by status
-    const isInStatusFilter = statusFilter === "All" || reimbursement.status === statusFilter;
+    const isInStatusFilter =
+      statusFilter === "All" || reimbursement.status === statusFilter;
 
-    // Filter by expense type
     const isInExpenseTypeFilter =
-      expenseTypeFilter === "All" || reimbursement.expenseType === expenseTypeFilter;
+      expenseTypeFilter === "All" ||
+      reimbursement.expenseType === expenseTypeFilter;
 
     return isInTimeFilter && isInStatusFilter && isInExpenseTypeFilter;
   });
 
-  // Calculate total expense
   const totalExpense = filteredReimbursements.reduce((total, reimbursement) => {
     return total + reimbursement.totalExpense;
   }, 0);
@@ -66,7 +70,7 @@ function ViewReimbE() {
       <br />
       <br />
       <h2 className="text-center">REIMBURSEMENT APPLICATIONS</h2>
-      <br/>
+      <br />
       <div className="filters-container text-center mb-4">
         <div className="dropdown mb-2">
           <button
@@ -80,17 +84,30 @@ function ViewReimbE() {
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownTimeButton">
             <li>
-              <button className={`dropdown-item ${timeFilter === "All" && "active"}`} onClick={() => setTimeFilter("All")}>
+              <button
+                className={`dropdown-item ${timeFilter === "All" && "active"}`}
+                onClick={() => setTimeFilter("All")}
+              >
                 All
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${timeFilter === "Last Week" && "active"}`} onClick={() => setTimeFilter("Last Week")}>
+              <button
+                className={`dropdown-item ${
+                  timeFilter === "Last Week" && "active"
+                }`}
+                onClick={() => setTimeFilter("Last Week")}
+              >
                 Last Week
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${timeFilter === "Last Month" && "active"}`} onClick={() => setTimeFilter("Last Month")}>
+              <button
+                className={`dropdown-item ${
+                  timeFilter === "Last Month" && "active"
+                }`}
+                onClick={() => setTimeFilter("Last Month")}
+              >
                 Last Month
               </button>
             </li>
@@ -108,22 +125,42 @@ function ViewReimbE() {
           </button>
           <ul className="dropdown-menu" aria-labelledby="dropdownStatusButton">
             <li>
-              <button className={`dropdown-item ${statusFilter === "All" && "active"}`} onClick={() => setStatusFilter("All")}>
+              <button
+                className={`dropdown-item ${
+                  statusFilter === "All" && "active"
+                }`}
+                onClick={() => setStatusFilter("All")}
+              >
                 All
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${statusFilter === "Approved" && "active"}`} onClick={() => setStatusFilter("Approved")}>
+              <button
+                className={`dropdown-item ${
+                  statusFilter === "Approved" && "active"
+                }`}
+                onClick={() => setStatusFilter("Approved")}
+              >
                 Approved
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${statusFilter === "Pending" && "active"}`} onClick={() => setStatusFilter("Pending")}>
+              <button
+                className={`dropdown-item ${
+                  statusFilter === "Pending" && "active"
+                }`}
+                onClick={() => setStatusFilter("Pending")}
+              >
                 Pending
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${statusFilter === "Rejected" && "active"}`} onClick={() => setStatusFilter("Rejected")}>
+              <button
+                className={`dropdown-item ${
+                  statusFilter === "Rejected" && "active"
+                }`}
+                onClick={() => setStatusFilter("Rejected")}
+              >
                 Rejected
               </button>
             </li>
@@ -139,54 +176,109 @@ function ViewReimbE() {
           >
             Filter by Expense Type: {expenseTypeFilter}
           </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownExpenseTypeButton">
+          <ul
+            className="dropdown-menu"
+            aria-labelledby="dropdownExpenseTypeButton"
+          >
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "All" && "active"}`} onClick={() => setExpenseTypeFilter("All")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "All" && "active"
+                }`}
+                onClick={() => setExpenseTypeFilter("All")}
+              >
                 All
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "fuel" && "active"}`} onClick={() => setExpenseTypeFilter("fuel")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "fuel" && "active"
+                }`}
+                onClick={() => setExpenseTypeFilter("fuel")}
+              >
                 Fuel
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "raw-material" && "active"}`} onClick={() => setExpenseTypeFilter("raw-material")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "raw-material" && "active"
+                }`}
+                onClick={() => setExpenseTypeFilter("raw-material")}
+              >
                 Raw Material
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "food" && "active"}`} onClick={() => setExpenseTypeFilter("food")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "food" && "active"
+                }`}
+                onClick={() => setExpenseTypeFilter("food")}
+              >
                 Food
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "accomodation" && "active"}`} onClick={() => setExpenseTypeFilter("accomodation")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "accomodation" && "active"
+                }`}
+                onClick={() => setExpenseTypeFilter("accomodation")}
+              >
                 Accommodation
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "no-bill-claim" && "active"}`} onClick={() => setExpenseTypeFilter("no-bill-claim")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "no-bill-claim" && "active"
+                }`}
+                onClick={() => setExpenseTypeFilter("no-bill-claim")}
+              >
                 No Bill Claim
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "stamp-paper" && "active"}`} onClick={() => setExpenseTypeFilter("stamp-paper")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "stamp-paper" && "active"
+                }`}
+                onClick={() => setExpenseTypeFilter("stamp-paper")}
+              >
                 Stamp Paper
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "travelling-transportation" && "active"}`} onClick={() => setExpenseTypeFilter("travelling-transportation")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "travelling-transportation" && "active"
+                }`}
+                onClick={() =>
+                  setExpenseTypeFilter("travelling-transportation")
+                }
+              >
                 Travelling/Transportation
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "advance-payment" && "active"}`} onClick={() => setExpenseTypeFilter("advance-payment")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "advance-payment" && "active"
+                }`}
+                onClick={() => setExpenseTypeFilter("advance-payment")}
+              >
                 Advance Payment
               </button>
             </li>
             <li>
-              <button className={`dropdown-item ${expenseTypeFilter === "other" && "active"}`} onClick={() => setExpenseTypeFilter("other")}>
+              <button
+                className={`dropdown-item ${
+                  expenseTypeFilter === "other" && "active"
+                }`}
+                onClick={() => setExpenseTypeFilter("other")}
+              >
                 Other
               </button>
             </li>
@@ -214,13 +306,20 @@ function ViewReimbE() {
                 {filteredReimbursements.map((reimbursement) => (
                   <tr key={reimbursement._id}>
                     <td>{reimbursement.expenseType}</td>
-                    <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
-                    <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
+                    <td>
+                      {new Date(reimbursement.startDate).toLocaleDateString()}
+                    </td>
+                    <td>
+                      {new Date(reimbursement.endDate).toLocaleDateString()}
+                    </td>
                     <td>{reimbursement.totalExpense}</td>
                     <td>{reimbursement.status}</td>
                     <td>{reimbursement.review}</td>
                     <td>
-                      <Link to={`/homee/editreimb/${reimbursement._id}`} className="btn btn-vw btn-sm">
+                      <Link
+                        to={`/homee/editreimb/${reimbursement._id}`}
+                        className="btn btn-vw btn-sm"
+                      >
                         View
                       </Link>
                     </td>

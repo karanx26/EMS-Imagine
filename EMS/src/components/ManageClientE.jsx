@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../styles/ManageClient.css"; // Import custom CSS for styling
+import "../styles/ManageClient.css"; 
 
 function ManageClientE() {
   const [clients, setClients] = useState([]);
@@ -12,7 +12,6 @@ function ManageClientE() {
     localStorage.removeItem("isLoggedIn");
     window.localStorage.removeItem("isLoggedIn");
 
-    // Fetch clients from the backend
     axios
       .get("http://localhost:8001/clients")
       .then((response) => {
@@ -34,7 +33,7 @@ function ManageClientE() {
   return (
     <>
       <br />
-  
+
       <div id="manage-client-container">
         <div className="buttonmc-container">
           <Link to="/homee/addcliente" className="manage-buttonmc">
@@ -44,11 +43,10 @@ function ManageClientE() {
         </div>
         <br />
         <div className="cardmce">
-        <div className="cardmce-header">
-        <h2 >CLIENT LIST</h2>
-        </div>
+          <div className="cardmce-header">
+            <h2>CLIENT LIST</h2>
+          </div>
 
-        
           <div className="cardmce-body">
             <div className="form-group d-flex justify-content-center align-items-center">
               <label htmlFor="clientTypeFilter" className="mr-2">
@@ -67,40 +65,40 @@ function ManageClientE() {
               </select>
             </div>
 
-        <div className="tablemce-container">
-          <table className="tablemce tablemce-bordered client-tablemce">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>UID</th>
-                <th>Name</th>
-                <th>Client Type</th>
-                <th>Phone</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredClients.map((client, index) => (
-                <tr key={client.uid}>
-                  <td>{index + 1}</td>
-                  <td>{client.uid}</td>
-                  <td>{client.name}</td>
-                  <td>{client.clientType}</td>
-                  <td>{client.phone}</td>
-                  <td>
-                    <Link
-                      to={`/homee/editcliente/${client.uid}`}
-                      className="btn btn-black btn-xs"
-                    >
-                      View
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            <div className="tablemce-container">
+              <table className="tablemce tablemce-bordered client-tablemce">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>UID</th>
+                    <th>Name</th>
+                    <th>Client Type</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredClients.map((client, index) => (
+                    <tr key={client.uid}>
+                      <td>{index + 1}</td>
+                      <td>{client.uid}</td>
+                      <td>{client.name}</td>
+                      <td>{client.clientType}</td>
+                      <td>{client.phone}</td>
+                      <td>
+                        <Link
+                          to={`/homee/editcliente/${client.uid}`}
+                          className="btn btn-black btn-xs"
+                        >
+                          View
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </>

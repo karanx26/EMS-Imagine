@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/Overtime.css";  // Import the CSS file
+import "../styles/Overtime.css"; 
 
 function Overtime() {
   const [overtimeData, setOvertimeData] = useState([]);
@@ -16,12 +16,13 @@ function Overtime() {
   }, [uid]);
 
   const fetchOvertimeData = () => {
-    axios.get(`http://localhost:8001/overtime/employee/${uid}`)
-      .then(response => {
+    axios
+      .get(`http://localhost:8001/overtime/employee/${uid}`)
+      .then((response) => {
         setOvertimeData(response.data);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setError("There was an error fetching the overtime data!");
         setLoading(false);
       });
@@ -34,15 +35,16 @@ function Overtime() {
     }
 
     const newOvertime = { uid, date, hours, description };
-    axios.post("http://localhost:8001/overtime", newOvertime)
-      .then(response => {
+    axios
+      .post("http://localhost:8001/overtime", newOvertime)
+      .then((response) => {
         fetchOvertimeData();
         setDate("");
         setHours("");
         setDescription("");
         setError(null);
       })
-      .catch(error => {
+      .catch((error) => {
         setError("There was an error adding the overtime record!");
       });
   };
@@ -93,7 +95,12 @@ function Overtime() {
                   placeholder="Description"
                   className="form-control mb-3"
                 />
-                <button onClick={handleAddOvertime} className="btnote btnote-primary w-100">Add Overtime</button>
+                <button
+                  onClick={handleAddOvertime}
+                  className="btnote btnote-primary w-100"
+                >
+                  Add Overtime
+                </button>
               </div>
 
               {loading ? (
@@ -115,7 +122,9 @@ function Overtime() {
                       <tbody>
                         {overtimeData.map((record) => (
                           <tr key={record._id}>
-                            <td>{new Date(record.date).toLocaleDateString()}</td>
+                            <td>
+                              {new Date(record.date).toLocaleDateString()}
+                            </td>
                             <td>{record.hours}</td>
                             <td>{record.description}</td>
                             {/* <td>

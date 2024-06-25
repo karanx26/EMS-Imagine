@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../styles/ManageEmpA.css"; // Import custom CSS for styling
+import "../styles/ManageEmpA.css"; 
 
 function ManageEmpA() {
-
   const [employee, setEmployee] = useState([]);
 
   const navigate = useNavigate();
@@ -83,7 +82,12 @@ function ManageEmpA() {
                     <td>{e.phone}</td>
                     <td>{e.department}</td>
                     <td>
-                      <Link to={`/homea/editempa/${e.uid}`} className="btn btn-orange btn-sm">Edit</Link>
+                      <Link
+                        to={`/homea/editempa/${e.uid}`}
+                        className="btn btn-orange btn-sm"
+                      >
+                        Edit
+                      </Link>
                     </td>
                   </tr>
                 ))}

@@ -44,9 +44,13 @@ function ProfileA() {
               <div className="cardpa-body">
                 <form>
                   <div className="form-group-pa mb-3">
-                    <label><b>Unique Id: </b> {adminData.uid}</label>
+                    <label>
+                      <b>Unique Id: </b> {adminData.uid}
+                    </label>
                     <br />
-                    <label><b>Password: </b> {adminData.password}</label>
+                    <label>
+                      <b>Password: </b> {adminData.password}
+                    </label>
                   </div>
                 </form>
               </div>

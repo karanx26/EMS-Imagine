@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/ReimbursementA.css"; // Import the CSS file
+import "../styles/ReimbursementA.css"; 
 
 const ReimbursementA = () => {
   const [reimbursements, setReimbursements] = useState([]);
@@ -18,7 +18,9 @@ const ReimbursementA = () => {
   useEffect(() => {
     const fetchReimbursements = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/reimbursements");
+        const response = await axios.get(
+          "http://localhost:8001/reimbursements"
+        );
         setReimbursements(response.data);
         setLoading(false);
       } catch (error) {
@@ -48,20 +50,22 @@ const ReimbursementA = () => {
 
   const getLastMonth = () => {
     const today = new Date();
-    const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+    const lastMonth = new Date(
+      today.getFullYear(),
+      today.getMonth() - 1,
+      today.getDate()
+    );
     return lastMonth;
   };
 
   const filteredReimbursements = reimbursements.filter((reimbursement) => {
     const startDate = new Date(reimbursement.startDate);
 
-    // Filter by time period
     const isInTimeFilter =
       timeFilter === "All" ||
       (timeFilter === "Last Week" && startDate >= getLastWeek()) ||
       (timeFilter === "Last Month" && startDate >= getLastMonth());
 
-    // Filter by status
     const isInStatusFilter =
       statusFilter === "All" ||
       (adminId === "A001" &&
@@ -79,17 +83,23 @@ const ReimbursementA = () => {
         (reimbursement.status === "Third Level Pending" ||
           reimbursement.status === "On Hold by Admin 3")) ||
       reimbursement.status === statusFilter;
-
-    // Filter by employee name
+      
     const isInEmployeeFilter =
       employeeFilter === "" ||
-      reimbursement.employeeName.toLowerCase().includes(employeeFilter.toLowerCase());
+      reimbursement.employeeName
+        .toLowerCase()
+        .includes(employeeFilter.toLowerCase());
 
-    // Filter by expense type
     const isInExpenseTypeFilter =
-      expenseTypeFilter === "" || reimbursement.expenseType === expenseTypeFilter;
+      expenseTypeFilter === "" ||
+      reimbursement.expenseType === expenseTypeFilter;
 
-    return isInTimeFilter && isInStatusFilter && isInEmployeeFilter && isInExpenseTypeFilter;
+    return (
+      isInTimeFilter &&
+      isInStatusFilter &&
+      isInEmployeeFilter &&
+      isInExpenseTypeFilter
+    );
   });
 
   const clearFilters = () => {
@@ -107,7 +117,6 @@ const ReimbursementA = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  // Calculate total expense
   const totalExpense = filteredReimbursements.reduce((total, reimbursement) => {
     return total + reimbursement.totalExpense;
   }, 0);
@@ -132,10 +141,15 @@ const ReimbursementA = () => {
                   >
                     Filter by Time Period: {timeFilter}
                   </button>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownTimeButton">
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownTimeButton"
+                  >
                     <li>
                       <button
-                        className={`dropdown-item ${timeFilter === "All" && "active"}`}
+                        className={`dropdown-item ${
+                          timeFilter === "All" && "active"
+                        }`}
                         onClick={() => setTimeFilter("All")}
                       >
                         All
@@ -143,7 +157,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${timeFilter === "Last Week" && "active"}`}
+                        className={`dropdown-item ${
+                          timeFilter === "Last Week" && "active"
+                        }`}
                         onClick={() => setTimeFilter("Last Week")}
                       >
                         Last Week
@@ -151,7 +167,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${timeFilter === "Last Month" && "active"}`}
+                        className={`dropdown-item ${
+                          timeFilter === "Last Month" && "active"
+                        }`}
                         onClick={() => setTimeFilter("Last Month")}
                       >
                         Last Month
@@ -171,10 +189,15 @@ const ReimbursementA = () => {
                   >
                     Filter by Status: {statusFilter}
                   </button>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownStatusButton">
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownStatusButton"
+                  >
                     <li>
                       <button
-                        className={`dropdown-item ${statusFilter === "Approved" && "active"}`}
+                        className={`dropdown-item ${
+                          statusFilter === "Approved" && "active"
+                        }`}
                         onClick={() => setStatusFilter("Approved")}
                       >
                         Approved
@@ -182,7 +205,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${statusFilter === "Rejected" && "active"}`}
+                        className={`dropdown-item ${
+                          statusFilter === "Rejected" && "active"
+                        }`}
                         onClick={() => setStatusFilter("Rejected")}
                       >
                         Rejected
@@ -192,7 +217,9 @@ const ReimbursementA = () => {
                       <>
                         <li>
                           <button
-                            className={`dropdown-item ${statusFilter === "Pending" && "active"}`}
+                            className={`dropdown-item ${
+                              statusFilter === "Pending" && "active"
+                            }`}
                             onClick={() => setStatusFilter("Pending")}
                           >
                             Pending
@@ -200,8 +227,12 @@ const ReimbursementA = () => {
                         </li>
                         <li>
                           <button
-                            className={`dropdown-item ${statusFilter === "On Hold by Admin 1" && "active"}`}
-                            onClick={() => setStatusFilter("On Hold by Admin 1")}
+                            className={`dropdown-item ${
+                              statusFilter === "On Hold by Admin 1" && "active"
+                            }`}
+                            onClick={() =>
+                              setStatusFilter("On Hold by Admin 1")
+                            }
                           >
                             On Hold by Admin 1
                           </button>
@@ -212,16 +243,25 @@ const ReimbursementA = () => {
                       <>
                         <li>
                           <button
-                            className={`dropdown-item ${statusFilter === "Second Level Pending" && "active"}`}
-                            onClick={() => setStatusFilter("Second Level Pending")}
+                            className={`dropdown-item ${
+                              statusFilter === "Second Level Pending" &&
+                              "active"
+                            }`}
+                            onClick={() =>
+                              setStatusFilter("Second Level Pending")
+                            }
                           >
                             Second Level Pending
                           </button>
                         </li>
                         <li>
                           <button
-                            className={`dropdown-item ${statusFilter === "On Hold by Admin 2" && "active"}`}
-                            onClick={() => setStatusFilter("On Hold by Admin 2")}
+                            className={`dropdown-item ${
+                              statusFilter === "On Hold by Admin 2" && "active"
+                            }`}
+                            onClick={() =>
+                              setStatusFilter("On Hold by Admin 2")
+                            }
                           >
                             On Hold by Admin 2
                           </button>
@@ -232,16 +272,24 @@ const ReimbursementA = () => {
                       <>
                         <li>
                           <button
-                            className={`dropdown-item ${statusFilter === "Third Level Pending" && "active"}`}
-                            onClick={() => setStatusFilter("Third Level Pending")}
+                            className={`dropdown-item ${
+                              statusFilter === "Third Level Pending" && "active"
+                            }`}
+                            onClick={() =>
+                              setStatusFilter("Third Level Pending")
+                            }
                           >
                             Third Level Pending
                           </button>
                         </li>
                         <li>
                           <button
-                            className={`dropdown-item ${statusFilter === "On Hold by Admin 3" && "active"}`}
-                            onClick={() => setStatusFilter("On Hold by Admin 3")}
+                            className={`dropdown-item ${
+                              statusFilter === "On Hold by Admin 3" && "active"
+                            }`}
+                            onClick={() =>
+                              setStatusFilter("On Hold by Admin 3")
+                            }
                           >
                             On Hold by Admin 3
                           </button>
@@ -250,7 +298,9 @@ const ReimbursementA = () => {
                     )}
                     <li>
                       <button
-                        className={`dropdown-item ${statusFilter === "All" && "active"}`}
+                        className={`dropdown-item ${
+                          statusFilter === "All" && "active"
+                        }`}
                         onClick={() => setStatusFilter("All")}
                       >
                         All
@@ -270,10 +320,15 @@ const ReimbursementA = () => {
                   >
                     Filter by Expense Type: {expenseTypeFilter || "All"}
                   </button>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownExpenseTypeButton">
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownExpenseTypeButton"
+                  >
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "" && "active"}`}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "" && "active"
+                        }`}
                         onClick={() => setExpenseTypeFilter("")}
                       >
                         All
@@ -281,7 +336,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "fuel" && "active"}`}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "fuel" && "active"
+                        }`}
                         onClick={() => setExpenseTypeFilter("fuel")}
                       >
                         Fuel
@@ -289,7 +346,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "raw-material" && "active"}`}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "raw-material" && "active"
+                        }`}
                         onClick={() => setExpenseTypeFilter("raw-material")}
                       >
                         Raw Material
@@ -297,7 +356,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "food" && "active"}`}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "food" && "active"
+                        }`}
                         onClick={() => setExpenseTypeFilter("food")}
                       >
                         Food
@@ -305,7 +366,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "accomodation" && "active"}`}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "accomodation" && "active"
+                        }`}
                         onClick={() => setExpenseTypeFilter("accomodation")}
                       >
                         Accomodation
@@ -313,7 +376,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "no-bill-claim" && "active"}`}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "no-bill-claim" && "active"
+                        }`}
                         onClick={() => setExpenseTypeFilter("no-bill-claim")}
                       >
                         No Bill Claim
@@ -321,7 +386,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "stamp-paper" && "active"}`}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "stamp-paper" && "active"
+                        }`}
                         onClick={() => setExpenseTypeFilter("stamp-paper")}
                       >
                         Stamp Paper
@@ -329,15 +396,22 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "travelling-transportation" && "active"}`}
-                        onClick={() => setExpenseTypeFilter("travelling-transportation")}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "travelling-transportation" &&
+                          "active"
+                        }`}
+                        onClick={() =>
+                          setExpenseTypeFilter("travelling-transportation")
+                        }
                       >
                         Travelling/Transportation
                       </button>
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "advance-payment" && "active"}`}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "advance-payment" && "active"
+                        }`}
                         onClick={() => setExpenseTypeFilter("advance-payment")}
                       >
                         Advance Payment
@@ -345,7 +419,9 @@ const ReimbursementA = () => {
                     </li>
                     <li>
                       <button
-                        className={`dropdown-item ${expenseTypeFilter === "other" && "active"}`}
+                        className={`dropdown-item ${
+                          expenseTypeFilter === "other" && "active"
+                        }`}
                         onClick={() => setExpenseTypeFilter("other")}
                       >
                         Other
@@ -368,7 +444,9 @@ const ReimbursementA = () => {
                     <option value="">All</option>
                     {reimbursements
                       .map((reimbursement) => reimbursement.employeeName)
-                      .filter((value, index, self) => self.indexOf(value) === index)
+                      .filter(
+                        (value, index, self) => self.indexOf(value) === index
+                      )
                       .map((employeeName) => (
                         <option key={employeeName} value={employeeName}>
                           {employeeName}
@@ -400,8 +478,12 @@ const ReimbursementA = () => {
                       <td>{reimbursement.uid}</td>
                       <td>{reimbursement.employeeName}</td>
                       <td>{reimbursement.expenseType}</td>
-                      <td>{new Date(reimbursement.startDate).toLocaleDateString()}</td>
-                      <td>{new Date(reimbursement.endDate).toLocaleDateString()}</td>
+                      <td>
+                        {new Date(reimbursement.startDate).toLocaleDateString()}
+                      </td>
+                      <td>
+                        {new Date(reimbursement.endDate).toLocaleDateString()}
+                      </td>
                       <td>{reimbursement.totalExpense}</td>
                       <td>{reimbursement.status}</td>
                       <td>
@@ -428,7 +510,10 @@ const ReimbursementA = () => {
         </div>
       </div>
       <div className="text-center">
-        <button className="btn btn-orange mt-1" onClick={() => navigate('/homea/gst-applications')}>
+        <button
+          className="btn btn-orange mt-1"
+          onClick={() => navigate("/homea/gst-applications")}
+        >
           GST Applications
         </button>
       </div>

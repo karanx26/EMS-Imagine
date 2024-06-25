@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../styles/ReimbursementE.css"; // Make sure to import the CSS file
+import "../styles/ReimbursementE.css"; 
 
 const EditReimb = () => {
   const [formData, setFormData] = useState({
@@ -18,15 +18,17 @@ const EditReimb = () => {
     gstType: "",
   });
 
-  const [newFiles, setNewFiles] = useState([]); // State to hold new files
+  const [newFiles, setNewFiles] = useState([]); 
 
   const navigate = useNavigate();
-  const { id } = useParams(); // Get the reimbursement ID from the URL params
+  const { id } = useParams(); 
 
   useEffect(() => {
     const fetchReimbursement = async () => {
       try {
-        const response = await axios.get(`http://localhost:8001/reimbursements/${id}`);
+        const response = await axios.get(
+          `http://localhost:8001/reimbursements/${id}`
+        );
         const data = response.data;
         setFormData({
           uid: data.uid,
@@ -112,14 +114,12 @@ const EditReimb = () => {
       data.append("startDate", formData.startDate);
       data.append("endDate", formData.endDate);
       data.append("totalExpense", formData.totalExpense);
-      data.append("gstType", formData.gstType); // Append GST type
+      data.append("gstType", formData.gstType); 
 
-      // Append new files
       newFiles.forEach((file) => {
         data.append("proofs", file);
       });
 
-      // Append existing proofs (if they are URLs, not actual files, they might be handled differently on the backend)
       formData.proofs.forEach((proof) => {
         data.append("existingProofs", proof);
       });
@@ -192,7 +192,9 @@ const EditReimb = () => {
                     <option value="accomodation">Accomodation</option>
                     <option value="no-bill-claim">No Bill Claim</option>
                     <option value="stamp-paper">Stamp Paper</option>
-                    <option value="travelling-transportation">Travelling/Transportation</option>
+                    <option value="travelling-transportation">
+                      Travelling/Transportation
+                    </option>
                     <option value="advance-payment">Advance Payment</option>
                     <option value="other">Other</option>
                   </select>
@@ -219,7 +221,9 @@ const EditReimb = () => {
                         <option value="4 Petrol/Diesel">
                           4 Wheeler (Petrol/Diesel) (8/- per Km)
                         </option>
-                        <option value="2 Wheeler">2 Wheeler (3/- per Km)</option>
+                        <option value="2 Wheeler">
+                          2 Wheeler (3/- per Km)
+                        </option>
                       </select>
                     </div>
                     <div className="form-group mb-4">
@@ -269,7 +273,7 @@ const EditReimb = () => {
                 </div>
 
                 <div className="form-group mb-4">
-                  <label className="form-label" style={{ display: 'block' }}>
+                  <label className="form-label" style={{ display: "block" }}>
                     GST Type:
                   </label>
                   <div className="d-flex align-items-center">
@@ -364,8 +368,15 @@ const EditReimb = () => {
                   <h4>Uploaded Files:</h4>
                   <ul>
                     {formData.proofs.map((proof, index) => (
-                      <li key={index} className="d-flex justify-content-between align-items-center">
-                        <a href={`http://localhost:8001/${proof}`} target="_blank" rel="noopener noreferrer">
+                      <li
+                        key={index}
+                        className="d-flex justify-content-between align-items-center"
+                      >
+                        <a
+                          href={`http://localhost:8001/${proof}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           View Proof {index + 1}
                         </a>
                         <button
@@ -385,8 +396,15 @@ const EditReimb = () => {
                   <h4>Newly Added Files:</h4>
                   <ul>
                     {newFiles.map((file, index) => (
-                      <li key={index} className="d-flex justify-content-between align-items-center">
-                        <a href={getObjectURL(file)} target="_blank" rel="noopener noreferrer">
+                      <li
+                        key={index}
+                        className="d-flex justify-content-between align-items-center"
+                      >
+                        <a
+                          href={getObjectURL(file)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           View File {index + 1}
                         </a>
                         <button

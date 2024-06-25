@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/LeaveE.css"; // Import the CSS file
+import "../styles/LeaveE.css"; 
 
 const LeaveE = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const LeaveE = () => {
     startDate: "",
     endDate: "",
     reason: "",
-    totalDays: 0, // Add totalDays field
+    totalDays: 0, 
   });
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const LeaveE = () => {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end date
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; 
     return diffDays;
   };
 
@@ -56,20 +56,20 @@ const LeaveE = () => {
       startDate: "",
       endDate: "",
       reason: "",
-      totalDays: 0, // Reset totalDays
+      totalDays: 0, 
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("Form Data:", formData); // Log formData to check its content
+      console.log("Form Data:", formData); 
       const response = await axios.post(
         "http://localhost:8001/submit-leave",
         formData
       );
       alert("Form submitted successfully");
-      resetForm(); // Reset the form after successful submission
+      resetForm(); 
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Error submitting form: " + error.message);

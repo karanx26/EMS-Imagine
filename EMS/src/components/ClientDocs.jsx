@@ -12,10 +12,12 @@ function ClientDocs() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const res = await axios.get(`http://localhost:8001/clientDocuments/${uid}`);
+        const res = await axios.get(
+          `http://localhost:8001/clientDocuments/${uid}`
+        );
         setDocuments(res.data);
       } catch (err) {
-        console.error('Error fetching documents:', err);
+        console.error("Error fetching documents:", err);
       }
     };
     fetchDocuments();
@@ -28,38 +30,45 @@ function ClientDocs() {
   const handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("docs", file); // Make sure this matches the backend's expected field name
+    formData.append("docs", file); 
     formData.append("documentName", documentName);
 
     try {
-      const res = await axios.post(`http://localhost:8001/clientDocuments/${uid}/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const res = await axios.post(
+        `http://localhost:8001/clientDocuments/${uid}/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
       setDocuments([...documents, res.data.document]);
       setDocumentName("");
       setFile(null);
       alert("Document uploaded successfully!");
     } catch (err) {
-      console.error('Error uploading document:', err.response || err);
+      console.error("Error uploading document:", err.response || err);
       alert("Failed to upload document.");
     }
   };
 
   const handleDelete = async (docId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this document?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this document?"
+    );
     if (confirmDelete) {
-    
-    try {
-      const res = await axios.delete(`http://localhost:8001/clientDocuments/${uid}/${docId}`);
-      console.log('Delete response:', res.data);
-      setDocuments(documents.filter(doc => doc._id !== docId));
-    } catch (err) {
-      console.error('Error deleting document:', err.response || err);
-      alert("Failed to delete document.");
+      try {
+        const res = await axios.delete(
+          `http://localhost:8001/clientDocuments/${uid}/${docId}`
+        );
+        console.log("Delete response:", res.data);
+        setDocuments(documents.filter((doc) => doc._id !== docId));
+      } catch (err) {
+        console.error("Error deleting document:", err.response || err);
+        alert("Failed to delete document.");
+      }
     }
-  }
   };
 
   return (
@@ -81,8 +90,10 @@ function ClientDocs() {
             </div>
             <div className="form-group mb-6">
               <label htmlFor="fileUpload">Upload Document:</label>
-              <br/>
-              <small>Supported file types: PDF, DOC, DOCX, PNG, JPG, JPEG</small>
+              <br />
+              <small>
+                Supported file types: PDF, DOC, DOCX, PNG, JPG, JPEG
+              </small>
               <input
                 id="fileUpload"
                 type="file"
@@ -92,7 +103,12 @@ function ClientDocs() {
               />
             </div>
             <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-orange text-center btn-sm">Upload</button>
+              <button
+                type="submit"
+                className="btn btn-orange text-center btn-sm"
+              >
+                Upload
+              </button>
             </div>
           </form>
         </div>
@@ -101,14 +117,32 @@ function ClientDocs() {
       {documents.length === 0 ? (
         <p className="text-center">No documents uploaded.</p>
       ) : (
-        <div className="card mt-3" style={{ maxWidth: "600px", margin: "0 auto" }}>
+        <div
+          className="card mt-3"
+          style={{ maxWidth: "600px", margin: "0 auto" }}
+        >
           <ul className="list-group list-group-flush">
             {documents.map((doc) => (
-              <li key={doc._id} className="list-group-item d-flex justify-content-between align-items-center">
+              <li
+                key={doc._id}
+                className="list-group-item d-flex justify-content-between align-items-center"
+              >
                 <div>
-                  <strong>{doc.documentName}</strong> - <a href={`http://localhost:8001/${doc.docs[0]}`} target="_blank" rel="noopener noreferrer">View</a>
+                  <strong>{doc.documentName}</strong> -{" "}
+                  <a
+                    href={`http://localhost:8001/${doc.docs[0]}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View
+                  </a>
                 </div>
-                <button className="btn btn-danger btn-xs" onClick={() => handleDelete(doc._id)}>Delete</button>
+                <button
+                  className="btn btn-danger btn-xs"
+                  onClick={() => handleDelete(doc._id)}
+                >
+                  Delete
+                </button>
               </li>
             ))}
           </ul>

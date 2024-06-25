@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import '../styles/AttendanceA.css';
+import "../styles/AttendanceA.css";
 
 const MonthAttendanceA = () => {
   const navigate = useNavigate();
@@ -12,10 +12,23 @@ const MonthAttendanceA = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const years = Array.from(new Array(20), (_, index) => new Date().getFullYear() - 10 + index); // 10 years back and 10 years ahead
+  const years = Array.from(
+    new Array(20),
+    (_, index) => new Date().getFullYear() - 10 + index
+  ); 
   const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   useEffect(() => {
@@ -43,7 +56,9 @@ const MonthAttendanceA = () => {
   const fetchAttendanceData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/employee/${selectedEmployeeId}`);
+      const response = await axios.get(
+        `http://localhost:8001/attendance/${selectedYear}/${selectedMonth}/employee/${selectedEmployeeId}`
+      );
       setAttendanceData(response.data);
     } catch (error) {
       console.error("Error fetching monthly attendance:", error);
@@ -67,7 +82,7 @@ const MonthAttendanceA = () => {
   const calculateTotals = (attendanceData) => {
     let totals = { present: 0, absent: 0, leave: 0 };
 
-    attendanceData.forEach(record => {
+    attendanceData.forEach((record) => {
       if (record.status.present) totals.present++;
       if (record.status.absent) totals.absent++;
       if (record.status.leave) totals.leave++;
@@ -80,92 +95,98 @@ const MonthAttendanceA = () => {
 
   return (
     <div className="containerata">
-    <br />
-    <div className="cardata">
-        <div className="cardata-header">
-      <h2>MONTHLY ATTENDANCE</h2>
-      </div>
       <br />
-      <div className="cardata-body">
-      <div className="date-containerata">
-        <label htmlFor="year">Year:</label>
-        <select
-          id="year"
-          value={selectedYear}
-          onChange={handleYearChange}
-          className="select-style"
-        >
-          {years.map(year => (
-            <option key={year} value={year}>{year}</option>
-          ))}
-        </select>
-        <label htmlFor="month">Month:</label>
-        <select
-          id="month"
-          value={selectedMonth}
-          onChange={handleMonthChange}
-          className="select-style"
-        >
-          {monthNames.map((month, index) => (
-            <option key={index} value={index + 1}>{month}</option>
-          ))}
-        </select>
-        <label htmlFor="employee">Employee:</label>
-        <select
-          id="employee"
-          value={selectedEmployeeId}
-          onChange={handleEmployeeChange}
-          className="select-style"
-        >
-          {employees.map(employee => (
-            <option key={employee.uid} value={employee.uid}>{employee.name}</option>
-          ))}
-        </select>
-      </div>
-      <div className="cardata-containerata">
-        <div className="cardata-style">
-          <h5>Present</h5>
-          <p>{totals.present}</p>
+      <div className="cardata">
+        <div className="cardata-header">
+          <h2>MONTHLY ATTENDANCE</h2>
         </div>
-        <div className="cardata-style">
-          <h5>Absent</h5>
-          <p>{totals.absent}</p>
-        </div>
-        <div className="cardata-style">
-          <h5>Leave</h5>
-          <p>{totals.leave}</p>
-        </div>
-      </div>
-      {attendanceData.length > 0 ? (
-        <div className="attendance-table-container">
-          <table className="attendance-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Day</th>
-                <th>Present</th>
-                <th>Absent</th>
-                <th>Leave</th>
-              </tr>
-            </thead>
-            <tbody>
-              {attendanceData.map(record => (
-                <tr key={record.date}>
-                  <td>{record.date}</td>
-                  <td>{record.day}</td>
-                  <td>{record.status.present ? 'Yes' : '-'}</td>
-                  <td>{record.status.absent ? 'Yes' : '-'}</td>
-                  <td>{record.status.leave ? 'Yes' : '-'}</td>
-                </tr>
+        <br />
+        <div className="cardata-body">
+          <div className="date-containerata">
+            <label htmlFor="year">Year:</label>
+            <select
+              id="year"
+              value={selectedYear}
+              onChange={handleYearChange}
+              className="select-style"
+            >
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
               ))}
-            </tbody>
-          </table>
+            </select>
+            <label htmlFor="month">Month:</label>
+            <select
+              id="month"
+              value={selectedMonth}
+              onChange={handleMonthChange}
+              className="select-style"
+            >
+              {monthNames.map((month, index) => (
+                <option key={index} value={index + 1}>
+                  {month}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="employee">Employee:</label>
+            <select
+              id="employee"
+              value={selectedEmployeeId}
+              onChange={handleEmployeeChange}
+              className="select-style"
+            >
+              {employees.map((employee) => (
+                <option key={employee.uid} value={employee.uid}>
+                  {employee.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="cardata-containerata">
+            <div className="cardata-style">
+              <h5>Present</h5>
+              <p>{totals.present}</p>
+            </div>
+            <div className="cardata-style">
+              <h5>Absent</h5>
+              <p>{totals.absent}</p>
+            </div>
+            <div className="cardata-style">
+              <h5>Leave</h5>
+              <p>{totals.leave}</p>
+            </div>
+          </div>
+          {attendanceData.length > 0 ? (
+            <div className="attendance-table-container">
+              <table className="attendance-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Leave</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {attendanceData.map((record) => (
+                    <tr key={record.date}>
+                      <td>{record.date}</td>
+                      <td>{record.day}</td>
+                      <td>{record.status.present ? "Yes" : "-"}</td>
+                      <td>{record.status.absent ? "Yes" : "-"}</td>
+                      <td>{record.status.leave ? "Yes" : "-"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p>No attendance records for the selected month.</p>
+          )}
         </div>
-      ) : (
-        <p>No attendance records for the selected month.</p>
-      )}
       </div>
-    </div>
     </div>
   );
 };
