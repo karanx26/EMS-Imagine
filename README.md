@@ -1,4 +1,4 @@
-# Employee Management System and Customer Relation Management
+# Employee Management System and Customer Relationship Management
 
 This project is a comprehensive web application built using the MERN stack (MongoDB, Express, React, Node.js). It features three types of user logins: Admin, Employee, and Customer, each with their own set of functionalities.
 
@@ -74,5 +74,14 @@ Follow these instructions to set up and run the project on your local machine.
 - **Customer Login**: View documents uploaded by admins or employees.
 
 ## Project Snippets
+
+<img width="454" alt="image" src="https://github.com/karanx26/EMS-Imagine/assets/112680487/f1d4d1b1-9bdc-4ab2-8931-697dd2dbc2e0">
+<img width="428" alt="image" src="https://github.com/karanx26/EMS-Imagine/assets/112680487/a5aa6caa-4d45-41fb-8c4d-1dffe6f658e6">
+<img width="498" alt="image" src="https://github.com/karanx26/EMS-Imagine/assets/112680487/27dae007-f355-44ca-b55c-1f08d09d9fbe">
+<img width="426" alt="image" src="https://github.com/karanx26/EMS-Imagine/assets/112680487/d5f68615-d865-4a33-b422-919e96395a64">
+<img width="493" alt="image" src="https://github.com/karanx26/EMS-Imagine/assets/112680487/164769f4-8ba2-4d7d-a62c-5dcf9ba22c36">
+
+
+
 
 
