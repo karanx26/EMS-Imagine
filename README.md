@@ -73,24 +73,6 @@ Follow these instructions to set up and run the project on your local machine.
 - **Employee Login**: Manage tasks, attendance, leave, reimbursement, and clients.
 - **Customer Login**: View documents uploaded by admins or employees.
 
-## Code Snippets
+## Project Snippets
 
-### Example: Adding an Employee (Backend - Node.js/Express)
 
-```javascript
-const express = require('express');
-const router = express.Router();
-const Employee = require('../models/Employee');
-
-// Add a new employee
-router.post('/add', async (req, res) => {
-    try {
-        const newEmployee = new Employee(req.body);
-        await newEmployee.save();
-        res.status(201).send(newEmployee);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-});
-
-module.exports = router;
